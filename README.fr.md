@@ -127,6 +127,92 @@ Ce qui l'est : chaque rapport nomme son propre contrat dans son champ
 [`verifier/verify.py`](verifier/verify.py) et
 [`verifier/spec/SPECIFICATION.md`](verifier/spec/SPECIFICATION.md).
 
+## Démarrage rapide — vérifier une preuve en quatre commandes
+
+```sh
+# 1. installer. Aucune cle d'API, aucun compte, aucun appel reseau a la verification.
+pip install neomundi-evidence-verify            # une fois publie ; voir PUBLISHING.md
+#   ou, aujourd'hui, depuis un clone :
+git clone https://github.com/neomundi-io/neomundi-evidence-gateway
+cd neomundi-evidence-gateway && pip install .
+
+# 2. verifier une archive d'exemple du corpus public de conformite
+neomundi-evidence verify verifier/conformance/fixtures/A-valid/A-05-archive-valid/archive.zip
+echo $?        # 0 - aucun controle n'a echoue
+
+# 3. la meme commande sur une archive alteree
+neomundi-evidence verify verifier/conformance/fixtures/D-tampered/D-10-archive-member-tampered/archive.zip
+echo $?        # 1 - un controle a ECHOUE, et la ligne dit quel membre
+
+# 4. une preuve OpenTimestamps (exige l'extra optionnel)
+pip install "neomundi-evidence-verify[timestamps]"
+cd verifier/examples/timestamp
+neomundi-evidence timestamp NEOMUNDI_EVIDENCE_DEMO_V0.1.zip.jws.confirmed.ots \
+                  --subject NEOMUNDI_EVIDENCE_DEMO_V0.1.zip.jws
+```
+
+### Lire le verdict
+
+Lire le **code de sortie**, pas l'absence de texte rouge.
+
+| Code | Signification | Une vérification a-t-elle eu lieu ? |
+|---|---|---|
+| **0** | aucun contrôle n'a échoué | oui |
+| **1** | **au moins un contrôle a ÉCHOUÉ** | oui |
+| **2** | mode strict : une garantie **requise** n'est pas démontrée | oui |
+| **3** | vérificateur embarqué introuvable — installation abîmée | **non** |
+| **4** | emploi incorrect — fichier ou option manquant | **non** |
+
+> ⚠ **`0` n'est pas un certificat.** Il signifie *aucun contrôle n'a échoué* —
+> ce qui inclut les contrôles qui **n'ont pas pu être faits**. `NOT TESTED`
+> n'est pas une réussite. Ajouter `--strict` pour qu'une garantie *requise*
+> non satisfaite rende `2`. Le mode strict ne change **aucune ligne de
+> verdict** : seulement le code.
+
+`neomundi-evidence doctor` imprime ce qui est installé, ce qui manque, et ce
+que chaque absence coûte.
+
+### OpenTimestamps — quatre états, jamais confondus
+
+| Observé | Rapporté | `--strict` |
+|---|---|---|
+| une attestation **Bitcoin** est présente | `PASS` — confirmée par la chaîne, avec son ou ses blocs | `0` |
+| **PENDING** seulement | `NOT TESTED` — un calendrier s'est engagé à inclure l'empreinte dans une transaction future ; **il n'atteste aucune date** | **`2`** |
+| la preuve s'engage sur une autre empreinte | **`FAIL`** — la liaison est réfutée | `1` |
+| `opentimestamps` non installée | `NOT TESTED` — état inconnu ; la **liaison** est tout de même contrôlée | `2` |
+
+Mesuré sur les deux preuves livrées dans `verifier/examples/timestamp/` : la
+confirmée rapporte *2 attestations Bitcoin, blocs 974714 et 974715* ; celle en
+attente rapporte *4 PENDING et AUCUNE Bitcoin*.
+
+> 🔴 Une preuve `PENDING` n'est **jamais** présentée comme un horodatage
+> confirmé, et **aucun horodatage qualifié eIDAS n'est revendiqué** —
+> OpenTimestamps n'est pas un prestataire de services de confiance qualifié au
+> sens du règlement.
+>
+> Même sur une preuve confirmée, *le temps vérifié par un tiers* reste
+> `NOT TESTED` : valider une attestation Bitcoin demande un en-tête de bloc,
+> donc une source de confiance que cet outil n'a pas. Ce contrôle est délégué
+> au client officiel (`ots verify`). Un outil qui prétendrait vérifier le
+> temps sans en-tête de bloc mentirait.
+
+### Ce que le résultat permet d'affirmer — et ce qu'il ne permet pas
+
+Un `0` dit : la structure de cette archive, ses empreintes et ses absences
+déclarées sont cohérentes entre elles, selon les contrôles qui ont tourné.
+
+Il n'établit **pas** l'authenticité (`verify` ne contrôle aucune signature),
+la vérité du contenu (une signature valide sur une archive fabriquée reste
+cryptographiquement valide), la capacité juridique du signataire, un
+horodatage indépendant, ni un ancrage tiers. Et une observation effacée
+*cohéremment* — décomptes et sommes refaits — passe tous les contrôles
+internes ; seule une empreinte conservée ailleurs la détecte.
+
+Liste complète : [`references/LIMITS.fr.md`](references/LIMITS.fr.md).
+L'indépendance, en une ligne : ce sont **nos** vérificateurs sur **notre**
+corpus — les exécuter confirme que nos outils se comportent comme décrit, pas
+que la conception est juste.
+
 ## Le dossier public
 
 Le moteur est un dépôt privé. Ce dont un tiers a besoin pour **vérifier**,

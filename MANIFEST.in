@@ -1,0 +1,41 @@
+# Contenu de l archive source (sdist).
+#
+# Le depot porte 260 fichiers, dont un corpus de conformite de 1,2 Mo. Une
+# sdist qui emporterait tout serait lourde et trompeuse : ce paquet distribue
+# le VERIFICATEUR, pas le corpus. Le corpus se recupere depuis le depot, et
+# `verifier/README.md` dit comment.
+#
+# En revanche `verifier/*.py` DOIT y etre : c est depuis ces fichiers que
+# `setup.py` materialise la roue, y compris quand la roue est construite a
+# partir de la sdist.
+
+include LICENSE-PACKAGE.txt
+include pyproject.toml
+include setup.py
+include neomundi_evidence/LISEZ-MOI-PYPI.md
+
+include verifier/verify.py
+include verifier/verify_attestation.py
+include verifier/canonical.py
+include verifier/i18n.py
+include verifier/timestamp.py
+include verifier/adapters/ingest.py
+
+include tests/test_paquet_pip.py
+
+# Tout le reste est hors paquet.
+prune verifier/conformance
+prune verifier/spec
+prune verifier/verifier-rs
+prune verifier/verifier-rs-crypto
+prune references
+prune docs
+prune demo
+prune examples
+prune contracts
+prune trust
+prune .github
+exclude gateway.py
+exclude engine.py
+exclude README.md
+exclude README.fr.md

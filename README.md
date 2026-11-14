@@ -120,6 +120,89 @@ The engine's report contracts — `neomundi.evidence.verification-report/1` and
 payload is carried verbatim under `engine_report`. They are documented in the
 engine's `docs/INTEGRATION.md`, which is **not public**. What is public: each report names its own contract in its `schema` field, and the fields are readable in [`verifier/verify.py`](verifier/verify.py) and [`verifier/spec/SPECIFICATION.md`](verifier/spec/SPECIFICATION.md).
 
+## Quick start — verify a proof in four commands
+
+```sh
+# 1. install. No API key, no account, no network call at verification time.
+pip install neomundi-evidence-verify            # once published; see PUBLISHING.md
+#   or, today, from a clone:
+git clone https://github.com/neomundi-io/neomundi-evidence-gateway
+cd neomundi-evidence-gateway && pip install .
+
+# 2. verify an example archive from the public conformance corpus
+neomundi-evidence verify verifier/conformance/fixtures/A-valid/A-05-archive-valid/archive.zip
+echo $?        # 0 - no control failed
+
+# 3. the same command on a tampered archive
+neomundi-evidence verify verifier/conformance/fixtures/D-tampered/D-10-archive-member-tampered/archive.zip
+echo $?        # 1 - one control FAILED, and the line says which member
+
+# 4. an OpenTimestamps proof (needs the optional extra)
+pip install "neomundi-evidence-verify[timestamps]"
+cd verifier/examples/timestamp
+neomundi-evidence timestamp NEOMUNDI_EVIDENCE_DEMO_V0.1.zip.jws.confirmed.ots \
+                  --subject NEOMUNDI_EVIDENCE_DEMO_V0.1.zip.jws
+```
+
+### Reading the verdict
+
+Read the **exit code**, not the absence of red text.
+
+| Code | Meaning | Did a verification happen? |
+|---|---|---|
+| **0** | no control failed | yes |
+| **1** | **at least one control FAILED** | yes |
+| **2** | strict mode: a **required** guarantee is not demonstrated | yes |
+| **3** | embedded verifier not found - broken install | **no** |
+| **4** | bad usage - missing file or option | **no** |
+
+> ⚠ **`0` is not a certificate.** It means *no control failed* — and that
+> includes controls that **could not be performed**. `NOT TESTED` is not
+> success. Add `--strict` to make an unmet *required* guarantee return `2`
+> instead. Strict mode changes **no verdict line**: only the code.
+
+`neomundi-evidence doctor` prints what is installed, what is missing, and what
+each absence costs.
+
+### OpenTimestamps — four states, never conflated
+
+| Observed | Reported | `--strict` |
+|---|---|---|
+| a **Bitcoin** attestation is present | `PASS` — confirmed by the chain, with block number(s) | `0` |
+| only **PENDING** attestations | `NOT TESTED` — a calendar undertook to include the digest in a future transaction; **it attests no date** | **`2`** |
+| the proof commits to another digest | **`FAIL`** — the binding is refuted | `1` |
+| `opentimestamps` not installed | `NOT TESTED` — state unknown; the **binding** is still checked | `2` |
+
+Measured on the two proofs shipped in `verifier/examples/timestamp/`: the
+confirmed one reports *2 Bitcoin attestations, blocks 974714 and 974715*; the
+pending one reports *4 PENDING and NO Bitcoin*.
+
+> 🔴 A `PENDING` proof is **never** presented as a confirmed timestamp, and
+> **no eIDAS qualified timestamp is claimed** — OpenTimestamps is not a
+> qualified trust service provider under the regulation.
+>
+> Even on a confirmed proof, *time verified by a third party* stays
+> `NOT TESTED`: validating a Bitcoin attestation needs a block header, i.e. a
+> trust source this tool does not have. That check is delegated to the
+> official client (`ots verify`). A tool claiming to verify time without a
+> block header would be lying.
+
+### What the result lets you assert — and what it does not
+
+A `0` says: this archive's structure, digests and declared absences are
+internally consistent, as checked by the controls that ran.
+
+It does **not** establish authenticity (`verify` checks no signature),
+content truth (a valid signature over a fabricated archive is still
+cryptographically valid), the signer's legal capacity, an independent
+timestamp, or third-party anchoring. And an observation deleted
+*consistently* — counts and sums recomputed — passes every internal check;
+only a digest kept elsewhere detects it.
+
+Full list: [`references/LIMITS.md`](references/LIMITS.md). Independence, in
+one line: these are **our** verifiers on **our** corpus — running them
+confirms our tools behave as described, not that the design is right.
+
 ## The public record
 
 The engine is a private repository. What a third party needs in order to

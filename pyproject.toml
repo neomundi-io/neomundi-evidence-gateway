@@ -1,0 +1,70 @@
+# Paquet `neomundi-evidence-verify` -- le verificateur public Evidence,
+# installable par pip.
+#
+# AUCUNE LOGIQUE N EST DUPLIQUEE ICI. Les verificateurs ne sont pas recopies
+# dans le depot : ils vivent dans `verifier/`, republies a l octet depuis le
+# moteur, et `setup.py` les materialise dans la roue a la construction, sous
+# `neomundi_evidence/_verifier/`. Une seule source dans le depot, un paquet
+# autonome a l arrivee.
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neomundi-evidence-verify"
+dynamic = ["version"]
+description = "Public offline verifier for NeoMundi Evidence archives, attestations and OpenTimestamps proofs"
+readme = "neomundi_evidence/LISEZ-MOI-PYPI.md"
+requires-python = ">=3.11"
+authors = [{ name = "NeoMundi Evidence" }]
+keywords = ["evidence", "verification", "sha256", "ed25519", "opentimestamps", "audit"]
+
+# 🔴 LICENCE : « tous droits reserves » est l etat REEL du Travail, et il est
+#    INCOMPATIBLE avec une publication sur PyPI, qui est une redistribution.
+#    Une concession explicite du titulaire est requise AVANT toute mise en
+#    ligne. Voir PUBLISHING.md, section « Le point bloquant ».
+license = "LicenseRef-NeoMundi-Proprietary"
+license-files = ["LICENSE-PACKAGE.txt"]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Legal Industry",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Security :: Cryptography",
+  "Topic :: Software Development :: Quality Assurance",
+]
+
+# AUCUNE dependance obligatoire : les quatre operations tournent en
+# bibliotheque standard seule.
+dependencies = []
+
+[project.optional-dependencies]
+# Chacune rend EPROUVABLE une ligne qui, sans elle, reste NOT TESTED --
+# jamais PASS. L absence n est donc jamais silencieuse.
+attestations = ["cryptography>=42"]
+timestamps = ["opentimestamps>=0.4"]
+all = ["cryptography>=42", "opentimestamps>=0.4"]
+
+[project.scripts]
+neomundi-evidence = "neomundi_evidence.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/neomundi-io/neomundi-evidence-gateway"
+"Verifier notice" = "https://github.com/neomundi-io/neomundi-evidence-gateway/blob/main/verifier/README.md"
+"Known limits" = "https://github.com/neomundi-io/neomundi-evidence-gateway/blob/main/references/LIMITS.md"
+"Conformance corpus" = "https://github.com/neomundi-io/neomundi-evidence-gateway/tree/main/verifier/conformance"
+
+[tool.setuptools]
+# Liste EXPLICITE : `find` ramasserait `verifier/` et son corpus de 1,2 Mo.
+packages = ["neomundi_evidence"]
+include-package-data = false
+
+[tool.setuptools.dynamic]
+version = { attr = "neomundi_evidence.__version__" }

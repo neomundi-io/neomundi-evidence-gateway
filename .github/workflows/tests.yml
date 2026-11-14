@@ -135,6 +135,87 @@ jobs:
         run: |
           python runners/run.py --verifier python
 
+      - name: Construire le paquet pip, et l eprouver
+        # Le paquet DISTRIBUE les verificateurs, il ne les recopie pas : le
+        # crochet de `setup.py` les materialise a la construction depuis
+        # `verifier/`. Donc il faut construire pour eprouver, et la suite
+        # confronte la roue a la source, a l octet.
+        run: |
+          python -m pip install --disable-pip-version-check --quiet build
+          rm -rf build dist neomundi_evidence/_verifier *.egg-info
+          python -m build
+          python tests/test_paquet_pip.py
+
+      - name: Installer la roue dans un environnement VIERGE, hors ligne
+        # `--no-index` : aucune dependance obligatoire ne doit etre tiree.
+        # Si pip doit atteindre le reseau ici, c est que le paquet a gagne
+        # une dependance que `pyproject.toml` ne declare pas.
+        run: |
+          python -m venv /tmp/vierge
+          /tmp/vierge/bin/python -m pip install --quiet --no-index \
+            dist/*.whl
+          /tmp/vierge/bin/neomundi-evidence --version
+          /tmp/vierge/bin/neomundi-evidence doctor
+
+      - name: Les codes de sortie du paquet, depuis l environnement vierge
+        run: |
+          set +e
+          NE=/tmp/vierge/bin/neomundi-evidence
+          V=verifier/conformance/fixtures/A-valid/A-05-archive-valid/archive.zip
+          A=verifier/conformance/fixtures/D-tampered/D-10-archive-member-tampered/archive.zip
+          echec=0
+          attendre() {
+            "$NE" "${@:2}" > /dev/null 2>&1
+            obtenu=$?
+            if [ "$obtenu" != "$1" ]; then
+              echo "FAIL code $obtenu au lieu de $1 : ${*:2}"
+              echec=1
+            else
+              echo "PASS code $1 : ${*:2}"
+            fi
+          }
+          attendre 0 verify "$V"
+          attendre 1 verify "$A"
+          attendre 2 verify "$V" --strict
+          attendre 4 verify n-existe-pas.zip
+          exit $echec
+
+      - name: Les quatre etats OpenTimestamps, avec l extra
+        # La preuve CONFIRMEE porte 2 attestations Bitcoin. La PENDING n en
+        # porte aucune, et ne doit JAMAIS passer pour un horodatage confirme :
+        # c est le code 2 en mode strict qui l etablit.
+        run: |
+          set +e
+          /tmp/vierge/bin/python -m pip install --quiet "opentimestamps>=0.4"
+          NE=/tmp/vierge/bin/neomundi-evidence
+          cd verifier/examples/timestamp
+          S=NEOMUNDI_EVIDENCE_DEMO_V0.1.zip.jws
+          echec=0
+          "$NE" timestamp "$S.confirmed.ots" --subject "$S" > /tmp/c.txt 2>&1
+          code_confirme=$?
+          "$NE" timestamp "$S.confirmed.ots" --subject "$S" --strict > /dev/null 2>&1
+          strict_confirme=$?
+          "$NE" timestamp "$S.ots" --subject "$S" --strict > /dev/null 2>&1
+          strict_pending=$?
+          "$NE" timestamp "$S.confirmed.ots" --subject trust-store.json > /dev/null 2>&1
+          code_invalide=$?
+          grep -q "attestation(s) Bitcoin" /tmp/c.txt \
+            && echo "PASS la preuve confirmee nomme ses attestations Bitcoin" \
+            || { echo "FAIL aucune attestation Bitcoin rapportee"; echec=1; }
+          grep -qi "eIDAS" /tmp/c.txt \
+            && echo "PASS la qualification eIDAS est explicitement NON revendiquee" \
+            || { echo "FAIL la ligne eIDAS a disparu"; echec=1; }
+          [ "$strict_confirme" = "0" ] \
+            && echo "PASS confirmee, strict -> 0" \
+            || { echo "FAIL confirmee, strict -> $strict_confirme"; echec=1; }
+          [ "$strict_pending" = "2" ] \
+            && echo "PASS PENDING, strict -> 2 : jamais presente comme confirmee" \
+            || { echo "FAIL PENDING, strict -> $strict_pending au lieu de 2"; echec=1; }
+          [ "$code_invalide" = "1" ] \
+            && echo "PASS liaison refutee -> 1" \
+            || { echo "FAIL liaison refutee -> $code_invalide"; echec=1; }
+          exit $echec
+
       - name: Aucun CRLF dans les sources suivies
         run: |
           python - <<'PY'
