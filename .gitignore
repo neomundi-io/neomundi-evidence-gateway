@@ -30,6 +30,15 @@ venv/
 !verifier/conformance/**/*.jws
 !verifier/conformance/**/*.ots
 
+# EXCEPTION, meme raison : le materiel de demonstration OpenTimestamps est
+# suivi. Les deux preuves `.ots` -- une CONFIRMEE (2 attestations Bitcoin) et
+# une PENDING -- et l attestation sur laquelle elles s engagent sont ce qui
+# permet a un tiers d eprouver les quatre etats lui-meme. Sans ces trois
+# lignes, 4 des 6 fichiers seraient silencieusement absents.
+!verifier/examples/**/*.jws
+!verifier/examples/**/*.ots
+!verifier/examples/**/*.zip
+
 # EXCEPTION : `trust/trust-store.json` EST suivi, et c est delibere. Il ne
 # porte aucun materiel de cle privee -- seulement le point public `x` d une
 # cle Ed25519 -- et il est la preuve ACCESSIBLE que le second canal ne fait
@@ -41,3 +50,14 @@ venv/
 trust-store.json
 !trust/trust-store.json
 !verifier/conformance/**/trust-store.json
+!verifier/examples/**/trust-store.json
+
+# Materialise A LA CONSTRUCTION par setup.py depuis `verifier/`. Le suivre
+# donnerait un SECOND exemplaire des verificateurs dans le depot, qui
+# divergerait un jour. Une seule source : `verifier/`.
+neomundi_evidence/_verifier/
+
+# Artefacts de construction du paquet.
+build/
+dist/
+*.egg-info/

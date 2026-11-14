@@ -17,3 +17,8 @@ trust/trust-store.json -text
 verifier/conformance/** -text
 *.jws binary
 *.ots binary
+
+# Le materiel de demonstration OpenTimestamps est engage par empreinte : la
+# preuve `.ots` s engage sur le sha256 EXACT du `.jws`. Une fin de ligne
+# reecrite romprait la liaison, et la demonstration des quatre etats avec.
+verifier/examples/** -text
