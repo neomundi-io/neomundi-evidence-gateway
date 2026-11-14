@@ -9,19 +9,18 @@ This page is part of the product, not a disclaimer appended to it.
 
 ## Engine repository status
 
-> **`neomundi-io/neomundi-evidence-public` is PUBLIC as this page is
-> published. Its move to private is authorised and imminent.**
+> **`neomundi-io/neomundi-evidence-public` is PRIVATE since 2026-11-14.**
 >
-> This block is the **single place** in this repository where that status is
-> recorded, and it is updated by its own commit the moment the move is made —
-> so the repository's history carries the date, rather than a page asserting a
-> state it cannot yet know.
+> Verified anonymously, with no token, at the moment of the move: the
+> repository, its API record, its `raw` URLs and its pull-request pages all
+> answer **404**.
 >
-> Whichever state applies: nothing is deleted and no history is rewritten. No
-> branch, tag, pull request or commit is removed — the engine repository's
-> entire content and history exist unchanged, and once it is private, access
-> to them is **granted, not public**. Request access at
-> [contact@neomundi.io](mailto:contact@neomundi.io).
+> **Nothing was deleted and no history was rewritten.** `main` is still
+> `3391c768f55b08590624aa1c24fe65fdb6420191`, all **7** branches are intact,
+> the annotated tag `v1.0.0-rc1` is intact, and the repository had **0 forks**
+> — so no public copy survives elsewhere. The entire content and history
+> exist unchanged; access to them is **granted, not public**. Request access
+> at [contact@neomundi.io](mailto:contact@neomundi.io).
 
 ## 🔴 The largest limit: nobody outside can re-run a verification
 
@@ -30,12 +29,12 @@ independent Rust verifiers — live in the engine repository. The normative
 specification (97 traced rules) and the public conformance corpus (50 frozen
 cases, 121 fixture files) live there too.
 
-So, once the move above is made:
+So, as of today:
 
 | Who | Can re-run an independent verification? |
 |---|---|
 | anyone with engine access | yes |
-| anyone without it | **no**, once the engine repository is private |
+| anyone without it | **no** |
 
 **This gateway does not close that gap, and is not meant to.** It verifies
 nothing; it transports a verdict produced by an engine. A report obtained
