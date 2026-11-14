@@ -308,6 +308,72 @@ def epreuve_e_aucun_fichier_prive() -> None:
                   f"{roue.name} : {len(noms)} entree(s), {octets // 1024} ko decompresses")
 
 
+# ---------------------------------------------------------------------------
+# F. La licence declaree est celle qui a ete decidee, et son perimetre est dit.
+# ---------------------------------------------------------------------------
+
+
+def epreuve_f_licence() -> None:
+    """Apache-2.0 sur le perimetre public, et le NOTICE qui le borne.
+
+    Une expression de licence dans `pyproject.toml` ne suffit pas : c est la
+    ROUE que l utilisateur recoit, donc c est sa METADATA qu il faut lire. Et
+    Apache-2.0 §4(d) exige que le `NOTICE`, des lors qu il existe, accompagne
+    la distribution -- c est lui qui dit ce que la concession NE couvre pas.
+    """
+    racine_fichiers = [(RACINE / "LICENSE"), (RACINE / "NOTICE")]
+    manquants = [f.name for f in racine_fichiers if not f.is_file()]
+    if manquants:
+        noter("FAIL", "F : LICENSE et NOTICE existent",
+              "absent(s) : " + ", ".join(manquants))
+        return
+    licence = racine_fichiers[0].read_text(encoding="utf-8")
+    if "Apache License" not in licence or "END OF TERMS AND CONDITIONS" not in licence:
+        noter("FAIL", "F : LICENSE porte le texte Apache-2.0",
+              "le corps normatif est absent ou tronque")
+    else:
+        noter("PASS", "F : LICENSE porte le texte Apache-2.0 complet",
+              f"{len(licence.encode())} octets")
+
+    notice = racine_fichiers[1].read_text(encoding="utf-8")
+    # Le NOTICE doit NOMMER ce qui n est pas couvert. Un NOTICE qui ne dirait
+    # que « Apache-2.0 » laisserait croire a une concession sur tout le depot.
+    attendus = ("NOT COVERED", "verifier/spec/", "verifier/conformance/",
+                "proprietary", "trademark")
+    absents = [m for m in attendus if m not in notice]
+    if absents:
+        noter("FAIL", "F : le NOTICE borne la concession",
+              "ne dit pas : " + ", ".join(absents))
+    else:
+        noter("PASS", "F : le NOTICE borne la concession",
+              "perimetre couvert ET non couvert nommes, marques exclues")
+
+    # La roue, enfin : c est elle qui compte.
+    roues = sorted((RACINE / "dist").glob("*.whl")) if (RACINE / "dist").is_dir() else []
+    if not roues:
+        noter("NOT TESTED", "F : la roue declare Apache-2.0",
+              "aucune roue dans dist/ : `python -m build` pour eprouver")
+        return
+    import zipfile
+
+    with zipfile.ZipFile(roues[-1]) as z:
+        noms = z.namelist()
+        meta = z.read(next(n for n in noms if n.endswith("METADATA"))).decode("utf-8")
+    ecarts = []
+    if "License-Expression: Apache-2.0" not in meta:
+        trouve = [l for l in meta.splitlines() if l.startswith("License")]
+        ecarts.append(f"License-Expression absent ou autre : {trouve}")
+    for attendu in ("licenses/LICENSE", "licenses/NOTICE"):
+        if not any(n.endswith(attendu) for n in noms):
+            ecarts.append(f"{attendu} absent de la roue")
+    if ecarts:
+        noter("FAIL", "F : la roue declare Apache-2.0 et embarque les deux fichiers",
+              " ; ".join(ecarts))
+    else:
+        noter("PASS", "F : la roue declare Apache-2.0 et embarque les deux fichiers",
+              "License-Expression: Apache-2.0, LICENSE + NOTICE presents")
+
+
 def main() -> int:
     epreuve_a_pas_de_duplication()
     epreuve_b_declarations_concordantes()
@@ -319,6 +385,7 @@ def main() -> int:
         if garde is not None:
             garde.cleanup()
     epreuve_e_aucun_fichier_prive()
+    epreuve_f_licence()
 
     reussis = sum(1 for e, _, _ in BILAN if e == "PASS")
     echoues = sum(1 for e, _, _ in BILAN if e == "FAIL")

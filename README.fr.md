@@ -15,7 +15,7 @@
 [![Evidence](https://img.shields.io/badge/Evidence-Vérifier-D4A545?style=flat-square)](verifier/README.fr.md)
 [![Gateway](https://img.shields.io/badge/Gateway-Intégrer-475569?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-gateway)
 
-[![Statut](https://img.shields.io/badge/Statut-expérimental-a16207?style=flat-square)](#maturité--à-lire-avant-de-citer-quoi-que-ce-soit) [![Bibliothèque standard](https://img.shields.io/badge/Dépendances-stdlib_Python-0f766e?style=flat-square)](#prérequis) [![Licence](https://img.shields.io/badge/Licence-tous_droits_réservés-6b7280?style=flat-square)](#droits)
+[![Statut](https://img.shields.io/badge/Statut-expérimental-a16207?style=flat-square)](#maturité--à-lire-avant-de-citer-quoi-que-ce-soit) [![Bibliothèque standard](https://img.shields.io/badge/Dépendances-stdlib_Python-0f766e?style=flat-square)](#prérequis) [![Licence](https://img.shields.io/badge/Licence-Apache_2.0-0f766e?style=flat-square)](LICENSE)
 
 </div>
 
@@ -271,8 +271,17 @@ EVIDENCE_ENGINE_HOME="$PWD/verifier" python gateway.py   verify verifier/conform
 
 ## Droits
 
-Aucune licence de réemploi n'est accordée par ce dépôt ; les droits sont
-réservés. C'est une décision, pas un oubli. Signaler une faille en privé à
+Le **vérificateur public est sous Apache-2.0** — voir
+[`LICENSE`](LICENSE). La concession porte sur le vérificateur et sur ce
+gateway, et sur **rien d'autre** : le moteur Evidence reste propriétaire, et
+[`NOTICE`](NOTICE) énumère ligne par ligne ce qui est couvert et ce qui ne
+l'est pas. Lire `NOTICE` avant tout réemploi : ce dépôt est délibérément à
+licences mixtes.
+
+Apache-2.0 concède des droits sur le *logiciel*. Elle ne concède rien sur ce
+qu'une vérification établit, et son §6 ne concède aucun droit de marque.
+
+Signaler une faille en privé à
 [contact@neomundi.io](mailto:contact@neomundi.io) — ne jamais envoyer de clé
 privée, de matériel de signature de magasin de confiance ni de secret de
 pilote.

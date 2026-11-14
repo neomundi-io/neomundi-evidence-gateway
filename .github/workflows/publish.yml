@@ -1,0 +1,277 @@
+# Publication de `neomundi-evidence-verify` sur PyPI.
+#
+# AUCUN JETON PyPI N EXISTE. La publication se fait par Trusted Publishing
+# (OIDC) : GitHub prouve a PyPI l identite du depot, du workflow et de
+# l environnement, et PyPI rend un jeton de courte duree. Rien a stocker,
+# rien a faire fuiter, rien a renouveler.
+#
+# CE WORKFLOW NE PEUT PAS PARTIR TOUT SEUL -- quatre garde-fous independants :
+#
+#   1. `workflow_dispatch` SEUL. Aucun push, aucune etiquette, aucune fusion
+#      ne le declenche. Il n y a deliberement pas de declencheur `release`.
+#   2. une CONFIRMATION TAPEE. L operateur doit ecrire `PUBLIER` a
+#      l identique ; toute autre valeur arrete le workflow AVANT la
+#      construction.
+#   3. un ENVIRONNEMENT GitHub par index. Il permet d exiger un relecteur
+#      humain, et la configuration du publieur sur PyPI y est liee par son
+#      NOM : un environnement qui ne correspond pas se fait refuser par OIDC.
+#   4. TROIS JOBS SEPARES. `construire` produit, `verifier` juge, et
+#      `publier` depend de `verifier`. Le meme artefact est construit une
+#      fois et reutilise : ce qui est verifie EST ce qui est televerse.
+#
+# Et une propriete a ne pas perdre de vue : `verifier` refuse une roue qui
+# porterait un fichier prive, une mauvaise licence, ou un verificateur qui
+# aurait derive de sa source.
+
+name: publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      index:
+        description: "Index visé. TOUJOURS testpypi d abord."
+        required: true
+        type: choice
+        default: testpypi
+        options: [testpypi, pypi]
+      confirmation:
+        description: "Taper PUBLIER (en majuscules) pour confirmer."
+        required: true
+        type: string
+
+# Permissions MINIMALES au niveau du workflow. `id-token` n est accorde que
+# dans le job qui publie, et nulle part ailleurs.
+permissions: {}
+
+jobs:
+  # -------------------------------------------------------------------------
+  garde:
+    name: garde -- la confirmation est-elle tapee ?
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuser toute valeur autre que PUBLIER
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+          INDEX: ${{ inputs.index }}
+        run: |
+          if [ "$CONFIRMATION" != "PUBLIER" ]; then
+            echo "::error::confirmation absente ou incorrecte. Taper exactement PUBLIER."
+            echo "Rien n a ete construit, rien n a ete televerse."
+            exit 1
+          fi
+          echo "confirmation acceptee -- index visé : $INDEX"
+          if [ "$INDEX" = "pypi" ]; then
+            echo "::warning::index PyPI REEL. Un nom publie est DEFINITIF, meme apres suppression."
+          fi
+
+  # -------------------------------------------------------------------------
+  construire:
+    name: construire les distributions
+    needs: garde
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Construire, depuis un arbre propre
+        run: |
+          python -m pip install --disable-pip-version-check --quiet build
+          rm -rf build dist neomundi_evidence/_verifier *.egg-info
+          python -m build
+          ls -l dist
+
+      - name: Conserver l artefact -- c est CELUI-LA qui sera televerse
+        uses: actions/upload-artifact@v4
+        with:
+          name: distributions
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
+  # -------------------------------------------------------------------------
+  verifier:
+    name: verifier l artefact avant tout televersement
+    needs: construire
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: distributions
+          path: dist
+
+      - name: Metadonnees lisibles par PyPI
+        run: |
+          python -m pip install --disable-pip-version-check --quiet twine
+          python -m twine check dist/*
+
+      - name: La licence declaree est bien Apache-2.0, et les deux fichiers y sont
+        run: |
+          python - <<'PY'
+          import pathlib, sys, zipfile
+          roue = sorted(pathlib.Path("dist").glob("*.whl"))[-1]
+          echecs = []
+          with zipfile.ZipFile(roue) as z:
+              noms = z.namelist()
+              meta = next(n for n in noms if n.endswith("METADATA"))
+              texte = z.read(meta).decode("utf-8")
+          ligne = [l for l in texte.splitlines() if l.startswith("License-Expression:")]
+          if ligne != ["License-Expression: Apache-2.0"]:
+              echecs.append(f"License-Expression = {ligne!r}, attendu Apache-2.0")
+          else:
+              print("PASS License-Expression: Apache-2.0")
+          for attendu in ("licenses/LICENSE", "licenses/NOTICE"):
+              if not any(n.endswith(attendu) for n in noms):
+                  echecs.append(f"{attendu} absent de la roue")
+              else:
+                  print(f"PASS {attendu} embarque")
+          # Apache-2.0 §4(d) : le NOTICE doit accompagner la distribution des
+          # lors qu il existe. Et il doit nommer le perimetre.
+          with zipfile.ZipFile(roue) as z:
+              nom = next((n for n in noms if n.endswith("licenses/NOTICE")), None)
+              if nom:
+                  notice = z.read(nom).decode("utf-8")
+                  for motif in ("Apache License", "NOT COVERED", "proprietary"):
+                      if motif not in notice:
+                          echecs.append(f"NOTICE ne dit pas {motif!r}")
+                  else:
+                      print("PASS le NOTICE enonce le perimetre")
+          for e in echecs:
+              print(f"FAIL {e}")
+          sys.exit(1 if echecs else 0)
+          PY
+
+      - name: La roue ne porte QUE le verificateur, et a l octet
+        run: |
+          python - <<'PY'
+          import hashlib, pathlib, sys, zipfile
+          ATTENDUS = ("verify.py", "verify_attestation.py", "canonical.py",
+                      "i18n.py", "timestamp.py", "adapters/ingest.py")
+          INTERDITS = ("gateway.py", "engine.py", "conformance/", "verifier-rs",
+                       "spec/", "trust-store.json", "references/", "examples/")
+          roue = sorted(pathlib.Path("dist").glob("*.whl"))[-1]
+          src = pathlib.Path("verifier")
+          echecs = []
+          with zipfile.ZipFile(roue) as z:
+              noms = z.namelist()
+              fautifs = sorted({m for n in noms for m in INTERDITS if m in n})
+              if fautifs:
+                  echecs.append("fichier(s) interdit(s) : " + ", ".join(fautifs))
+              else:
+                  print(f"PASS aucun fichier prive ({len(noms)} entrees)")
+              for rel in ATTENDUS:
+                  dans = f"neomundi_evidence/_verifier/{rel}"
+                  if dans not in noms:
+                      echecs.append(f"{rel} absent de la roue")
+                      continue
+                  a = hashlib.sha256((src / rel).read_bytes()).hexdigest()
+                  b = hashlib.sha256(z.read(dans)).hexdigest()
+                  if a != b:
+                      echecs.append(f"{rel} a DERIVE de sa source")
+              if not echecs:
+                  print(f"PASS les {len(ATTENDUS)} verificateurs sont identiques a leur source")
+          for e in echecs:
+              print(f"FAIL {e}")
+          sys.exit(1 if echecs else 0)
+          PY
+
+      - name: Installer la roue HORS LIGNE dans un environnement vierge
+        run: |
+          python -m venv /tmp/vierge
+          /tmp/vierge/bin/python -m pip install --quiet --no-index dist/*.whl
+          /tmp/vierge/bin/neomundi-evidence --version
+          /tmp/vierge/bin/neomundi-evidence doctor
+
+      - name: Les quatre codes de sortie de reference
+        run: |
+          set +e
+          NE=/tmp/vierge/bin/neomundi-evidence
+          V=verifier/conformance/fixtures/A-valid/A-05-archive-valid/archive.zip
+          A=verifier/conformance/fixtures/D-tampered/D-10-archive-member-tampered/archive.zip
+          echec=0
+          attendre() {
+            "$NE" "${@:2}" > /dev/null 2>&1
+            obtenu=$?
+            if [ "$obtenu" != "$1" ]; then
+              echo "FAIL code $obtenu au lieu de $1 : ${*:2}"; echec=1
+            else
+              echo "PASS code $1 : ${*:2}"
+            fi
+          }
+          attendre 0 verify "$V"
+          attendre 1 verify "$A"
+          attendre 2 verify "$V" --strict
+          attendre 4 verify n-existe-pas.zip
+          exit $echec
+
+      - name: La suite du paquet
+        run: |
+          python -m pip install --disable-pip-version-check --quiet jsonschema
+          python tests/test_paquet_pip.py
+
+  # -------------------------------------------------------------------------
+  publier:
+    name: publier sur ${{ inputs.index }}
+    needs: verifier
+    runs-on: ubuntu-latest
+    # L environnement est le quatrieme garde-fou : PyPI lie la configuration
+    # du publieur a son NOM, et GitHub permet d y exiger un relecteur.
+    environment:
+      name: ${{ inputs.index }}
+      url: ${{ inputs.index == 'pypi' && 'https://pypi.org/project/neomundi-evidence-verify/' || 'https://test.pypi.org/project/neomundi-evidence-verify/' }}
+    permissions:
+      # `id-token: write` est accorde ICI ET NULLE PART AILLEURS. C est ce
+      # qui permet a PyPI de verifier l identite du workflow par OIDC. Aucun
+      # secret, aucun jeton.
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: distributions
+          path: dist
+
+      - name: Ce qui va etre televerse
+        run: ls -l dist
+
+      - name: Televerser sur TestPyPI
+        if: inputs.index == 'testpypi'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          print-hash: true
+
+      - name: Televerser sur PyPI
+        if: inputs.index == 'pypi'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          print-hash: true
+
+      - name: Comment confronter ce qui vient d etre publie
+        env:
+          INDEX: ${{ inputs.index }}
+        run: |
+          echo "Publie sur $INDEX. A confronter depuis un environnement VIERGE :"
+          echo ""
+          if [ "$INDEX" = "testpypi" ]; then
+            echo "  python -m venv /tmp/t && /tmp/t/bin/pip install \\"
+            echo "    --index-url https://test.pypi.org/simple/ \\"
+            echo "    --extra-index-url https://pypi.org/simple/ \\"
+            echo "    neomundi-evidence-verify"
+          else
+            echo "  python -m venv /tmp/t && /tmp/t/bin/pip install neomundi-evidence-verify"
+          fi
+          echo "  /tmp/t/bin/neomundi-evidence doctor"
+          echo ""
+          echo "Puis seulement, si testpypi : relancer ce workflow avec index=pypi."

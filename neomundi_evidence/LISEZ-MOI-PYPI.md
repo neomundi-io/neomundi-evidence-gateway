@@ -119,7 +119,17 @@ corpus. Running them confirms that our tools behave as we describe. It does
 not make the verification independent of NeoMundi, and it does not establish
 that the design is right.
 
-## Rights
+## Licence
 
-Copyright (c) 2026 Sébastien Favre. All rights reserved. No reuse licence is
-granted by this package. See `LICENSE-PACKAGE.txt`.
+**Apache-2.0.** Copyright 2026 Sébastien Favre. See `LICENSE`, and `NOTICE`
+for the exact scope.
+
+The grant covers **this package** — the CLI and the six verifier files it
+distributes. It does **not** cover the Evidence engine, which stays
+proprietary, nor the normative specification and conformance corpus, which
+are published for verification and review with rights reserved. The two Rust
+verifiers of the project carry Apache-2.0 in their own `Cargo.toml` and are
+not part of this Python package.
+
+Apache-2.0 grants rights in the software. It grants nothing about what a
+verification establishes, and §6 grants no trademark rights.

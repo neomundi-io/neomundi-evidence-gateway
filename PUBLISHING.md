@@ -1,41 +1,38 @@
 # Publishing `neomundi-evidence-verify` to PyPI
 
-The package is **built and tested. It is NOT published**, and must not be
-until the point below is settled.
+The package is **built, tested and licensed. It is NOT published.**
+
+Everything on GitHub is ready. What remains is outside this repository: the
+Trusted Publisher must be created on PyPI, and the `publish` workflow must be
+run deliberately. Neither has been done, and neither should be done without
+an explicit decision.
 
 ---
 
-## 🔴 The blocking point: publishing to PyPI is redistribution
+## 🟢 The licence point is settled
 
-`pip install` copies the files onto the user's machine, and PyPI distributes
-them to anyone. That is **redistribution** in the ordinary sense, and it is
-exactly what the current rights position forbids:
+Publishing to PyPI is a **redistribution**, and until 14 November 2026 that
+was incompatible with this repository's blanket rights-reserved statement.
+**That blocker is lifted.**
 
-| Where | What it says |
+Decision of the rights holder, **Sébastien Favre, 14 November 2026**: the
+**public verifier is licensed under Apache-2.0**. See [`LICENSE`](LICENSE),
+and [`NOTICE`](NOTICE) for the exact scope.
+
+| | |
 |---|---|
-| engine `LICENSE` §3 | *"Without the prior written authorisation of the Rights Holder, no person may copy, reproduce, publish, distribute […] the Work […] in whole or in part, in source or in compiled form"* |
-| this repository's README | *"No reuse licence is granted by this repository; rights are reserved"* |
-| `verifier/README.md` | *"published for verification and review"* |
+| 🟢 covered | `neomundi_evidence/` and the **six** verifier files the wheel distributes; the gateway; the two Rust crates (**confirmed**, they already declared Apache-2.0) |
+| 🟡 not covered | `verifier/spec/`, `verifier/conformance/`, `verifier/examples/`, `trust/trust-store.json` — published for verification and review, rights reserved |
+| 🔴 not covered | the Evidence **engine**, private and proprietary. **No file of it was modified** |
 
-**You cannot offer `pip install` while reserving all rights.** The two
-statements contradict each other, and a user who runs the install command is
-entitled to assume the first one.
+The split is coherent without touching the private repository because the
+engine's own `LICENSE` §6.4 already provides for it: *"Material republished
+elsewhere under a NeoMundi notice […] is governed by the notice published
+with it, not by this document."* `NOTICE` is that notice.
 
-So this is a **decision for the rights holder (Sébastien Favre)**, not a
-packaging detail. Three coherent ways out:
-
-| Option | What it means | Consequence |
-|---|---|---|
-| **A — grant a licence to the verifier package** | e.g. Apache-2.0, as the two Rust verifiers and the `neomundi` measurement SDK already carry | `pip install` becomes coherent. Consistent with the gateway's own argument: an independent verifier nobody may reuse is a weaker artefact |
-| **B — grant a narrow licence** | "use and redistribute unmodified, for verification purposes" | allows PyPI while reserving derivative works. Non-standard, so OSI tooling and corporate reviewers will flag it |
-| **C — do not publish** | distribute from the git clone only (`pip install .`) | the Quick Start still works. But `pip install neomundi-evidence-verify` stays impossible, and the reservation still sits awkwardly with inviting people to run the tools |
-
-⚠ Whatever is chosen, it applies **forward only**. The Apache-2.0 declaration
-already carried by the two Rust crates is untouched — see engine `LICENSE`
-§6, and §6.3 on why correcting the rights holder changed nothing there.
-
-**No other blocking point was found.** The name is free, the dependencies are
-permissive and optional, and the tests pass from a clean environment.
+🟡 **One question remains open**, and is named in `NOTICE` rather than
+quietly decided: whether `spec/` and `conformance/` should also become
+Apache-2.0, so that a third-party implementer may ship the test vectors.
 
 ## The name — free, and to be confirmed
 
@@ -132,36 +129,76 @@ party* stays `NOT TESTED`: that needs a block header, and is delegated to
 `stamp` and `upgrade`, which submit a digest to public calendars, are **not
 exposed**: this package verifies, it does not produce.
 
-## The procedure, once the licence is settled
+## How publication happens: the workflow, not a laptop
 
-Do **not** run these before an explicit GO.
+Publication is performed by **GitHub Actions** with **PyPI Trusted
+Publishing** (OIDC). There is **no PyPI token anywhere** — not in the
+repository, not in repository secrets, not on anyone's machine. Nothing to
+leak, nothing to rotate.
 
-```sh
-# 0. the licence decision is recorded, and LICENSE-PACKAGE.txt reflects it
-# 1. confirm the name one last time (a released name is permanent)
-curl -s -o /dev/null -w '%{http_code}\n' https://pypi.org/pypi/neomundi-evidence-verify/json   # 404 expected
+**Workflow name: `publish`** — `.github/workflows/publish.yml`.
 
-# 2. bump the version if needed, then build clean
-rm -rf build dist neomundi_evidence/_verifier *.egg-info
-python -m build
+It cannot fire by accident. Four independent guards:
 
-# 3. check the artefacts before uploading
-python -m pip install --quiet twine
-python -m twine check dist/*
-python tests/test_paquet_pip.py          # 11 PASS expected
+| Guard | What it stops |
+|---|---|
+| `workflow_dispatch` only | no push, no tag, no merge ever triggers it |
+| a typed confirmation input | the operator must type `PUBLIER` exactly; anything else aborts before the build |
+| a GitHub **Environment** per index (`testpypi`, `pypi`) | lets you require a manual reviewer, and PyPI's publisher config is bound to the environment name |
+| build-then-verify, in separate jobs | the publishing job needs the verifying job to have passed; the artefact is built once and reused |
 
-# 4. TestPyPI first, and install from it in a clean venv
-python -m twine upload --repository testpypi dist/*
-python -m venv /tmp/t && /tmp/t/bin/pip install \
-  --index-url https://test.pypi.org/simple/ neomundi-evidence-verify
-/tmp/t/bin/neomundi-evidence doctor
+What the verifying job checks before anything is uploaded:
 
-# 5. only then, the real index
-python -m twine upload dist/*
+- `python -m twine check` on both distributions;
+- the **licence metadata** is `Apache-2.0` and `LICENSE` + `NOTICE` are in
+  the wheel;
+- the wheel contains the nine expected files and **no private file** — no
+  `gateway.py`, no corpus, no Rust crate, no trust store, no `references/`;
+- the six verifier files are **byte-identical** to their source;
+- the wheel installs in a clean environment **offline**, with **zero**
+  dependency pulled, and the CLI returns **0 / 1 / 2 / 4** on the four
+  reference cases;
+- `tests/test_paquet_pip.py` passes (11 PASS).
+
+### Running it, when the GO comes
+
+```
+Actions → publish → Run workflow
+  index        : testpypi      (then pypi, in a second run)
+  confirmation : PUBLIER
 ```
 
-Use a **project-scoped API token**, never an account-wide one, and prefer
-PyPI Trusted Publishing from a dedicated workflow over a long-lived token.
+Publish to **TestPyPI first**, install from it in a clean venv, and only then
+run it again against `pypi`. The workflow prints the exact install command to
+use for that check.
+
+### What must be created on PyPI first — one time, by the owner
+
+A Trusted Publisher is configured **on PyPI**, not here. Settings to enter,
+for each index:
+
+| Field | Value |
+|---|---|
+| PyPI Project Name | `neomundi-evidence-verify` |
+| Owner | `neomundi-io` |
+| Repository name | `neomundi-evidence-gateway` |
+| Workflow name | `publish.yml` |
+| Environment name | `pypi` — and `testpypi` for the TestPyPI publisher |
+
+Create it at *Your projects → Publishing* (or, for a name never yet
+published, *Publishing → Add a pending publisher*). TestPyPI needs its own
+publisher, configured identically at `test.pypi.org`.
+
+⚠ **The environment name must match exactly**, or OIDC will be refused.
+
+### Before the first run
+
+- confirm the name one last time — a released PyPI name is **permanent**,
+  even after deletion:
+  `curl -s -o /dev/null -w '%{http_code}\n' https://pypi.org/pypi/neomundi-evidence-verify/json`
+  (**404** expected);
+- create the two GitHub Environments (`testpypi`, `pypi`), and add a required
+  reviewer to `pypi` if you want a second pair of eyes on the real index.
 
 ## After publication
 
