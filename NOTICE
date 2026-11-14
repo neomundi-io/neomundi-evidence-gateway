@@ -1,0 +1,132 @@
+NeoMundi Evidence — public verifier
+Copyright 2026 Sébastien Favre
+
+This product includes software developed by Sébastien Favre, licensed under
+the Apache License, Version 2.0. See LICENSE.
+
+
+================================================================================
+WHAT APACHE-2.0 COVERS HERE, AND WHAT IT DOES NOT
+================================================================================
+
+This repository is deliberately MIXED-LICENCE. Apache-2.0 is granted over the
+PUBLIC VERIFIER and nothing else. Reading only `LICENSE` would over-state the
+grant, which is why this file exists and why it is specific.
+
+--------------------------------------------------------------------------------
+COVERED BY APACHE-2.0 (the public verifier)
+--------------------------------------------------------------------------------
+
+  neomundi_evidence/                      the pip package: CLI and metadata
+  verifier/verify.py                      archive verifier
+  verifier/verify_attestation.py          Ed25519/JWS attestation verifier
+  verifier/canonical.py                   canonicalisation profile
+  verifier/i18n.py                        translations (optional at runtime)
+  verifier/timestamp.py                   OpenTimestamps proof verifier
+  verifier/adapters/ingest.py             submission-package verifier
+  verifier/verifier-rs/                   second independent verifier (Rust)
+  verifier/verifier-rs-crypto/            signature/archive verifier (Rust)
+
+  gateway.py, engine.py                   the input/output gateway
+  contracts/                              the gateway's request/response schemas
+  tests/, demo/, examples/                tests, demonstration, example requests
+  docs/, references/                      documentation of the above
+
+The Python wheel `neomundi-evidence-verify` distributes exactly NINE files:
+the three of `neomundi_evidence/` and the SIX verifier files listed above
+(`verify`, `verify_attestation`, `canonical`, `i18n`, `timestamp`,
+`adapters/ingest`). Measured on the built wheel, each of the six byte-identical
+to its source under `verifier/`.
+
+The two Rust crates already carried `license = "Apache-2.0"` in their own
+`Cargo.toml` before this notice existed. That earlier declaration is
+confirmed, not replaced.
+
+--------------------------------------------------------------------------------
+NOT COVERED — rights reserved
+--------------------------------------------------------------------------------
+
+  The Evidence ENGINE, in the private repository
+  `neomundi-io/neomundi-evidence-public`.
+
+      Everything that PRODUCES and SIGNS stays proprietary: key generation
+      and attestation, binding construction, timestamp creation
+      (`stamp`/`upgrade`), trust-store publication, the pilot reconciliation
+      adapters, the private dossiers, the dated internal reports. See that
+      repository's own LICENSE. Nothing in this notice modifies it.
+
+      The engine's LICENSE already anticipates this split, at §6.4:
+      "Material republished elsewhere under a NeoMundi notice — notably the
+      public verification surface in neomundi-io/neomundi-evidence-gateway —
+      is governed by the notice published with it, not by this document."
+      This file is that notice.
+
+  verifier/spec/                          the normative specification
+  verifier/conformance/                   the frozen conformance corpus
+                                          (50 cases, 121 fixtures)
+  verifier/examples/                      the OpenTimestamps demonstration
+                                          material
+  trust/trust-store.json                  the public trust store
+
+      These remain published for VERIFICATION AND REVIEW, with rights
+      reserved. They may be read, run and relied upon to check our figures.
+      No reuse licence is granted over them by this notice.
+
+      NOTE, as an open question rather than a settled position: a conformance
+      corpus that may not be redistributed is awkward for a third party
+      implementing the protocol, who would reasonably want to ship the test
+      vectors. Extending Apache-2.0 to `spec/` and `conformance/` is a
+      separate decision for the rights holder, and has not been taken.
+
+--------------------------------------------------------------------------------
+THIRD-PARTY COMPONENTS
+--------------------------------------------------------------------------------
+
+No third-party source code is vendored in this repository.
+
+The Python package has NO mandatory dependency. Two optional extras are
+installed from PyPI by pip — never bundled here — and remain governed by
+their own licences:
+
+  cryptography        Apache-2.0 OR BSD-3-Clause
+  opentimestamps      LGPL-3.0; pulls python-bitcoinlib (LGPL-3.0)
+                      and pycryptodomex (BSD-2-Clause / public domain)
+
+  WARNING: `opentimestamps` is LGPL-3.0. It is optional and separately
+  installed, so no copyleft obligation attaches to this work. Never vendor
+  it.
+
+`verifier-rs` has no dependency at all: its Cargo.lock holds one entry.
+`verifier-rs-crypto` depends at build time on `ed25519-dalek` and its
+transitive closure — 22 third-party crates listed in its Cargo.lock, all
+permissive (BSD-3-Clause, MIT, Apache-2.0, and Unicode-3.0 for one). They are
+not redistributed here, and no compiled binary is distributed. Distributing
+one would trigger their attribution requirements.
+
+  Two of those 22 were NOT measured: libc 0.2.191 and fiat-crypto 0.3.0 are
+  declared in Cargo.lock but were not fetched by the build performed on
+  14 November 2026. They are not assumed. Read them before distributing any
+  compiled binary.
+
+--------------------------------------------------------------------------------
+ATTRIBUTIONS
+--------------------------------------------------------------------------------
+
+Independent reviewers examined this work. Their contributions are recorded,
+within the scope each person approved, in `references/REVIEWS.md`.
+
+Recording a review is not an assignment of rights, an endorsement or a
+certification — in either direction. No reviewer acquires rights in this work
+by reviewing it.
+
+--------------------------------------------------------------------------------
+WHAT THE LICENCE DOES NOT GRANT
+--------------------------------------------------------------------------------
+
+Apache-2.0 grants rights in the SOFTWARE. It grants nothing about what a
+verification establishes. A `0` exit code is not a certificate, a `PENDING`
+OpenTimestamps proof attests no date, and no eIDAS qualified timestamp is
+claimed anywhere. See `references/LIMITS.md`.
+
+Apache-2.0 §6 grants no trademark rights. "NeoMundi" and "NeoMundi Evidence"
+are not licensed by this notice.

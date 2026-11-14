@@ -163,9 +163,18 @@ corpus, cloner ce dépôt-ci.
 
 ## Droits
 
-Ces fichiers sont publiés pour la **vérification et la revue**. Aucune licence
-de réemploi n'est accordée par ce dépôt ; les droits sont réservés. Les deux
-caisses Rust portent `license = "Apache-2.0"` dans leur propre `Cargo.toml`,
-comme à leur première publication — cette déclaration subsiste et n'est pas
-retirée ici. Voir [`../references/LIMITS.fr.md`](../references/LIMITS.fr.md),
-*Les droits*.
+**Les vérificateurs sont sous Apache-2.0** — les six fichiers Python de
+vérification que distribue `neomundi-evidence-verify`, plus les deux caisses
+Rust, qui
+portaient déjà `license = "Apache-2.0"` dans leur propre `Cargo.toml`. Cette
+déclaration antérieure est confirmée, non remplacée.
+
+⚠ **`spec/`, `conformance/` et `examples/` ne sont PAS couverts.** Ils sont
+publiés pour la **vérification et la revue**, droits réservés : les lire, les
+exécuter, s'en servir pour contrôler nos chiffres — mais aucune licence de
+réemploi n'est accordée sur eux. [`../NOTICE`](../NOTICE) énumère le partage
+ligne par ligne, et nomme la question ouverte sur le corpus.
+
+Le **moteur** Evidence — tout ce qui produit et signe — reste propriétaire
+dans son dépôt privé. Voir
+[`../references/LIMITS.fr.md`](../references/LIMITS.fr.md), *Les droits*.

@@ -124,21 +124,35 @@ Only a digest kept elsewhere detects it.
 
 ## Rights, as actually constituted
 
+🟢 **Settled on 14 November 2026** by a decision of the rights holder,
+Sébastien Favre: the **public verifier is licensed under Apache-2.0**. The
+contradiction recorded here until then — Apache-2.0 metadata on two crates
+against a blanket rights-reserved statement — is resolved by **scope**, not
+by erasure.
+
 | | |
 |---|---|
-| this gateway | no reuse licence granted; rights reserved |
-| the engine repository | no `LICENSE`, `NOTICE` or `CONTRIBUTING` file is present (measured on `3391c768`); its README states rights reserved |
-| 🟡 **the two Rust verifier crates** | their `Cargo.toml` files declare **`license = "Apache-2.0"`** |
+| 🟢 the public verifier and this gateway | **Apache-2.0** — [`LICENSE`](../LICENSE), scope in [`NOTICE`](../NOTICE) |
+| 🟢 the two Rust verifier crates | **Apache-2.0**, as their `Cargo.toml` already declared. **Confirmed, not replaced** |
+| 🟡 `verifier/spec/`, `verifier/conformance/`, `verifier/examples/`, `trust/trust-store.json` | published for **verification and review**; rights reserved. Read them, run them, check our figures — no reuse licence |
+| 🔴 the Evidence **engine** (private repository) | **proprietary.** Everything that *produces and signs*. Unchanged by this decision |
 
-🟡 **That declaration is not withdrawn here, and could not be.** Those files
-were published in a public repository carrying that package metadata. Anyone
-who obtained them during that period may rely on the grant it expresses;
-making the repository private does not reach back and revoke it. Neither
-crate was ever published to a registry (`publish = false` on both).
+**Why the split holds together.** The engine's own `LICENSE` anticipated it,
+at §6.4: *"Material republished elsewhere under a NeoMundi notice — notably
+the public verification surface in `neomundi-io/neomundi-evidence-gateway` —
+is governed by the notice published with it, not by this document."*
+[`NOTICE`](../NOTICE) is that notice. **No file of the private engine was
+modified to make this work.**
 
-The contradiction between that metadata and the rights-reserved statement is
-**unresolved**, and is recorded here as unresolved rather than settled in one
-direction by silence. It is a question for NeoMundi to answer explicitly.
+🟡 **One question left open, and named rather than quietly decided.** A
+conformance corpus that may not be redistributed is awkward for a third party
+implementing the protocol, who would reasonably want to ship the test
+vectors. Extending Apache-2.0 to `spec/` and `conformance/` is a separate
+decision, and has not been taken.
+
+⚠ Apache-2.0 grants rights in the **software**. It grants nothing about what
+a verification establishes — everything above in this page still applies —
+and its §6 grants **no trademark rights**.
 
 ## What is deliberately not published
 

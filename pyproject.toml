@@ -20,12 +20,14 @@ requires-python = ">=3.11"
 authors = [{ name = "NeoMundi Evidence" }]
 keywords = ["evidence", "verification", "sha256", "ed25519", "opentimestamps", "audit"]
 
-# 🔴 LICENCE : « tous droits reserves » est l etat REEL du Travail, et il est
-#    INCOMPATIBLE avec une publication sur PyPI, qui est une redistribution.
-#    Une concession explicite du titulaire est requise AVANT toute mise en
-#    ligne. Voir PUBLISHING.md, section « Le point bloquant ».
-license = "LicenseRef-NeoMundi-Proprietary"
-license-files = ["LICENSE-PACKAGE.txt"]
+# LICENCE : Apache-2.0, par decision du titulaire des droits du 14/11/2026.
+#
+# La concession porte sur le PERIMETRE PUBLIC -- le verificateur -- et sur
+# lui seul. Le moteur Evidence reste proprietaire, et `NOTICE` enumere
+# ligne par ligne ce qui est couvert et ce qui ne l est pas. `NOTICE` est
+# embarque dans la roue : Apache-2.0 §4(d) l exige des lors qu il existe.
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
 
 classifiers = [
   "Development Status :: 4 - Beta",

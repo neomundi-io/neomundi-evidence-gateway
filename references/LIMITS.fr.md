@@ -133,23 +133,35 @@ internes. Seule une empreinte conservée ailleurs la détecte.
 
 ## Les droits, tels qu'ils sont réellement constitués
 
+🟢 **Tranché le 14 novembre 2026** par une décision du titulaire, Sébastien
+Favre : le **vérificateur public est sous Apache-2.0**. La contradiction
+consignée ici jusque-là — métadonnée Apache-2.0 sur deux caisses face à une
+réserve générale de droits — est résolue par **périmètre**, non par
+effacement.
+
 | | |
 |---|---|
-| ce gateway | aucune licence de réemploi accordée ; droits réservés |
-| le dépôt du moteur | aucun fichier `LICENSE`, `NOTICE` ni `CONTRIBUTING` présent (mesuré sur `3391c768`) ; son README énonce des droits réservés |
-| 🟡 **les deux caisses Rust du vérificateur** | leurs `Cargo.toml` déclarent **`license = "Apache-2.0"`** |
+| 🟢 le vérificateur public et ce gateway | **Apache-2.0** — [`LICENSE`](../LICENSE), périmètre dans [`NOTICE`](../NOTICE) |
+| 🟢 les deux caisses Rust du vérificateur | **Apache-2.0**, comme leur `Cargo.toml` le déclarait déjà. **Confirmé, non remplacé** |
+| 🟡 `verifier/spec/`, `verifier/conformance/`, `verifier/examples/`, `trust/trust-store.json` | publiés pour la **vérification et la revue** ; droits réservés. Les lire, les exécuter, contrôler nos chiffres — aucune licence de réemploi |
+| 🔴 le **moteur** Evidence (dépôt privé) | **propriétaire.** Tout ce qui *produit et signe*. Inchangé par cette décision |
 
-🟡 **Cette déclaration n'est pas retirée ici, et ne pourrait pas l'être.** Ces
-fichiers ont été publiés dans un dépôt public portant cette métadonnée de
-paquet. Quiconque les a obtenus pendant cette période peut se fonder sur la
-concession qu'elle exprime ; rendre le dépôt privé ne revient pas en arrière
-et ne la révoque pas. Aucune des deux caisses n'a jamais été publiée sur un
-registre (`publish = false` sur les deux).
+**Pourquoi le partage tient.** Le `LICENSE` du moteur l'avait anticipé, à son
+§6.4 : *« Material republished elsewhere under a NeoMundi notice — notably the
+public verification surface in `neomundi-io/neomundi-evidence-gateway` — is
+governed by the notice published with it, not by this document. »*
+[`NOTICE`](../NOTICE) est cette notice. **Aucun fichier du moteur privé n'a
+été modifié pour que cela fonctionne.**
 
-La contradiction entre cette métadonnée et la mention de droits réservés est
-**non résolue**, et elle est consignée ici comme non résolue plutôt que
-tranchée dans un sens par le silence. C'est une question à laquelle NeoMundi
-doit répondre explicitement.
+🟡 **Une question reste ouverte, nommée plutôt que tranchée en silence.** Un
+corpus de conformité qui ne peut pas être redistribué est malcommode pour un
+tiers qui implémente le protocole, et qui voudrait légitimement livrer les
+vecteurs d'épreuve. Étendre Apache-2.0 à `spec/` et `conformance/` est une
+décision distincte, et elle n'est pas prise.
+
+⚠ Apache-2.0 concède des droits sur le **logiciel**. Elle ne concède rien sur
+ce qu'une vérification établit — tout ce qui précède dans cette page vaut
+toujours — et son §6 ne concède **aucun droit de marque**.
 
 ## Ce qui n'est délibérément pas publié
 

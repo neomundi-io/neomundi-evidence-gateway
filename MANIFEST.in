@@ -9,7 +9,8 @@
 # `setup.py` materialise la roue, y compris quand la roue est construite a
 # partir de la sdist.
 
-include LICENSE-PACKAGE.txt
+include LICENSE
+include NOTICE
 include pyproject.toml
 include setup.py
 include neomundi_evidence/LISEZ-MOI-PYPI.md

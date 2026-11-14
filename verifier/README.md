@@ -158,8 +158,17 @@ instead.
 
 ## Rights
 
-These files are published for **verification and review**. No reuse licence
-is granted by this repository; rights are reserved. The two Rust crates carry
-`license = "Apache-2.0"` in their own `Cargo.toml`, as they did when first
-published — that declaration stands and is not withdrawn here. See
+**The verifiers are licensed under Apache-2.0** — the six Python verifier
+files distributed by `neomundi-evidence-verify`, plus the two Rust crates, which
+already carried `license = "Apache-2.0"` in their own `Cargo.toml`. That
+earlier declaration is confirmed, not replaced.
+
+⚠ **`spec/`, `conformance/` and `examples/` are NOT covered.** They are
+published for **verification and review**, with rights reserved: read them,
+run them, use them to check our figures — but no reuse licence is granted
+over them. [`../NOTICE`](../NOTICE) lists the split line by line, and names
+the open question about the corpus.
+
+The Evidence **engine** — everything that produces and signs — stays
+proprietary in its private repository. See
 [`../references/LIMITS.md`](../references/LIMITS.md), *Rights*.

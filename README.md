@@ -15,7 +15,7 @@
 [![Evidence](https://img.shields.io/badge/Evidence-Verify-D4A545?style=flat-square)](verifier/README.md)
 [![Gateway](https://img.shields.io/badge/Gateway-Integrate-475569?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-gateway)
 
-[![Status](https://img.shields.io/badge/Status-experimental-a16207?style=flat-square)](#maturity-read-this-before-quoting-anything) [![Stdlib only](https://img.shields.io/badge/Dependencies-Python_stdlib-0f766e?style=flat-square)](#requirements) [![License](https://img.shields.io/badge/License-all_rights_reserved-6b7280?style=flat-square)](#rights)
+[![Status](https://img.shields.io/badge/Status-experimental-a16207?style=flat-square)](#maturity-read-this-before-quoting-anything) [![Stdlib only](https://img.shields.io/badge/Dependencies-Python_stdlib-0f766e?style=flat-square)](#requirements) [![License](https://img.shields.io/badge/License-Apache_2.0-0f766e?style=flat-square)](LICENSE)
 
 </div>
 
@@ -257,8 +257,17 @@ EVIDENCE_ENGINE_HOME="$PWD/verifier" python gateway.py   verify verifier/conform
 
 ## Rights
 
-No reuse licence is granted by this repository; rights are reserved. This is a
-decision, not an omission. Report security issues privately to
+The **public verifier is licensed under Apache-2.0** — see
+[`LICENSE`](LICENSE). The grant covers the verifier and this gateway, and
+**nothing else**: the Evidence engine stays proprietary, and
+[`NOTICE`](NOTICE) lists line by line what is covered and what is not. Read
+`NOTICE` before reusing anything: this repository is deliberately
+mixed-licence.
+
+Apache-2.0 grants rights in the *software*. It grants nothing about what a
+verification establishes, and §6 grants no trademark rights.
+
+Report security issues privately to
 [contact@neomundi.io](mailto:contact@neomundi.io) — never send private keys,
 trust-store signing material or pilot secrets.
 
