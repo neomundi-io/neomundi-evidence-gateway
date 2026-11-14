@@ -47,11 +47,20 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Installer jsonschema
-        # OPTIONNELLE pour le produit, employee par les suites pour valider
-        # les enveloppes contre les contrats publies. Sans elle le controle
-        # rend NOT TESTED -- jamais PASS.
-        run: python -m pip install --disable-pip-version-check --quiet jsonschema
+      - name: Installer jsonschema et cryptography
+        # Les DEUX sont optionnelles pour le produit.
+        #
+        #   `jsonschema` sert aux suites a valider les enveloppes contre les
+        #   contrats publies. Sans elle, le controle rend NOT TESTED.
+        #
+        #   `cryptography` est ce dont le corpus a besoin pour ses 9 cas
+        #   d attestation. Sans elle le banc rend 33 PASS / 8 AMBIGUOUS et
+        #   sort en 2 : neuf cas deviennent ineprouvables. On l installe donc
+        #   pour que la mesure ANNONCEE (40/10) ait reellement lieu -- et
+        #   `tests/test_corpus_public.py` sait distinguer les deux cas, de
+        #   sorte qu une absence soit NOMMEE et non prise pour une regression.
+        run: |
+          python -m pip install --disable-pip-version-check --quiet             jsonschema cryptography
 
       - name: Les contrats sont du JSON valide, et fermes
         run: |

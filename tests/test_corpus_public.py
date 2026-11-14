@@ -35,9 +35,19 @@ EMPREINTE_MANIFESTE = "2720995161e6b98ee707c72ba3000a5029d8e49a07f1e80de3cf6da82
 VERSION_ATTENDUE = "1.3.0"
 ENTREES_COUVERTES = 172
 
-#: Bilan attendu du verificateur Python sur le corpus. Un refus ATTENDU est
-#: une reussite : les 40 PASS comprennent des paquets correctement refuses.
-ATTENDU_PYTHON = {"PASS": 40, "AMBIGUOUS": 10}
+#: Bilan attendu du verificateur Python sur le corpus, selon que la
+#: dependance OPTIONNELLE `cryptography` est presente ou non.
+#:
+#: Un refus ATTENDU est une reussite : les 40 PASS comprennent des paquets
+#: correctement refuses.
+#:
+#: ⚠ Ces deux lignes sont la trace d une observation de relecture externe du
+#: 13 novembre 2026 : sans `cryptography`, le banc rendait « echecs non
+#: declares -- regression » sans nommer nulle part la dependance. Neuf cas
+#: deviennent ineprouvables, et c est une ABSENCE, pas une regression. Cette
+#: suite le dit donc au lieu de l absorber.
+ATTENDU_AVEC_CRYPTO = {"PASS": 40, "AMBIGUOUS": 10}
+ATTENDU_SANS_CRYPTO = {"PASS": 33, "AMBIGUOUS": 8}
 
 BILAN: list[tuple[str, str, str]] = []
 
@@ -156,12 +166,29 @@ def controle_autonomie() -> None:
             noter("PASS", f"{outil} : publie, i18n optionnel", "repli present")
 
 
+def _cryptography_disponible() -> bool:
+    """`cryptography` est-elle importable par l interpreteur courant ?"""
+    try:
+        import cryptography  # noqa: F401
+    except ImportError:
+        return False
+    return True
+
+
 def controle_corpus_python() -> None:
     """Joue le corpus avec le verificateur Python et confronte le bilan."""
     runner = CORPUS / "runners" / "run.py"
     if not runner.is_file():
         noter("FAIL", "le banc du corpus est publie", "runners/run.py absent")
         return
+
+    avec_crypto = _cryptography_disponible()
+    attendu = ATTENDU_AVEC_CRYPTO if avec_crypto else ATTENDU_SANS_CRYPTO
+    if not avec_crypto:
+        noter("NOT TESTED", "les cas d attestation du corpus",
+              "`cryptography` est absente de cet environnement : 7 PASS et "
+              "2 AMBIGUOUS deviennent ineprouvables. C est une ABSENCE, pas "
+              "une regression -- `pip install cryptography` pour les couvrir")
     try:
         acheve = subprocess.run(  # noqa: S603
             [sys.executable, "-B", "runners/run.py", "--verifier", "python"],
@@ -178,15 +205,21 @@ def controle_corpus_python() -> None:
     compte = dict(re.findall(r"([A-Z ]+?)=(\d+)", bilan[-1]))
     compte = {k.strip(): int(v) for k, v in compte.items()}
     ecarts = [f"{k}={compte.get(k)} au lieu de {v}"
-              for k, v in ATTENDU_PYTHON.items() if compte.get(k) != v]
+              for k, v in attendu.items() if compte.get(k) != v]
     if compte.get("FAIL"):
         ecarts.append(f"FAIL={compte['FAIL']}")
-    if acheve.returncode != 0:
-        ecarts.append(f"code={acheve.returncode}")
+    # Sans `cryptography`, le banc sort en 2 : des cas declares n ont pas pu
+    # etre executes. C est le comportement correct, et il ne doit pas passer
+    # pour un echec de cette suite.
+    code_attendu = 0 if avec_crypto else 2
+    if acheve.returncode != code_attendu:
+        ecarts.append(f"code={acheve.returncode} au lieu de {code_attendu}")
+    contexte = "avec cryptography" if avec_crypto else "SANS cryptography"
     if ecarts:
-        noter("FAIL", "corpus, verificateur Python", " ; ".join(ecarts))
+        noter("FAIL", f"corpus, verificateur Python ({contexte})",
+              " ; ".join(ecarts))
     else:
-        noter("PASS", "corpus, verificateur Python",
+        noter("PASS", f"corpus, verificateur Python ({contexte})",
               f"PASS={compte.get('PASS')} AMBIGUOUS={compte.get('AMBIGUOUS')} FAIL=0")
         if "ecarts de CODE sur verdict concordant : 0" not in sortie:
             noter("FAIL", "aucun ecart de code sur verdict concordant",
