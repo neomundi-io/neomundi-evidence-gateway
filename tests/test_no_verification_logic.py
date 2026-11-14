@@ -16,7 +16,9 @@ README et impossible a verifier en le lisant. Trois epreuves ici :
      moteur produit sur le meme artefact. C est l epreuve la plus forte :
      si le gateway calculait quoi que ce soit, cette egalite casserait.
 
-L epreuve C exige le moteur. A et B non.
+L epreuve C exige un moteur -- la surface publique de verification publiee
+dans `verifier/` convient, donc elle ne depend d AUCUN acces prive. A et B
+n exigent rien.
 
 Emploi :
     python tests/test_no_verification_logic.py
@@ -121,21 +123,46 @@ def epreuve_b_vocabulaire() -> None:
                   "aucun litteral PASS/FAIL/NOT TESTED en position de valeur")
 
 
+def _artefact_de_reference(moteur: Path) -> tuple[str, str | None, str] | None:
+    """Rend (archive, corpus, origine) depuis le premier jeu disponible.
+
+    Le dossier `examples/dossier-v1/` vit dans le moteur PRIVE ; le corpus de
+    conformite est PUBLIC. L epreuve C vaut avec l un comme avec l autre : ce
+    qu elle confronte est l EGALITE entre deux chemins d appel, pas la
+    richesse de l artefact.
+    """
+    prive = moteur / "examples" / "dossier-v1"
+    if (prive / "NEOMUNDI_EVIDENCE_V1_DEMO.zip").is_file():
+        return ("examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip",
+                "examples/dossier-v1/corpus",
+                "dossier de demonstration prive")
+    public = ("conformance/fixtures/A-valid/A-05-archive-valid/archive.zip")
+    if (moteur / public).is_file():
+        return (public, None, "corpus public de conformite")
+    return None
+
+
 def epreuve_c_egalite(moteur: Path) -> None:
-    dossier = moteur / "examples" / "dossier-v1"
-    archive = dossier / "NEOMUNDI_EVIDENCE_V1_DEMO.zip"
-    corpus = dossier / "corpus"
-    if not archive.is_file():
+    jeu = _artefact_de_reference(moteur)
+    if jeu is None:
         noter("NOT TESTED", "C : le verdict est celui d un appel direct au moteur",
-              "le moteur declare ne porte pas examples/dossier-v1")
+              "le moteur declare ne porte ni examples/dossier-v1 ni le corpus "
+              "de conformite")
         return
+    archive, corpus, origine = jeu
+
+    # Le mode strict n est pose que si un corpus d entrees rejouees existe :
+    # sinon le code de sortie serait 2 des deux cotes, ce qui ne changerait
+    # rien a l egalite mais rendrait l epreuve moins lisible.
+    arguments = [str(moteur / archive)]
+    if corpus:
+        arguments += ["--corpus", str(moteur / corpus), "--strict"]
+    arguments += ["--lang", "fr"]
 
     with tempfile.TemporaryDirectory(prefix="nm-gw-direct-") as temporaire:
         direct = Path(temporaire) / "direct.json"
         acheve = subprocess.run(  # noqa: S603
-            [engine.interpreteur(), "verify.py", str(archive),
-             "--corpus", str(corpus), "--strict", "--lang", "fr",
-             "--json", str(direct)],
+            [engine.interpreteur(), "verify.py", *arguments, "--json", str(direct)],
             cwd=str(moteur), capture_output=True,
         )
         if not direct.is_file():
@@ -148,9 +175,9 @@ def epreuve_c_egalite(moteur: Path) -> None:
     requete = {
         "schema": gateway.CONTRAT_REQUETE,
         "operation": "verify",
-        "artifact": {"name": "demo", "path": "examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip"},
-        "inputs": {"corpus": "examples/dossier-v1/corpus"},
-        "options": {"strict": True, "language": "fr"},
+        "artifact": {"name": "reference", "path": archive},
+        "inputs": {"corpus": corpus} if corpus else {},
+        "options": {"strict": bool(corpus), "language": "fr"},
     }
     reponse = gateway.traiter(requete, moteur, str(moteur))
     verdict = reponse.get("verdict") or {}
@@ -183,8 +210,8 @@ def epreuve_c_egalite(moteur: Path) -> None:
               " ; ".join(ecarts))
     else:
         noter("PASS", "C : le verdict est celui d un appel direct au moteur",
-              f"{len(lignes_moteur)} ligne(s) de controle identiques, "
-              f"comptes identiques, code {code_direct} identique")
+              f"{len(lignes_moteur)} ligne(s) de controle identiques, comptes "
+              f"identiques, code {code_direct} identique ({origine})")
 
 
 def main() -> int:
@@ -195,7 +222,8 @@ def main() -> int:
     moteur = engine.racine_du_moteur(None)
     if moteur is None or not (moteur / "verify.py").is_file():
         noter("NOT TESTED", "C : le verdict est celui d un appel direct au moteur",
-              f"aucun moteur atteignable : poser {engine.VAR_MOTEUR}")
+              f"aucun moteur atteignable : poser {engine.VAR_MOTEUR} -- la "
+              "surface publique de verification convient (verifier/)")
     else:
         epreuve_c_egalite(moteur)
 

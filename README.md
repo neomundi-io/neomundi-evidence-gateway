@@ -123,15 +123,16 @@ engine's [`docs/INTEGRATION.md`](https://github.com/neomundi-io/neomundi-evidenc
 ## The public record
 
 The engine is a private repository. What a third party needs in order to
-trace, cite or confront the work is published **here**, and does not depend
-on access to it:
+**verify**, trace, cite or confront the work is published **here**, and does
+not depend on access to it:
 
 | | |
 |---|---|
 | [`trust/trust-store.json`](trust/trust-store.json) | the **public trust store**, byte for byte, `sha256 dac94e8a…` — the artifact, not only its digest. [Notice](trust/README.md) |
 | [`references/REVIEWS.md`](references/REVIEWS.md) | the three **independent reviews**: what each reviewer did, each review's limits, and the exact engine PR, merge commit and date |
 | [`references/VERIFICATION_RESULTS.md`](references/VERIFICATION_RESULTS.md) | what was **measured**, against which revision, with which digest — and which digests have no reachable artifact |
-| [`references/LIMITS.md`](references/LIMITS.md) | the **known limits**, including the one the separation creates: outside the engine, nobody can re-run a verification |
+| [`verifier/`](verifier) | 🟢 the **public verification surface** — specification, frozen conformance corpus, Python verifiers and two independent Rust verifiers. 227 files, standard library only. [Notice](verifier/README.md) |
+| [`references/LIMITS.md`](references/LIMITS.md) | the **known limits** — what a verification still does not establish, and what independence does and does not mean here |
 
 ## Maturity — read this before quoting anything
 
@@ -162,8 +163,14 @@ or 3.10. `jsonschema` is optional and
 used by the suites to validate the envelopes against the published contracts;
 without it that control reports `NOT TESTED`, never `PASS`.
 
-The engine is **not** vendored, copied or redistributed here. It is located at
-run time, by configuration. That is what lets it be private.
+The engine that **produces and signs** is not vendored here: it is located at
+run time, by configuration, and that is what lets it stay private. The engine
+that **verifies** is published, in [`verifier/`](verifier) — so point the
+gateway at it and nothing else is needed:
+
+```sh
+EVIDENCE_ENGINE_HOME="$PWD/verifier" python gateway.py   verify verifier/conformance/fixtures/A-valid/A-05-archive-valid/archive.zip   --artifact-root "$PWD/verifier"
+```
 
 ## Rights
 

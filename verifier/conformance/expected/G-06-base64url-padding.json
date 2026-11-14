@@ -1,0 +1,57 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Un segment du JWS porte un bourrage `=`, que la RFC 7515 §2 interdit.",
+  "expected": {
+    "ambiguous": true,
+    "note": "Troisieme ambiguite de la meme famille. NON arbitree. Les deux REFUSENT, et le comportement est desormais fige par verificateur -- il ne l etait pas en 1.1.0.",
+    "python": {
+      "exit_code": 1,
+      "verdict": "REJETE"
+    },
+    "rust-crypto": {
+      "exit_code": 1,
+      "verdict": "REJETE"
+    }
+  },
+  "expected_by_verifier": {},
+  "family": "G-ambiguous",
+  "files": [
+    {
+      "bytes": 20237,
+      "path": "fixtures/G-ambiguous/G-06-base64url-padding/archive.zip",
+      "sha256": "e31e12bb7e32c7a33db1ecacc8c38cd18225fa10618c7e1aa5d6f9540f2ad7d6"
+    },
+    {
+      "bytes": 2211,
+      "path": "fixtures/G-ambiguous/G-06-base64url-padding/attestation.jws",
+      "sha256": "cc88fb22938e18010b55ebbcb34124055dc08c4ca4f903583e2e05e5a08eabdd"
+    },
+    {
+      "bytes": 2815,
+      "path": "fixtures/G-ambiguous/G-06-base64url-padding/trust-store.json",
+      "sha256": "6e6534544d85cf8e6ef83b6a176869e9d1ab03fb55895966659a1bc9d76df41c"
+    }
+  ],
+  "id": "G-06-base64url-padding",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [
+    "--allow-test-keys"
+  ],
+  "provenance": "DERIVE de examples/dossier-v1/, deja public dans ce depot et declare << aucune donnee reelle >>. Aucun dossier de pilote n intervient.",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "RFC 7515 §2 ; COMPLETUDE_RUST_EVIDENCE/03 §8",
+    "statut": "AMBIGUOUS",
+    "texte": "La RFC impose base64url SANS bourrage. `base64` de Python le tolere. Consequence : une attestation a PLUSIEURS serialisations acceptees d un cote et une seule de l autre."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "attestation"
+}

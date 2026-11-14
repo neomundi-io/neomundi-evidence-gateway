@@ -1,0 +1,51 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "L attestation porte sur une AUTRE archive que celle fournie.",
+  "expected": {
+    "attested_level": null,
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "D-tampered",
+  "files": [
+    {
+      "bytes": 142,
+      "path": "fixtures/D-tampered/D-09-attestation-replaced-by-other/archive.zip",
+      "sha256": "9346f5cdb19930bebc3580c626589d8df6600a5e1a68770af8bdd12ea87b033e"
+    },
+    {
+      "bytes": 2211,
+      "path": "fixtures/D-tampered/D-09-attestation-replaced-by-other/attestation.jws",
+      "sha256": "d533518f4413d75e7ea58923d21bfe6c168eba2f1cc6703dc12353abceda3493"
+    },
+    {
+      "bytes": 2815,
+      "path": "fixtures/D-tampered/D-09-attestation-replaced-by-other/trust-store.json",
+      "sha256": "6e6534544d85cf8e6ef83b6a176869e9d1ab03fb55895966659a1bc9d76df41c"
+    }
+  ],
+  "id": "D-09-attestation-replaced-by-other",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [
+    "--allow-test-keys"
+  ],
+  "provenance": "DERIVE de examples/dossier-v1/, deja public dans ce depot et declare << aucune donnee reelle >>. Aucun dossier de pilote n intervient.",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "verify_attestation.py -- pilier `concordance`",
+    "statut": "NORMATIVE",
+    "texte": "La concordance confronte `bundle_sha256`, `manifest_sha256` et `checksums_sha256` aux octets de l archive tenue."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "attestation"
+}

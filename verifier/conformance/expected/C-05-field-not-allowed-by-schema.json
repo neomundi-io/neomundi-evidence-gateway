@@ -1,0 +1,51 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Un champ en SURPLUS dans `pilot`, que `additionalProperties: false` interdit.",
+  "expected": {
+    "ambiguous": true,
+    "note": "Le schema impose un refus ; l implementation de reference nomme et poursuit. Les deux lectures sont defendables, et aucune n est imposee par ce corpus.",
+    "python": {
+      "exit_code": 0,
+      "verdict": "ACCEPTE"
+    }
+  },
+  "expected_by_verifier": {},
+  "family": "C-malformed",
+  "files": [
+    {
+      "bytes": 823,
+      "path": "fixtures/C-malformed/C-05-field-not-allowed-by-schema/submission.json",
+      "sha256": "b1376a776ad343076e5fc28e1c345ed1a3c73228ca558d12538dc366a833224a"
+    },
+    {
+      "bytes": 3,
+      "path": "fixtures/C-malformed/C-05-field-not-allowed-by-schema/artefacts/prompt.txt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    },
+    {
+      "bytes": 11,
+      "path": "fixtures/C-malformed/C-05-field-not-allowed-by-schema/artefacts/reponse.txt",
+      "sha256": "740c8a152af2c0077d66598619eec8c3570f6f95bbc7acbb2020ae3d53f8092e"
+    }
+  ],
+  "id": "C-05-field-not-allowed-by-schema",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "schemas/evidence-submission-v2.json#/properties/pilot/additionalProperties",
+    "statut": "AMBIGUOUS",
+    "texte": "Le schema publie `additionalProperties: false`. `adapters/ingest.py` a tranche autrement : il NOMME le champ en surplus en NOT TESTED plutot que de refuser, pour ne pas rompre un paquet que le contrat precedent acceptait. La divergence est ASSUMEE et documentee dans le code. Un corpus de conformite ne peut donc pas imposer un verdict unique."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

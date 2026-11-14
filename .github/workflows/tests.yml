@@ -8,10 +8,15 @@
 #   Il reste vert quand le moteur est prive, parce qu il ne lui demande rien.
 #
 #   « confrontation au moteur (si atteignable) » tente de recuperer le
-#   moteur. S il n est pas atteignable -- et il ne le sera plus une fois
-#   prive -- le job NE MENT PAS : il imprime ce qui n a pas ete eprouve et
-#   s arrete la. Un job qui se contenterait de passer laisserait croire que
-#   les cas 1 a 3 ont tourne.
+#   moteur PRIVE. Il n est plus atteignable en anonyme depuis le 14/11, donc
+#   le job NE MENT PAS : il imprime ce qui n a pas ete eprouve et s arrete
+#   la. Un job qui se contenterait de passer laisserait croire que la
+#   confrontation a eu lieu.
+#
+#   ⚠ Depuis la publication de `verifier/`, les cas 1 a 3 et l epreuve C
+#   tournent dans le job OBLIGATOIRE, sur la surface publique. Ce second job
+#   ne vaut plus que pour une chose : confronter le gateway au moteur
+#   PRIVE lui-meme, quand l executant y a acces.
 
 name: tests
 
@@ -42,11 +47,20 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Installer jsonschema
-        # OPTIONNELLE pour le produit, employee par les suites pour valider
-        # les enveloppes contre les contrats publies. Sans elle le controle
-        # rend NOT TESTED -- jamais PASS.
-        run: python -m pip install --disable-pip-version-check --quiet jsonschema
+      - name: Installer jsonschema et cryptography
+        # Les DEUX sont optionnelles pour le produit.
+        #
+        #   `jsonschema` sert aux suites a valider les enveloppes contre les
+        #   contrats publies. Sans elle, le controle rend NOT TESTED.
+        #
+        #   `cryptography` est ce dont le corpus a besoin pour ses 9 cas
+        #   d attestation. Sans elle le banc rend 33 PASS / 8 AMBIGUOUS et
+        #   sort en 2 : neuf cas deviennent ineprouvables. On l installe donc
+        #   pour que la mesure ANNONCEE (40/10) ait reellement lieu -- et
+        #   `tests/test_corpus_public.py` sait distinguer les deux cas, de
+        #   sorte qu une absence soit NOMMEE et non prise pour une regression.
+        run: |
+          python -m pip install --disable-pip-version-check --quiet             jsonschema cryptography
 
       - name: Les contrats sont du JSON valide, et fermes
         run: |
@@ -93,6 +107,9 @@ jobs:
       - name: Le magasin de confiance publie porte bien l empreinte annoncee
         run: python tests/test_trust_store.py
 
+      - name: Le corpus public de conformite est celui que nous annoncons
+        run: python tests/test_corpus_public.py
+
       - name: Cas 4 et 5 -- aucune verification n a lieu, et le code le dit
         run: python tests/test_gateway.py
 
@@ -102,22 +119,46 @@ jobs:
       - name: La demonstration joue ses deux scenarios sans moteur
         run: sh demo/demo.sh --no-engine
 
+      - name: Les CINQ scenarios, sur la surface publique de verification
+        # C est ce que la publication de `verifier/` rend possible : les cas
+        # 1 a 3 et l epreuve C tournent ici SANS aucun acces prive. Avant,
+        # ils rendaient NOT TESTED dans ce job.
+        env:
+          EVIDENCE_ENGINE_HOME: ${{ github.workspace }}/verifier
+        run: |
+          python tests/test_gateway.py
+          python tests/test_no_verification_logic.py
+          sh demo/demo.sh
+
+      - name: Le corpus public se joue avec le verificateur Python
+        working-directory: verifier/conformance
+        run: |
+          python runners/run.py --verifier python
+
       - name: Aucun CRLF dans les sources suivies
         run: |
           python - <<'PY'
           import pathlib, subprocess, sys
           suivis = subprocess.run(["git", "ls-files"], capture_output=True, text=True,
                                   check=True).stdout.split()
+          # Les fixtures du corpus sont des ZIP, des JWS et des OTS : un
+          # CRLF y est un octet compresse, pas une fin de ligne. Les
+          # confronter rendrait un faux positif sur 14 fichiers.
+          BINAIRES = (".zip", ".jws", ".ots", ".bin", ".lock")
           fautifs = []
+          ignores = 0
           for nom in suivis:
               chemin = pathlib.Path(nom)
               if not chemin.is_file():
+                  continue
+              if chemin.suffix.lower() in BINAIRES:
+                  ignores += 1
                   continue
               if chemin.read_bytes().count(b"\r\n"):
                   fautifs.append(nom)
           for nom in fautifs:
               print(f"FAIL {nom} : porte des CRLF")
-          print(f"{len(suivis)} fichier(s) suivi(s) confronte(s)")
+          print(f"{len(suivis)} fichier(s) suivi(s), {ignores} binaire(s) ecarte(s)")
           sys.exit(1 if fautifs else 0)
           PY
 
@@ -173,11 +214,13 @@ jobs:
       - name: CE QUI N A PAS ETE EPROUVE
         if: steps.moteur.outputs.disponible != 'true'
         run: |
-          echo "NOT TESTED -- le moteur Evidence n a pas pu etre recupere sans"
-          echo "autorisation. Les cas 1 a 3 (artefact valide, artefact altere,"
-          echo "artefact non verifiable) et l epreuve C (egalite avec un appel"
-          echo "direct au moteur) N ONT PAS TOURNE dans cette execution."
+          echo "NOT TESTED -- le moteur PRIVE n a pas pu etre recupere sans"
+          echo "autorisation, et c est le resultat attendu depuis le 14/11."
           echo ""
-          echo "Ce job est vert parce qu il n a rien a reprocher au gateway, et"
-          echo "NON parce que ces cas sont passes. Pour les eprouver, lancer"
-          echo "les suites avec EVIDENCE_ENGINE_HOME pose sur un moteur local."
+          echo "Ce qui N A PAS ete eprouve ici : la confrontation du gateway au"
+          echo "moteur PRIVE lui-meme. Ce job est vert parce qu il n a rien a"
+          echo "reprocher au gateway, NON parce que cette confrontation a eu lieu."
+          echo ""
+          echo "En revanche les cas 1 a 3, l epreuve C et les cinq scenarios ONT"
+          echo "tourne dans le job « contrat du gateway », sur la surface"
+          echo "publique de verification -- voir verifier/README.md."

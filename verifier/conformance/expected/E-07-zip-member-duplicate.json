@@ -1,0 +1,38 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Un ZIP portant DEUX membres de meme nom.",
+  "expected": {
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "E-paths",
+  "files": [
+    {
+      "bytes": 1316,
+      "path": "fixtures/E-paths/E-07-zip-member-duplicate/paquet.zip",
+      "sha256": "86cb2bbabaa9878a8abe948aa67d5fef5df9e9aca17b86d31220a27fd9dcaa15"
+    }
+  ],
+  "id": "E-07-zip-member-duplicate",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "APPNOTE ZIP",
+    "statut": "NORMATIVE",
+    "texte": "Deux membres de meme nom rendent l archive ambigue : un lecteur prendrait le premier, un autre le dernier, et les deux condenseraient des octets differents sous le meme chemin declare."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

@@ -1,0 +1,33 @@
+# evidence-verify-rs -- second verificateur independant de NeoMundi Evidence.
+#
+# AUCUNE DEPENDANCE. La section [dependencies] est vide, et c est une
+# propriete du produit, pas une economie :
+#
+#   un verificateur independant doit pouvoir etre LU de bout en bout avant
+#   d etre execute. C est la condition d une verification independante, et
+#   c est deja la discipline du verificateur Python de ce depot
+#   (bibliotheque standard seule). Une chaine de dependances transitives
+#   deplacerait la confiance vers des tiers que l auditeur n a pas choisis.
+#
+# Consequence assumee : SHA-256, l analyse JSON, la lecture ZIP et
+# l inflation DEFLATE sont ecrites ici. Chacune est eprouvee contre des
+# vecteurs publies -- voir `tests/`.
+[package]
+name = "evidence-verify-rs"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+description = "Second verificateur independant d un paquet de soumission NeoMundi Evidence"
+license = "Apache-2.0"
+publish = false
+
+[dependencies]
+# Volontairement vide. Voir l en-tete.
+
+[profile.release]
+# Pour une empreinte de binaire stable et comparable.
+opt-level = 2
+debug = false
+strip = true
+panic = "abort"
+codegen-units = 1

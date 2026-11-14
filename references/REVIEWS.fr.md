@@ -110,14 +110,25 @@ le 2026-11-14.
 
 ## Un relecteur externe — corpus de conformité et mode strict
 
-🟡 **Ce relecteur n'est délibérément pas nommé sur cette page.** Un
-remerciement nominatif de son travail a été rédigé dans la pull request
-**#40** du moteur, qui porte une barrière de publication explicite — *« DO
-NOT MERGE without the reviewer's approval of their name and exact wording »*
-— et qui **reste ouverte et non fusionnée**. Présenter comme approuvée une
-attribution en attente serait précisément ce que cette page ne doit pas
-faire. La place est réservée ; le nom sera ajouté quand, et seulement quand,
-cet accord existera.
+🟡 **Aucun remerciement nominatif n'est fait sur cette page**, et c'est
+délibéré. Un tel remerciement a été rédigé dans la pull request **#40** du
+moteur, qui porte une barrière de publication explicite — *« DO NOT MERGE
+without the reviewer's approval of their name and exact wording »* — et qui
+**reste ouverte et non fusionnée**. Présenter comme approuvée une attribution
+en attente serait précisément ce que cette page ne doit pas faire. La place
+est réservée ; le remerciement sera fait quand, et seulement quand, cet
+accord existera.
+
+⚠ **Une distinction, énoncée plutôt que laissée à découvrir.** Le relecteur
+**est** nommé dans [`../verifier/conformance/CHANGELOG.md`](../verifier/conformance/CHANGELOG.md)
+et dans deux commentaires de `../verifier/conformance/runners/run.py`, comme
+**rapporteur** des observations ci-dessous — exactement comme le moteur l'a
+consigné lors de la fusion du 13 novembre. Publier le corpus de conformité a
+emporté ce compte rendu avec lui, verbatim. Retirer un crédit de rapporteur
+pour pouvoir republier un corpus gelé aurait été pire que le conserver : cela
+aurait édité un compte rendu daté et dépouillé une attribution. Le compte
+rendu subsiste donc, et le *remerciement* reste en attente. Ce sont deux
+choses différentes, et cette page ne les confond pas.
 
 **Périmètre examiné.** Une vérification indépendante du dépôt du moteur alors
 public, menée le **13 novembre 2026**.

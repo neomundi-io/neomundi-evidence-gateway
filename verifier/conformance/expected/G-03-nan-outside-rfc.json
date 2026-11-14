@@ -1,0 +1,55 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "`NaN` dans un champ hors contrat : la RFC 8259 ne le definit pas.",
+  "expected": {
+    "ambiguous": true,
+    "note": "Meme famille que G-01. A trancher avec elle, pas separement.",
+    "python": {
+      "exit_code": 0,
+      "verdict": "ACCEPTE"
+    },
+    "rust-core": {
+      "exit_code": 1,
+      "verdict": "REJETE"
+    }
+  },
+  "expected_by_verifier": {},
+  "family": "G-ambiguous",
+  "files": [
+    {
+      "bytes": 837,
+      "path": "fixtures/G-ambiguous/G-03-nan-outside-rfc/submission.json",
+      "sha256": "b4872484c91a3cfb029ffd00cbdc3cb110a6b12a6ce88a5c2760f7c127170241"
+    },
+    {
+      "bytes": 3,
+      "path": "fixtures/G-ambiguous/G-03-nan-outside-rfc/artefacts/prompt.txt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    },
+    {
+      "bytes": 11,
+      "path": "fixtures/G-ambiguous/G-03-nan-outside-rfc/artefacts/reponse.txt",
+      "sha256": "740c8a152af2c0077d66598619eec8c3570f6f95bbc7acbb2020ae3d53f8092e"
+    }
+  ],
+  "id": "G-03-nan-outside-rfc",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "RFC 8259 §6 ; COMPLETUDE_RUST_EVIDENCE/08 §4",
+    "statut": "AMBIGUOUS",
+    "texte": "La grammaire des nombres de la RFC n a ni `NaN` ni `Infinity`. `json` de Python les accepte comme extension ; un analyseur strict les refuse. Les contrats Evidence n en disent rien."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

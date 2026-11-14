@@ -1,0 +1,51 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Le magasin porte une AUTRE clef publique sous le meme `kid`.",
+  "expected": {
+    "attested_level": null,
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "D-tampered",
+  "files": [
+    {
+      "bytes": 20237,
+      "path": "fixtures/D-tampered/D-08-attestation-wrong-key/archive.zip",
+      "sha256": "e31e12bb7e32c7a33db1ecacc8c38cd18225fa10618c7e1aa5d6f9540f2ad7d6"
+    },
+    {
+      "bytes": 2211,
+      "path": "fixtures/D-tampered/D-08-attestation-wrong-key/attestation.jws",
+      "sha256": "d533518f4413d75e7ea58923d21bfe6c168eba2f1cc6703dc12353abceda3493"
+    },
+    {
+      "bytes": 2815,
+      "path": "fixtures/D-tampered/D-08-attestation-wrong-key/trust-store.json",
+      "sha256": "ce8dfa0b9541d4dfebf4ad321d0ef907e0c67930719ef7f873206ccc03915738"
+    }
+  ],
+  "id": "D-08-attestation-wrong-key",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [
+    "--allow-test-keys"
+  ],
+  "provenance": "DERIVE de examples/dossier-v1/, deja public dans ce depot et declare << aucune donnee reelle >>. Aucun dossier de pilote n intervient.",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "RFC 8032",
+    "statut": "NORMATIVE",
+    "texte": "Une clef substituee ne verifie pas la signature. La substitution est obtenue en alterant le MAGASIN, qui ne contient que du public : aucune clef privee n est embarquee dans ce corpus."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "attestation"
+}

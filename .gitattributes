@@ -8,3 +8,12 @@
 # normaliser : `text=auto` reecrirait ses fins de ligne et changerait son
 # sha256, donc la preuve. `-text` le soustrait a toute conversion.
 trust/trust-store.json -text
+
+# Le corpus public de conformite est couvert par `SHA256SUMS`, et son propre
+# `SHA256SUMS` a une empreinte publiee. `text=auto` reecrirait les fins de
+# ligne de ses 172 fichiers couverts et casserait la verification. `-text`
+# soustrait tout l arbre a la conversion -- fixtures, attendus, manifeste et
+# sommes.
+verifier/conformance/** -text
+*.jws binary
+*.ots binary

@@ -126,16 +126,17 @@ du moteur.
 
 ## Le dossier public
 
-Le moteur est un dépôt privé. Ce dont un tiers a besoin pour tracer, citer ou
-confronter le travail est publié **ici**, et ne dépend pas de l'accès à
-celui-ci :
+Le moteur est un dépôt privé. Ce dont un tiers a besoin pour **vérifier**,
+tracer, citer ou confronter le travail est publié **ici**, et ne dépend pas de
+l'accès à celui-ci :
 
 | | |
 |---|---|
 | [`trust/trust-store.json`](trust/trust-store.json) | le **magasin de confiance public**, à l'octet, `sha256 dac94e8a…` — l'artefact, pas seulement son empreinte. [Notice](trust/README.fr.md) |
 | [`references/REVIEWS.fr.md`](references/REVIEWS.fr.md) | les trois **revues indépendantes** : ce que chaque relecteur a fait, les limites de chaque revue, et la PR du moteur, son commit de fusion et sa date |
 | [`references/VERIFICATION_RESULTS.fr.md`](references/VERIFICATION_RESULTS.fr.md) | ce qui a été **mesuré**, contre quelle révision, avec quelle empreinte — et quelles empreintes n'ont aucun artefact atteignable |
-| [`references/LIMITS.fr.md`](references/LIMITS.fr.md) | les **limites connues**, dont celle que crée la séparation : hors du moteur, personne ne peut rejouer une vérification |
+| [`verifier/`](verifier) | 🟢 la **surface publique de vérification** — spécification, corpus de conformité gelé, vérificateurs Python et deux vérificateurs Rust indépendants. 227 fichiers, bibliothèque standard seule. [Notice](verifier/README.fr.md) |
+| [`references/LIMITS.fr.md`](references/LIMITS.fr.md) | les **limites connues** — ce qu'une vérification n'établit toujours pas, et ce que l'indépendance veut dire ici, ou ne veut pas dire |
 
 ## Maturité — à lire avant de citer quoi que ce soit
 
@@ -169,8 +170,14 @@ runners Ubuntu 26.04 n'offrent plus 3.9 ni 3.10. `jsonschema` est
 optionnelle et sert aux suites à valider les enveloppes contre les contrats
 publiés ; sans elle, ce contrôle rend `NOT TESTED`, jamais `PASS`.
 
-Le moteur n'est **ni embarqué, ni copié, ni redistribué** ici. Il est localisé
-à l'exécution, par configuration. C'est ce qui lui permet d'être privé.
+Le moteur qui **produit et signe** n'est pas embarqué ici : il est localisé à
+l'exécution, par configuration, et c'est ce qui lui permet de rester privé. Le
+moteur qui **vérifie** est publié, dans [`verifier/`](verifier) — il suffit
+donc d'y pointer le gateway :
+
+```sh
+EVIDENCE_ENGINE_HOME="$PWD/verifier" python gateway.py   verify verifier/conformance/fixtures/A-valid/A-05-archive-valid/archive.zip   --artifact-root "$PWD/verifier"
+```
 
 ## Droits
 

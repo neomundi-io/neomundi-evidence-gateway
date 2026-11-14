@@ -72,7 +72,23 @@ is worth stating plainly:
 The gateway's own configuration is unaffected: a private checkout at
 `EVIDENCE_ENGINE_HOME` works exactly like a public one.
 
-## Half the contract can be tested without the engine
+## The simplest engine: the one published next door
+
+Since 14 November 2026 this repository also publishes the **verification**
+part of the engine, in [`../verifier/`](../verifier). It satisfies every
+requirement in the table above, so it can be used as the engine directly:
+
+```sh
+export EVIDENCE_ENGINE_HOME="$PWD/verifier"
+python gateway.py engine          # available: true, conformance corpus 1.3.0
+```
+
+Measured on 2026-11-14 with the gateway pointed there instead of the private
+engine: the five scenarios return **0 / 1 / 2 / 4 / 3**, using corpus
+fixtures as artefacts. What stays private is what *produces and signs* — no
+configuration brings that part back.
+
+## Half the contract can be tested without any engine
 
 The two states that say *no verification took place* — `rejected` and
 `engine_unavailable` — need no engine at all:

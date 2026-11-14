@@ -1,0 +1,38 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Un fichier `.zip` qui n est pas une archive.",
+  "expected": {
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "C-malformed",
+  "files": [
+    {
+      "bytes": 2048,
+      "path": "fixtures/C-malformed/C-06-not-a-zip/paquet.zip",
+      "sha256": "e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad"
+    }
+  ],
+  "id": "C-06-not-a-zip",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "APPNOTE ZIP §4.3.16",
+    "statut": "NORMATIVE",
+    "texte": "Sans fin de repertoire central, il n y a pas d archive."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

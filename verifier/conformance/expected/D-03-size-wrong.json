@@ -1,0 +1,43 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "La TAILLE declaree est fausse, l empreinte est juste.",
+  "expected": {
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "D-tampered",
+  "files": [
+    {
+      "bytes": 630,
+      "path": "fixtures/D-tampered/D-03-size-wrong/submission.json",
+      "sha256": "8f2111c3d0bc58d62e2932333298e01e8ffcd11a29e8ebab975f28776f402664"
+    },
+    {
+      "bytes": 3,
+      "path": "fixtures/D-tampered/D-03-size-wrong/artefacts/prompt.txt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    }
+  ],
+  "id": "D-03-size-wrong",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "schemas/evidence-submission-v2.json#/properties/artifacts/items/properties/bytes",
+    "statut": "NORMATIVE",
+    "texte": "La taille est elle aussi recalculee. Deux controles independants valent mieux qu un."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

@@ -105,13 +105,24 @@ on 2026-11-14.
 
 ## An external reviewer — conformance corpus and strict mode
 
-🟡 **This reviewer is deliberately not named on this page.** A named
-acknowledgment of their work was drafted in engine pull request **#40**,
-which carries an explicit publication gate — *"DO NOT MERGE without the
-reviewer's approval of their name and exact wording"* — and which **remains
-open and unmerged**. Presenting an attribution that is pending as though it
-were approved would be the one thing this page must not do. The slot is
-reserved; the name will be added when, and only when, that approval exists.
+🟡 **No named acknowledgment is made on this page**, and that is deliberate.
+One was drafted in engine pull request **#40**, which carries an explicit
+publication gate — *"DO NOT MERGE without the reviewer's approval of their
+name and exact wording"* — and which **remains open and unmerged**.
+Presenting a pending attribution as approved would be the one thing this page
+must not do. The slot is reserved; the acknowledgment will be made when, and
+only when, that approval exists.
+
+⚠ **One distinction, stated rather than left to be noticed.** The reviewer
+**is** named in [`../verifier/conformance/CHANGELOG.md`](../verifier/conformance/CHANGELOG.md)
+and in two comments of `../verifier/conformance/runners/run.py`, as the
+**reporter** of the observations below — exactly as the engine recorded it
+when those changes were merged on 13 November. Publishing the conformance
+corpus brought that record with it, verbatim. Removing a reporter credit in
+order to republish a frozen corpus would have been worse than keeping it: it
+would have edited a dated record and stripped an attribution. So the record
+stands, and the *acknowledgment* stays pending. Those are two different
+things, and this page does not merge them.
 
 **Scope reviewed.** An independent verification of the then-public engine
 repository, carried out on **13 November 2026**.

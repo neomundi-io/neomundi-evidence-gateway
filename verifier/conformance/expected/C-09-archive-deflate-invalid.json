@@ -1,0 +1,38 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Un membre annonce la methode 8 (deflate) et porte un flux invalide.",
+  "expected": {
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "C-malformed",
+  "files": [
+    {
+      "bytes": 19781,
+      "path": "fixtures/C-malformed/C-09-archive-deflate-invalid/archive.zip",
+      "sha256": "b44de102c6f1c5ac08e2c6ae6296ede258ce2897ea8798994bc915ebd500e353"
+    }
+  ],
+  "id": "C-09-archive-deflate-invalid",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "DERIVE de examples/dossier-v1/, deja public dans ce depot et declare << aucune donnee reelle >>. Aucun dossier de pilote n intervient.",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "RFC 1951",
+    "statut": "NORMATIVE",
+    "texte": "Un flux DEFLATE dont les arbres de Huffman sont invalides doit etre refuse, non decode au mieux."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "archive"
+}

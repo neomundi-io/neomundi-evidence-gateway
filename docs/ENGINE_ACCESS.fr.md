@@ -73,7 +73,23 @@ d'être dit en clair :
 La configuration propre au gateway n'est pas touchée : un clone privé en
 `EVIDENCE_ENGINE_HOME` fonctionne exactement comme un clone public.
 
-## La moitié du contrat s'éprouve sans le moteur
+## Le moteur le plus simple : celui publié à côté
+
+Depuis le 14 novembre 2026, ce dépôt publie aussi la part **vérification** du
+moteur, dans [`../verifier/`](../verifier). Elle satisfait chaque exigence du
+tableau ci-dessus : elle peut donc servir de moteur directement.
+
+```sh
+export EVIDENCE_ENGINE_HOME="$PWD/verifier"
+python gateway.py engine          # disponible : true, corpus de conformite 1.3.0
+```
+
+Mesuré le 2026-11-14, gateway pointé là plutôt que sur le moteur privé : les
+cinq scénarios rendent **0 / 1 / 2 / 4 / 3**, avec des fixtures du corpus
+comme artefacts. Ce qui reste privé est ce qui *produit et signe* — aucune
+configuration ne ramène cette part.
+
+## La moitié du contrat s'éprouve sans aucun moteur
 
 Les deux états qui disent *aucune vérification n'a eu lieu* — `rejected` et
 `engine_unavailable` — n'exigent aucun moteur :

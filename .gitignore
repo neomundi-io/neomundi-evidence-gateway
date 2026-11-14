@@ -21,9 +21,23 @@ venv/
 *.jws
 *.ots
 
+# EXCEPTION : le corpus public de conformite EST suivi, fixtures comprises.
+# Ses 18 archives `.zip` et ses 9 attestations `.jws` sont des VECTEURS
+# D EPREUVE geles, couverts par `verifier/conformance/SHA256SUMS`. Sans ces
+# trois lignes, 27 fichiers du corpus ne seraient jamais suivis -- et le
+# corpus publie serait silencieusement incomplet.
+!verifier/conformance/**/*.zip
+!verifier/conformance/**/*.jws
+!verifier/conformance/**/*.ots
+
 # EXCEPTION : `trust/trust-store.json` EST suivi, et c est delibere. Il ne
 # porte aucun materiel de cle privee -- seulement le point public `x` d une
 # cle Ed25519 -- et il est la preuve ACCESSIBLE que le second canal ne fait
 # que confirmer. Voir trust/README.md.
-*/trust-store.json
+# `*/trust-store.json` n aurait filtre qu UN niveau : ecrit sans slash, le
+# motif porte a toute profondeur, et les deux exceptions disent ce qui est
+# legitimement publie -- le magasin public, et les 9 magasins de FIXTURE du
+# corpus gele.
+trust-store.json
 !trust/trust-store.json
+!verifier/conformance/**/trust-store.json

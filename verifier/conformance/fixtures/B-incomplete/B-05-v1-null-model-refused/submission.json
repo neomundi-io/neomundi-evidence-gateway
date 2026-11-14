@@ -1,0 +1,26 @@
+{
+  "artifacts": [
+    {
+      "bytes": 3,
+      "path": "artefacts/prompt.txt",
+      "role": "prompt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    },
+    {
+      "bytes": 11,
+      "path": "artefacts/reponse.txt",
+      "role": "response",
+      "sha256": "740c8a152af2c0077d66598619eec8c3570f6f95bbc7acbb2020ae3d53f8092e"
+    }
+  ],
+  "execution": {
+    "kind_declared": "replay",
+    "model_declared": null
+  },
+  "pilot": {
+    "name_declared": "Corpus de conformite"
+  },
+  "schema": "neomundi.evidence.submission/1",
+  "submission_id": "conformance-v1-001",
+  "submitted_at_declared": "2026-01-01T00:00:00Z"
+}

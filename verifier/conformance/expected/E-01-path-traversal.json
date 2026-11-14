@@ -1,0 +1,43 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Artefact declare avec un chemin dangereux : remontee `..`.",
+  "expected": {
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "E-paths",
+  "files": [
+    {
+      "bytes": 620,
+      "path": "fixtures/E-paths/E-01-path-traversal/submission.json",
+      "sha256": "0895cfe11ce9526c4dece46db2717b2ad1440e5da2c3703b78e2756cfe56e4dc"
+    },
+    {
+      "bytes": 3,
+      "path": "fixtures/E-paths/E-01-path-traversal/artefacts/prompt.txt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    }
+  ],
+  "id": "E-01-path-traversal",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "schemas/evidence-submission-v2.json#/properties/artifacts/items/properties/path (prose : « un chemin relatif, sans remontee »)",
+    "statut": "NORMATIVE",
+    "texte": "Un chemin qui sort du paquet est refuse AVANT toute lecture. Le contrat l exige en prose ; le MOTIF exact applique par les implementations n est pas publie, et c est AMBIGUITE-1 des rapports precedents."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

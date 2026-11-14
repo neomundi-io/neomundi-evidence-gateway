@@ -1,0 +1,884 @@
+{
+  "cases": [
+    {
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "family": "A-valid",
+      "files": [
+        "fixtures/A-valid/A-01-submission-v1-valid/submission.json",
+        "fixtures/A-valid/A-01-submission-v1-valid/artefacts/prompt.txt",
+        "fixtures/A-valid/A-01-submission-v1-valid/artefacts/reponse.txt"
+      ],
+      "id": "A-01-submission-v1-valid",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "family": "A-valid",
+      "files": [
+        "fixtures/A-valid/A-02-submission-v2-valid/submission.json",
+        "fixtures/A-valid/A-02-submission-v2-valid/artefacts/prompt.txt",
+        "fixtures/A-valid/A-02-submission-v2-valid/artefacts/reponse.txt"
+      ],
+      "id": "A-02-submission-v2-valid",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "family": "A-valid",
+      "files": [
+        "fixtures/A-valid/A-03-submission-v2-zip-valid/paquet.zip"
+      ],
+      "id": "A-03-submission-v2-zip-valid",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "family": "A-valid",
+      "files": [
+        "fixtures/A-valid/A-04-empty-artifact-allowed/submission.json",
+        "fixtures/A-valid/A-04-empty-artifact-allowed/artefacts/vide.bin"
+      ],
+      "id": "A-04-empty-artifact-allowed",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "ACCEPTE"
+      },
+      "family": "A-valid",
+      "files": [
+        "fixtures/A-valid/A-05-archive-valid/archive.zip"
+      ],
+      "id": "A-05-archive-valid",
+      "rule_status": "NORMATIVE",
+      "subject": "archive"
+    },
+    {
+      "expected": {
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "family": "A-valid",
+      "files": [
+        "fixtures/A-valid/A-06-attestation-valid/archive.zip",
+        "fixtures/A-valid/A-06-attestation-valid/attestation.jws",
+        "fixtures/A-valid/A-06-attestation-valid/trust-store.json"
+      ],
+      "id": "A-06-attestation-valid",
+      "rule_status": "NORMATIVE",
+      "subject": "attestation"
+    },
+    {
+      "expected": {
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "ACCEPTE"
+      },
+      "family": "A-valid",
+      "files": [
+        "fixtures/A-valid/A-07-attestation-store-not-confronted/archive.zip",
+        "fixtures/A-valid/A-07-attestation-store-not-confronted/attestation.jws",
+        "fixtures/A-valid/A-07-attestation-store-not-confronted/trust-store.json"
+      ],
+      "id": "A-07-attestation-store-not-confronted",
+      "rule_status": "NORMATIVE",
+      "subject": "attestation"
+    },
+    {
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "INCOMPLET"
+      },
+      "family": "B-incomplete",
+      "files": [
+        "fixtures/B-incomplete/B-01-artifact-file-missing/submission.json",
+        "fixtures/B-incomplete/B-01-artifact-file-missing/artefacts/prompt.txt"
+      ],
+      "id": "B-01-artifact-file-missing",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "B-incomplete",
+      "files": [
+        "fixtures/B-incomplete/B-02-required-field-absent/submission.json",
+        "fixtures/B-incomplete/B-02-required-field-absent/artefacts/prompt.txt",
+        "fixtures/B-incomplete/B-02-required-field-absent/artefacts/reponse.txt"
+      ],
+      "id": "B-02-required-field-absent",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "family": "B-incomplete",
+      "files": [
+        "fixtures/B-incomplete/B-03-v2-null-model-with-reason/submission.json",
+        "fixtures/B-incomplete/B-03-v2-null-model-with-reason/artefacts/prompt.txt",
+        "fixtures/B-incomplete/B-03-v2-null-model-with-reason/artefacts/reponse.txt"
+      ],
+      "id": "B-03-v2-null-model-with-reason",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "B-incomplete",
+      "files": [
+        "fixtures/B-incomplete/B-04-v2-null-model-without-reason/submission.json",
+        "fixtures/B-incomplete/B-04-v2-null-model-without-reason/artefacts/prompt.txt",
+        "fixtures/B-incomplete/B-04-v2-null-model-without-reason/artefacts/reponse.txt"
+      ],
+      "id": "B-04-v2-null-model-without-reason",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "B-incomplete",
+      "files": [
+        "fixtures/B-incomplete/B-05-v1-null-model-refused/submission.json",
+        "fixtures/B-incomplete/B-05-v1-null-model-refused/artefacts/prompt.txt",
+        "fixtures/B-incomplete/B-05-v1-null-model-refused/artefacts/reponse.txt"
+      ],
+      "id": "B-05-v1-null-model-refused",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "family": "B-incomplete",
+      "files": [
+        "fixtures/B-incomplete/B-06-optional-fields-absent/submission.json",
+        "fixtures/B-incomplete/B-06-optional-fields-absent/artefacts/prompt.txt",
+        "fixtures/B-incomplete/B-06-optional-fields-absent/artefacts/reponse.txt"
+      ],
+      "id": "B-06-optional-fields-absent",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "C-malformed",
+      "files": [
+        "fixtures/C-malformed/C-01-invalid-json/submission.json",
+        "fixtures/C-malformed/C-01-invalid-json/artefacts/prompt.txt",
+        "fixtures/C-malformed/C-01-invalid-json/artefacts/reponse.txt"
+      ],
+      "id": "C-01-invalid-json",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "C-malformed",
+      "files": [
+        "fixtures/C-malformed/C-02-invalid-utf8/submission.json",
+        "fixtures/C-malformed/C-02-invalid-utf8/artefacts/prompt.txt",
+        "fixtures/C-malformed/C-02-invalid-utf8/artefacts/reponse.txt"
+      ],
+      "id": "C-02-invalid-utf8",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "C-malformed",
+      "files": [
+        "fixtures/C-malformed/C-03-unexpected-structure/submission.json",
+        "fixtures/C-malformed/C-03-unexpected-structure/artefacts/prompt.txt",
+        "fixtures/C-malformed/C-03-unexpected-structure/artefacts/reponse.txt"
+      ],
+      "id": "C-03-unexpected-structure",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "C-malformed",
+      "files": [
+        "fixtures/C-malformed/C-04-unknown-version/submission.json",
+        "fixtures/C-malformed/C-04-unknown-version/artefacts/prompt.txt",
+        "fixtures/C-malformed/C-04-unknown-version/artefacts/reponse.txt"
+      ],
+      "id": "C-04-unknown-version",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "ambiguous": true,
+        "note": "Le schema impose un refus ; l implementation de reference nomme et poursuit. Les deux lectures sont defendables, et aucune n est imposee par ce corpus.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        }
+      },
+      "family": "C-malformed",
+      "files": [
+        "fixtures/C-malformed/C-05-field-not-allowed-by-schema/submission.json",
+        "fixtures/C-malformed/C-05-field-not-allowed-by-schema/artefacts/prompt.txt",
+        "fixtures/C-malformed/C-05-field-not-allowed-by-schema/artefacts/reponse.txt"
+      ],
+      "id": "C-05-field-not-allowed-by-schema",
+      "rule_status": "AMBIGUOUS",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "C-malformed",
+      "files": [
+        "fixtures/C-malformed/C-06-not-a-zip/paquet.zip"
+      ],
+      "id": "C-06-not-a-zip",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "C-malformed",
+      "files": [
+        "fixtures/C-malformed/C-07-archive-crc-invalid/archive.zip"
+      ],
+      "id": "C-07-archive-crc-invalid",
+      "rule_status": "NORMATIVE",
+      "subject": "archive"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "C-malformed",
+      "files": [
+        "fixtures/C-malformed/C-08-archive-local-header-mismatch/archive.zip"
+      ],
+      "id": "C-08-archive-local-header-mismatch",
+      "rule_status": "NORMATIVE",
+      "subject": "archive"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "C-malformed",
+      "files": [
+        "fixtures/C-malformed/C-09-archive-deflate-invalid/archive.zip"
+      ],
+      "id": "C-09-archive-deflate-invalid",
+      "rule_status": "NORMATIVE",
+      "subject": "archive"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "D-tampered",
+      "files": [
+        "fixtures/D-tampered/D-01-artifact-tampered/submission.json",
+        "fixtures/D-tampered/D-01-artifact-tampered/artefacts/prompt.txt",
+        "fixtures/D-tampered/D-01-artifact-tampered/artefacts/reponse.txt"
+      ],
+      "id": "D-01-artifact-tampered",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "D-tampered",
+      "files": [
+        "fixtures/D-tampered/D-02-manifest-digest-wrong/submission.json",
+        "fixtures/D-tampered/D-02-manifest-digest-wrong/artefacts/prompt.txt"
+      ],
+      "id": "D-02-manifest-digest-wrong",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "D-tampered",
+      "files": [
+        "fixtures/D-tampered/D-03-size-wrong/submission.json",
+        "fixtures/D-tampered/D-03-size-wrong/artefacts/prompt.txt"
+      ],
+      "id": "D-03-size-wrong",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "D-tampered",
+      "files": [
+        "fixtures/D-tampered/D-04-file-substituted/submission.json",
+        "fixtures/D-tampered/D-04-file-substituted/artefacts/prompt.txt",
+        "fixtures/D-tampered/D-04-file-substituted/artefacts/reponse.txt"
+      ],
+      "id": "D-04-file-substituted",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "INCOMPLET"
+      },
+      "family": "D-tampered",
+      "files": [
+        "fixtures/D-tampered/D-05-artifact-removed/submission.json",
+        "fixtures/D-tampered/D-05-artifact-removed/artefacts/reponse.txt"
+      ],
+      "id": "D-05-artifact-removed",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "D-tampered",
+      "files": [
+        "fixtures/D-tampered/D-06-attestation-signature-invalid/archive.zip",
+        "fixtures/D-tampered/D-06-attestation-signature-invalid/attestation.jws",
+        "fixtures/D-tampered/D-06-attestation-signature-invalid/trust-store.json"
+      ],
+      "id": "D-06-attestation-signature-invalid",
+      "rule_status": "NORMATIVE",
+      "subject": "attestation"
+    },
+    {
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "D-tampered",
+      "files": [
+        "fixtures/D-tampered/D-07-attestation-payload-tampered/archive.zip",
+        "fixtures/D-tampered/D-07-attestation-payload-tampered/attestation.jws",
+        "fixtures/D-tampered/D-07-attestation-payload-tampered/trust-store.json"
+      ],
+      "id": "D-07-attestation-payload-tampered",
+      "rule_status": "NORMATIVE",
+      "subject": "attestation"
+    },
+    {
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "D-tampered",
+      "files": [
+        "fixtures/D-tampered/D-08-attestation-wrong-key/archive.zip",
+        "fixtures/D-tampered/D-08-attestation-wrong-key/attestation.jws",
+        "fixtures/D-tampered/D-08-attestation-wrong-key/trust-store.json"
+      ],
+      "id": "D-08-attestation-wrong-key",
+      "rule_status": "NORMATIVE",
+      "subject": "attestation"
+    },
+    {
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "D-tampered",
+      "files": [
+        "fixtures/D-tampered/D-09-attestation-replaced-by-other/archive.zip",
+        "fixtures/D-tampered/D-09-attestation-replaced-by-other/attestation.jws",
+        "fixtures/D-tampered/D-09-attestation-replaced-by-other/trust-store.json"
+      ],
+      "id": "D-09-attestation-replaced-by-other",
+      "rule_status": "NORMATIVE",
+      "subject": "attestation"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "D-tampered",
+      "files": [
+        "fixtures/D-tampered/D-10-archive-member-tampered/archive.zip"
+      ],
+      "id": "D-10-archive-member-tampered",
+      "rule_status": "NORMATIVE",
+      "subject": "archive"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "E-paths",
+      "files": [
+        "fixtures/E-paths/E-01-path-traversal/submission.json",
+        "fixtures/E-paths/E-01-path-traversal/artefacts/prompt.txt"
+      ],
+      "id": "E-01-path-traversal",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "E-paths",
+      "files": [
+        "fixtures/E-paths/E-02-path-absolute-unix/submission.json",
+        "fixtures/E-paths/E-02-path-absolute-unix/artefacts/prompt.txt"
+      ],
+      "id": "E-02-path-absolute-unix",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "E-paths",
+      "files": [
+        "fixtures/E-paths/E-03-path-absolute-windows/submission.json",
+        "fixtures/E-paths/E-03-path-absolute-windows/artefacts/prompt.txt"
+      ],
+      "id": "E-03-path-absolute-windows",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "E-paths",
+      "files": [
+        "fixtures/E-paths/E-04-path-backslash/submission.json",
+        "fixtures/E-paths/E-04-path-backslash/artefacts/prompt.txt"
+      ],
+      "id": "E-04-path-backslash",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "E-paths",
+      "files": [
+        "fixtures/E-paths/E-05-path-empty/submission.json",
+        "fixtures/E-paths/E-05-path-empty/artefacts/prompt.txt"
+      ],
+      "id": "E-05-path-empty",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "ambiguous": true,
+        "note": "Au moins une des deux empreintes sera fausse, donc un refus est probable -- mais pour une raison incidente, non parce que le doublon serait interdit."
+      },
+      "family": "E-paths",
+      "files": [
+        "fixtures/E-paths/E-06-path-declared-twice/submission.json",
+        "fixtures/E-paths/E-06-path-declared-twice/artefacts/prompt.txt",
+        "fixtures/E-paths/E-06-path-declared-twice/artefacts/reponse.txt"
+      ],
+      "id": "E-06-path-declared-twice",
+      "rule_status": "AMBIGUOUS",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "E-paths",
+      "files": [
+        "fixtures/E-paths/E-07-zip-member-duplicate/paquet.zip"
+      ],
+      "id": "E-07-zip-member-duplicate",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "ambiguous": true,
+        "note": "FIGE par verificateur en 1.2.0. La note de 1.1.0 affirmait que les deux implementations admettent le segment `.` : c est FAUX. python ACCEPTE, rust-core REFUSE. Et python signale le meme fichier comme NON DECLARE dans son propre rapport : les deux ecritures du chemin ne se reconnaissent pas entre elles.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "family": "E-paths",
+      "files": [
+        "fixtures/E-paths/E-08-path-dot-segment/submission.json",
+        "fixtures/E-paths/E-08-path-dot-segment/artefacts/prompt.txt"
+      ],
+      "id": "E-08-path-dot-segment",
+      "rule_status": "AMBIGUOUS",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "ceiling": true,
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "family": "F-coherent-rewrite",
+      "files": [
+        "fixtures/F-coherent-rewrite/F-01-coherent-rewrite-accepted/submission.json",
+        "fixtures/F-coherent-rewrite/F-01-coherent-rewrite-accepted/artefacts/prompt.txt",
+        "fixtures/F-coherent-rewrite/F-01-coherent-rewrite-accepted/artefacts/reponse.txt"
+      ],
+      "id": "F-01-coherent-rewrite-accepted",
+      "rule_status": "NORMATIVE",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "family": "F-coherent-rewrite",
+      "files": [
+        "fixtures/F-coherent-rewrite/F-02-coherent-rewrite-breaks-attestation/archive.zip",
+        "fixtures/F-coherent-rewrite/F-02-coherent-rewrite-breaks-attestation/attestation.jws",
+        "fixtures/F-coherent-rewrite/F-02-coherent-rewrite-breaks-attestation/trust-store.json"
+      ],
+      "id": "F-02-coherent-rewrite-breaks-attestation",
+      "rule_status": "NORMATIVE",
+      "subject": "attestation"
+    },
+    {
+      "expected": {
+        "ceiling": true,
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "ACCEPTE"
+      },
+      "family": "F-coherent-rewrite",
+      "files": [
+        "fixtures/F-coherent-rewrite/F-03-archive-amputated-no-contract/archive.zip"
+      ],
+      "id": "F-03-archive-amputated-no-contract",
+      "rule_status": "NORMATIVE",
+      "subject": "archive"
+    },
+    {
+      "expected": {
+        "ambiguous": true,
+        "note": "Recommandation consignee : interdire. Compatibilite mesuree : 0 doublon sur 494 documents JSON du depot. NON arbitre.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "family": "G-ambiguous",
+      "files": [
+        "fixtures/G-ambiguous/G-01-duplicate-json-keys/submission.json",
+        "fixtures/G-ambiguous/G-01-duplicate-json-keys/artefacts/prompt.txt",
+        "fixtures/G-ambiguous/G-01-duplicate-json-keys/artefacts/reponse.txt"
+      ],
+      "id": "G-01-duplicate-json-keys",
+      "rule_status": "AMBIGUOUS",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "ambiguous": true,
+        "note": "C est le cas qui rend l ambiguite grave : l empreinte est le coeur du dispositif.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "family": "G-ambiguous",
+      "files": [
+        "fixtures/G-ambiguous/G-02-duplicate-key-on-digest/submission.json",
+        "fixtures/G-ambiguous/G-02-duplicate-key-on-digest/artefacts/prompt.txt",
+        "fixtures/G-ambiguous/G-02-duplicate-key-on-digest/artefacts/reponse.txt"
+      ],
+      "id": "G-02-duplicate-key-on-digest",
+      "rule_status": "AMBIGUOUS",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "ambiguous": true,
+        "note": "Meme famille que G-01. A trancher avec elle, pas separement.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "family": "G-ambiguous",
+      "files": [
+        "fixtures/G-ambiguous/G-03-nan-outside-rfc/submission.json",
+        "fixtures/G-ambiguous/G-03-nan-outside-rfc/artefacts/prompt.txt",
+        "fixtures/G-ambiguous/G-03-nan-outside-rfc/artefacts/reponse.txt"
+      ],
+      "id": "G-03-nan-outside-rfc",
+      "rule_status": "AMBIGUOUS",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "ambiguous": true,
+        "note": "Meme decision que G-03.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "family": "G-ambiguous",
+      "files": [
+        "fixtures/G-ambiguous/G-04-infinity-outside-rfc/submission.json",
+        "fixtures/G-ambiguous/G-04-infinity-outside-rfc/artefacts/prompt.txt",
+        "fixtures/G-ambiguous/G-04-infinity-outside-rfc/artefacts/reponse.txt"
+      ],
+      "id": "G-04-infinity-outside-rfc",
+      "rule_status": "AMBIGUOUS",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "ambiguous": true,
+        "note": "Les DEUX refusent desormais, pour deux raisons DIFFERENTES : Python parce que la valeur ne peut pas etre reportee verbatim, Rust parce que son analyseur refuse la demi-paire. La concordance de verdict ne resout pas l ambiguite.",
+        "python": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "family": "G-ambiguous",
+      "files": [
+        "fixtures/G-ambiguous/G-05-lone-surrogate/submission.json",
+        "fixtures/G-ambiguous/G-05-lone-surrogate/artefacts/prompt.txt",
+        "fixtures/G-ambiguous/G-05-lone-surrogate/artefacts/reponse.txt"
+      ],
+      "id": "G-05-lone-surrogate",
+      "rule_status": "AMBIGUOUS",
+      "subject": "submission"
+    },
+    {
+      "expected": {
+        "ambiguous": true,
+        "note": "Troisieme ambiguite de la meme famille. NON arbitree. Les deux REFUSENT, et le comportement est desormais fige par verificateur -- il ne l etait pas en 1.1.0.",
+        "python": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        },
+        "rust-crypto": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "family": "G-ambiguous",
+      "files": [
+        "fixtures/G-ambiguous/G-06-base64url-padding/archive.zip",
+        "fixtures/G-ambiguous/G-06-base64url-padding/attestation.jws",
+        "fixtures/G-ambiguous/G-06-base64url-padding/trust-store.json"
+      ],
+      "id": "G-06-base64url-padding",
+      "rule_status": "AMBIGUOUS",
+      "subject": "attestation"
+    },
+    {
+      "expected": {
+        "ambiguous": true,
+        "note": "C est le cas ou la divergence est la plus visible : un meme engagement cryptographique est atteste d un cote et refuse de l autre, sans qu aucun octet signe ne differe. FIGE par verificateur en 1.2.0 : le corpus 1.1.0 mesurait cette divergence sans la publier.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-crypto": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "family": "G-ambiguous",
+      "files": [
+        "fixtures/G-ambiguous/G-07-base64url-standard-alphabet/archive.zip",
+        "fixtures/G-ambiguous/G-07-base64url-standard-alphabet/attestation.jws",
+        "fixtures/G-ambiguous/G-07-base64url-standard-alphabet/trust-store.json"
+      ],
+      "id": "G-07-base64url-standard-alphabet",
+      "rule_status": "AMBIGUOUS",
+      "subject": "attestation"
+    }
+  ],
+  "contracts_covered": [
+    "neomundi.evidence.attestation/1",
+    "neomundi.evidence.submission/1",
+    "neomundi.evidence.submission/2",
+    "neomundi.evidence.trust-store/1",
+    "station.export.campagne/2"
+  ],
+  "corpus_version": "1.3.0",
+  "counts": {
+    "by_family": {
+      "A-valid": 7,
+      "B-incomplete": 6,
+      "C-malformed": 9,
+      "D-tampered": 10,
+      "E-paths": 8,
+      "F-coherent-rewrite": 3,
+      "G-ambiguous": 7
+    },
+    "by_rule_status": {
+      "AMBIGUOUS": 10,
+      "NORMATIVE": 40
+    },
+    "cases": 50,
+    "files": 121
+  },
+  "determinism": [
+    "Aucune horloge n est lue : toutes les dates sont des constantes.",
+    "Aucune clef n est generee : aucune clef privee n existe dans ce corpus.",
+    "Les ZIP ont une date FIXE et la methode ZIP_STORED.",
+    "Le JSON est trie, indente de deux espaces, en UTF-8."
+  ],
+  "families": [
+    "A-valid",
+    "B-incomplete",
+    "C-malformed",
+    "D-tampered",
+    "E-paths",
+    "F-coherent-rewrite",
+    "G-ambiguous"
+  ],
+  "generated_by": "conformance/runners/build_fixtures.py",
+  "schema": "neomundi.evidence.conformance-corpus/1"
+}

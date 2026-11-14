@@ -1,0 +1,50 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Un segment `.` dans le chemin : `artefacts/./prompt.txt`.",
+  "expected": {
+    "ambiguous": true,
+    "note": "FIGE par verificateur en 1.2.0. La note de 1.1.0 affirmait que les deux implementations admettent le segment `.` : c est FAUX. python ACCEPTE, rust-core REFUSE. Et python signale le meme fichier comme NON DECLARE dans son propre rapport : les deux ecritures du chemin ne se reconnaissent pas entre elles.",
+    "python": {
+      "exit_code": 0,
+      "verdict": "ACCEPTE"
+    },
+    "rust-core": {
+      "exit_code": 1,
+      "verdict": "REJETE"
+    }
+  },
+  "expected_by_verifier": {},
+  "family": "E-paths",
+  "files": [
+    {
+      "bytes": 630,
+      "path": "fixtures/E-paths/E-08-path-dot-segment/submission.json",
+      "sha256": "6730ef725cbbcd4f0e1547677a814d08a71d87f795062d1e36e1c2250029e828"
+    },
+    {
+      "bytes": 3,
+      "path": "fixtures/E-paths/E-08-path-dot-segment/artefacts/prompt.txt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    }
+  ],
+  "id": "E-08-path-dot-segment",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "AMBIGUITE-1 -- CONSOLIDATION_RUST_PR26/07",
+    "statut": "AMBIGUOUS",
+    "texte": "Le contrat interdit les chemins dangereux en PROSE. Le motif effectivement applique par les implementations admet `a/./b` et refuse `a/../b` : cette bizarrerie n est publiee nulle part. Un corpus de conformite la CONSIGNE sans la trancher."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}
