@@ -149,7 +149,10 @@ du moteur.
 
 ## Prérequis
 
-Python 3.9 ou plus récent, **bibliothèque standard seule**. `jsonschema` est
+Python 3.11, 3.12 ou 3.13 — les versions sur lesquelles les suites sont
+lancées, et celles du moteur — **bibliothèque standard seule**. Les versions
+antérieures ne sont pas annoncées parce qu'elles ne sont pas éprouvées : les
+runners Ubuntu 26.04 n'offrent plus 3.9 ni 3.10. `jsonschema` est
 optionnelle et sert aux suites à valider les enveloppes contre les contrats
 publiés ; sans elle, ce contrôle rend `NOT TESTED`, jamais `PASS`.
 

@@ -142,7 +142,10 @@ engine's [limitations](https://github.com/neomundi-io/neomundi-evidence-public/b
 
 ## Requirements
 
-Python 3.9 or later, **standard library only**. `jsonschema` is optional and
+Python 3.11, 3.12 or 3.13 — the versions the suites are run on, and the
+engine's own — **standard library only**. Earlier versions are not claimed
+because they are not exercised: the Ubuntu 26.04 runners no longer offer 3.9
+or 3.10. `jsonschema` is optional and
 used by the suites to validate the envelopes against the published contracts;
 without it that control reports `NOT TESTED`, never `PASS`.
 
