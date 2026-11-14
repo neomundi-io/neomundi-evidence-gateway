@@ -12,7 +12,7 @@
 
 [![Measurement](https://img.shields.io/badge/Measurement-Measure-2563eb?style=flat-square)](https://github.com/neomundi-io/neomundi-runtime-measurement)
 [![Station](https://img.shields.io/badge/Station-Observe-0f766e?style=flat-square)](https://github.com/neomundi-io/neomundi-station-public)
-[![Evidence](https://img.shields.io/badge/Evidence-Verify-D4A545?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-public)
+[![Evidence](https://img.shields.io/badge/Evidence-Verify-D4A545?style=flat-square)](verifier/README.md)
 [![Gateway](https://img.shields.io/badge/Gateway-Integrate-475569?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-gateway)
 
 [![Status](https://img.shields.io/badge/Status-experimental-a16207?style=flat-square)](#maturity-read-this-before-quoting-anything) [![Stdlib only](https://img.shields.io/badge/Dependencies-Python_stdlib-0f766e?style=flat-square)](#requirements) [![License](https://img.shields.io/badge/License-all_rights_reserved-6b7280?style=flat-square)](#rights)
@@ -46,7 +46,7 @@ engine and are republished unchanged. The response says so in each payload:
 
 This abstention is the product, not a shortcut. A gateway that reimplemented
 verification would be a second verifier with its own divergences — exactly
-what the [Evidence specification](https://github.com/neomundi-io/neomundi-evidence-public/blob/main/spec/SPECIFICATION.md)
+what the [Evidence specification](verifier/spec/SPECIFICATION.md)
 is written to avoid. [`tests/test_no_verification_logic.py`](tests/test_no_verification_logic.py)
 fails if a verification primitive ever appears in the product sources, and
 compares the republished verdict, field by field, against a **direct** engine
@@ -118,7 +118,7 @@ this gateway does not relax it.
 The engine's report contracts — `neomundi.evidence.verification-report/1` and
 `neomundi.evidence.attestation-report/1` — are **not redefined here**. Their
 payload is carried verbatim under `engine_report`. They are documented in the
-engine's [`docs/INTEGRATION.md`](https://github.com/neomundi-io/neomundi-evidence-public/blob/main/docs/INTEGRATION.md).
+engine's `docs/INTEGRATION.md`, which is **not public**. What is public: each report names its own contract in its `schema` field, and the fields are readable in [`verifier/verify.py`](verifier/verify.py) and [`verifier/spec/SPECIFICATION.md`](verifier/spec/SPECIFICATION.md).
 
 ## The public record
 
@@ -152,7 +152,7 @@ Two limits are republished in **every** response, and neither is a formality:
 Everything the engine itself does not establish — content truth, legal
 capacity of a signer, independent timestamping, third-party anchoring — is
 copied into the response's `limits` array, prefixed `engine:`. See the
-engine's [limitations](https://github.com/neomundi-io/neomundi-evidence-public/blob/main/docs/EVIDENCE_LIMITATIONS.md).
+engine's own limitations document, which is not public — its `does_not_establish` lines are copied into [`references/LIMITS.md`](references/LIMITS.md).
 
 ## Requirements
 

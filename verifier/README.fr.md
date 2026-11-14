@@ -146,6 +146,21 @@ Les 3 `GAP` et les 3 `UNKNOWN` sont déclarés, pas cachés.
 - le corpus est **gelé**. Il est une preuve sur les cas qu'il contient, et
   muet sur tous ceux qu'il ne contient pas.
 
+## Une conséquence du fait de republier sans modifier
+
+Ces 227 fichiers sont une republication **à l'octet** de ce que porte le
+moteur — propriété affirmée dans l'historique de ce dépôt et vérifiée par
+`tests/test_corpus_public.py`. Donc certains d'entre eux portent encore des
+liens et des instructions de clonage vers
+`neomundi-io/neomundi-evidence-public`, qui est privé :
+`conformance/README.md` en est le cas le plus net.
+
+Ces liens sont laissés tels quels, délibérément. Éditer un artefact gelé
+republié pour faire le ménage dans un lien coûterait la seule propriété qui
+rend ce corpus digne d'être publié. **Lire un tel lien comme nommant la
+provenance du fichier, non comme un endroit où aller.** Pour cloner le
+corpus, cloner ce dépôt-ci.
+
 ## Droits
 
 Ces fichiers sont publiés pour la **vérification et la revue**. Aucune licence
