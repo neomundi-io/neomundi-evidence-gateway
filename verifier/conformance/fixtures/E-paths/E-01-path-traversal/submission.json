@@ -1,0 +1,22 @@
+{
+  "artifacts": [
+    {
+      "bytes": 3,
+      "path": "../dehors.txt",
+      "role": "other",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    }
+  ],
+  "execution": {
+    "kind_declared": "replay",
+    "model_absence_note_declared": "Aucun modele d IA n intervient : fixture deterministe.",
+    "model_absence_reason_declared": "not_applicable",
+    "model_declared": null
+  },
+  "pilot": {
+    "name_declared": "Corpus de conformite"
+  },
+  "schema": "neomundi.evidence.submission/2",
+  "submission_id": "conformance-v2-001",
+  "submitted_at_declared": "2026-01-01T00:00:00Z"
+}

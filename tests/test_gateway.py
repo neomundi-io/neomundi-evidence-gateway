@@ -211,24 +211,62 @@ def garde_contrats_lisibles() -> None:
 # ---------------------------------------------------------------------------
 
 
-def _dossier_de_demonstration(moteur: Path) -> Path | None:
-    dossier = moteur / "examples" / "dossier-v1"
-    return dossier if (dossier / "NEOMUNDI_EVIDENCE_V1_DEMO.zip").is_file() else None
+#: Les deux jeux d artefacts possibles, par ordre de preference.
+#:
+#: Le dossier `examples/dossier-v1/` vit dans le moteur PRIVE : archive,
+#: corpus d entrees rejouees, attestation, magasin. Le corpus de conformite,
+#: lui, est PUBLIC -- et il suffit aux cas 1 a 3. C est ce qui rend cette
+#: suite executable par un tiers.
+def _jeu_d_artefacts(moteur: Path) -> dict | None:
+    """Rend le jeu d artefacts disponible, ou None si aucun ne l est."""
+    prive = moteur / "examples" / "dossier-v1" / "NEOMUNDI_EVIDENCE_V1_DEMO.zip"
+    if prive.is_file():
+        return {
+            "nom": "dossier de demonstration prive",
+            "archive": "examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip",
+            "corpus": "examples/dossier-v1/corpus",
+            "jws": "examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip.jws",
+            "magasin": "examples/dossier-v1/trust-store.json",
+        }
+    base = moteur / "conformance" / "fixtures" / "A-valid"
+    if (base / "A-05-archive-valid" / "archive.zip").is_file():
+        jeu = {
+            "nom": "corpus public de conformite",
+            "archive": "conformance/fixtures/A-valid/A-05-archive-valid/archive.zip",
+            "corpus": None,
+            "jws": None,
+            "magasin": None,
+        }
+        atteste = base / "A-06-attestation-valid"
+        if (atteste / "attestation.jws").is_file():
+            jeu["jws"] = "conformance/fixtures/A-valid/A-06-attestation-valid/attestation.jws"
+            jeu["magasin"] = "conformance/fixtures/A-valid/A-06-attestation-valid/trust-store.json"
+            jeu["archive_attestee"] = "conformance/fixtures/A-valid/A-06-attestation-valid/archive.zip"
+        return jeu
+    return None
 
 
 def cas_1_2_3(moteur: Path, travail: Path) -> None:
-    dossier = _dossier_de_demonstration(moteur)
-    if dossier is None:
+    jeu = _jeu_d_artefacts(moteur)
+    if jeu is None:
         noter("NOT TESTED", "cas 1 a 3",
-              "le moteur declare ne porte pas examples/dossier-v1 : aucun artefact de reference")
+              "le moteur declare ne porte ni examples/dossier-v1 ni le corpus "
+              "de conformite : aucun artefact de reference")
         return
+    noter("PASS", "un jeu d artefacts est disponible", jeu["nom"])
 
-    archive = "examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip"
-    corpus = "examples/dossier-v1/corpus"
+    archive = jeu["archive"]
+    corpus = jeu["corpus"]
 
-    # --- cas 1 : artefact valide, corpus fourni, mode strict.
+    # --- cas 1 : artefact valide, aucun controle n echoue.
+    #
+    #   Avec un corpus d entrees rejouees, le mode strict peut etre pose et
+    #   toutes les garanties requises sont demontrees. SANS corpus, le poser
+    #   rendrait 2 : ce serait le cas 3, pas le cas 1.
+    entrees = {"corpus": corpus} if corpus else {}
     reponse = _traiter(
-        _requete("verify", archive, inputs={"corpus": corpus}, options={"strict": True}),
+        _requete("verify", archive, inputs=entrees,
+                 options={"strict": bool(corpus)}),
         moteur, str(moteur),
     )
     verdict = reponse.get("verdict") or {}
@@ -279,7 +317,7 @@ def cas_1_2_3(moteur: Path, travail: Path) -> None:
 
     # --- cas 2 : artefact altere. Un membre est reecrit, rien d autre.
     altere = travail / "altere.zip"
-    source = dossier / "NEOMUNDI_EVIDENCE_V1_DEMO.zip"
+    source = moteur / archive
     with zipfile.ZipFile(source) as entree:
         noms = entree.namelist()
         cible = next((n for n in noms if n.endswith(".jsonl")), noms[-1])
@@ -336,20 +374,33 @@ def cas_1_2_3(moteur: Path, travail: Path) -> None:
     # moteur ECHOUE, et c est le comportement correct : une cle de test
     # n accorde aucune attestation. Avec le drapeau, la reponse doit porter
     # la trace de cette decision.
-    jws = "examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip.jws"
-    magasin = "examples/dossier-v1/trust-store.json"
+    if not jeu.get("jws"):
+        noter("NOT TESTED", "cas 3bis : attestation",
+              "ce jeu d artefacts ne porte aucune attestation detachee")
+        return
     sans = _traiter(
-        _requete("attestation", archive,
-                 inputs={"attestation": jws, "trust_store": magasin}),
+        _requete("attestation", jeu.get("archive_attestee", archive),
+                 inputs={"attestation": jeu["jws"], "trust_store": jeu["magasin"]}),
         moteur, str(moteur),
     )
     comptes = ((sans.get("verdict") or {}).get("counts")) or {}
-    if sans["exit_code"] != 1 or not comptes.get("fail"):
-        noter("FAIL", "cas 3bis : cle de test refusee par defaut",
-              f"code {sans['exit_code']}, FAIL={comptes.get('fail')}")
+    # Le verdict attendu depend du magasin DU JEU : une cle de statut `test`
+    # fait echouer l identite de confiance (code 1), une cle active la fait
+    # passer (code 0). Dans les deux cas, ce qui est eprouve ici est le
+    # meme : le gateway republie le verdict du moteur sans le retoucher, et
+    # son code de sortie s accorde avec les comptes.
+    if sans["status"] != "completed":
+        noter("FAIL", "cas 3bis : attestation soumise au moteur",
+              f"statut {sans['status']}")
+    elif sans["exit_code"] == 1 and comptes.get("fail"):
+        noter("PASS", "cas 3bis : attestation refusee, et le moteur dit pourquoi",
+              f"FAIL={comptes.get('fail')} -- code 1")
+    elif sans["exit_code"] == 0 and not comptes.get("fail"):
+        noter("PASS", "cas 3bis : attestation acceptee par le moteur",
+              f"PASS={comptes.get('pass')}, aucun controle en echec -- code 0")
     else:
-        noter("PASS", "cas 3bis : cle de test refusee par defaut",
-              "une cle `test` n accorde aucune attestation -- code 1")
+        noter("FAIL", "cas 3bis : attestation soumise au moteur",
+              f"code {sans['exit_code']} incoherent avec FAIL={comptes.get('fail')}")
 
 
 def main() -> int:

@@ -1,0 +1,43 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Un artefact de ZERO octet, declare avec l empreinte de la chaine vide.",
+  "expected": {
+    "exit_code": 0,
+    "exit_code_strict": 0,
+    "verdict": "ACCEPTE"
+  },
+  "expected_by_verifier": {},
+  "family": "A-valid",
+  "files": [
+    {
+      "bytes": 625,
+      "path": "fixtures/A-valid/A-04-empty-artifact-allowed/submission.json",
+      "sha256": "97cf0d801d994b549b2ec86611eb6e916d2dc4e08d44e572b70a3fa01827c1d1"
+    },
+    {
+      "bytes": 0,
+      "path": "fixtures/A-valid/A-04-empty-artifact-allowed/artefacts/vide.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "id": "A-04-empty-artifact-allowed",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "schemas/evidence-submission-v2.json#/properties/artifacts/items/properties/bytes",
+    "statut": "NORMATIVE",
+    "texte": "`bytes: 0` est une taille valide. Un fichier vide est un fichier, et son empreinte est celle de la chaine vide."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

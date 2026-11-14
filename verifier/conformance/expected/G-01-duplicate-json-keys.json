@@ -1,0 +1,55 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "`submission_id` declare DEUX fois dans le manifeste.",
+  "expected": {
+    "ambiguous": true,
+    "note": "Recommandation consignee : interdire. Compatibilite mesuree : 0 doublon sur 494 documents JSON du depot. NON arbitre.",
+    "python": {
+      "exit_code": 0,
+      "verdict": "ACCEPTE"
+    },
+    "rust-core": {
+      "exit_code": 1,
+      "verdict": "REJETE"
+    }
+  },
+  "expected_by_verifier": {},
+  "family": "G-ambiguous",
+  "files": [
+    {
+      "bytes": 836,
+      "path": "fixtures/G-ambiguous/G-01-duplicate-json-keys/submission.json",
+      "sha256": "4f701347ad62ac9042317cc22cfdfb0c59cfc53d17c292e0afb2473d54b9414f"
+    },
+    {
+      "bytes": 3,
+      "path": "fixtures/G-ambiguous/G-01-duplicate-json-keys/artefacts/prompt.txt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    },
+    {
+      "bytes": 11,
+      "path": "fixtures/G-ambiguous/G-01-duplicate-json-keys/artefacts/reponse.txt",
+      "sha256": "740c8a152af2c0077d66598619eec8c3570f6f95bbc7acbb2020ae3d53f8092e"
+    }
+  ],
+  "id": "G-01-duplicate-json-keys",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "RFC 8259 §4 ; CONSOLIDATION_RUST_PR26/AMBIGUITE_4_DECISION.md",
+    "statut": "AMBIGUOUS",
+    "texte": "La RFC dit que les noms « SHOULD be unique » et laisse le cas INDEFINI. Les deux contrats Evidence n en disent rien : `duplicate`, `unique` et `RFC 8259` ont zero occurrence dans les schemas publies. Une implementation qui refuse et une qui garde la derniere sont toutes deux defendables."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "neomundi.evidence.conformance-known-failures/1",
+  "corpus_version": "1.1.0",
+  "a_propos": "Les echecs de conformite CONSTATES et DECLARES. Le banc les rapporte comme `KNOWN FAIL` : ils restent VISIBLES et ne masquent rien, mais ils ne font pas echouer la CI -- sinon la seule facon de rendre la CI verte serait de retirer le cas du corpus, c est-a-dire de supprimer la mesure qui derange. Un echec NON declare, lui, fait rougir la CI : c est une regression.",
+  "regle": "Une entree de cette liste doit nommer le defaut, dire ou il a ete trouve, et proposer un correctif. Retirer une entree exige que le defaut soit corrige et que le cas passe. AJOUTER une entree est une decision, pas une commodite : c est reconnaitre publiquement qu une implementation de reference ne respecte pas une regle que le corpus declare NORMATIVE.",
+  "regle_des_resolus": "Une entree corrigee N EST PAS SUPPRIMEE : elle passe dans `resolved`, avec son resultat d origine. Deux raisons. D abord un lecteur doit pouvoir retrouver ce que le corpus mesurait a une version donnee -- c est la seule facon de relire une conclusion ancienne sans la deformer. Ensuite, un cas resolu n est plus declare : s il echoue de nouveau, son echec devient NON DECLARE et fait rougir la CI. La regression se signale donc toute seule, sans mecanisme supplementaire.",
+  "failures": [],
+  "resolved": [
+    {
+      "case": "C-09-archive-deflate-invalid",
+      "verifier": "python",
+      "declared_in": "1.0.0",
+      "resolved_in": "1.1.0",
+      "resolved_on": "2026-11-11",
+      "observed_when_declared": "zlib.error non rattrapee -- << Error -3 while decompressing data: invalid block type >>. Code de sortie 1, AUCUNE ligne de verdict, AUCUN bilan.",
+      "expected": "REJETE, avec un verdict motive",
+      "defect": "`verify.py` lit les membres de l archive par `zipfile`, qui leve `zlib.error` sur un flux DEFLATE invalide. L exception n etait pas rattrapee : l outil sortait en 1 sans rendre de verdict. Un code 1 sans verdict est indistinguable d un refus legitime, et le depot a lui-meme ecrit que c est le defaut a rendre impossible -- voir la sentinelle `CRASH_NO_REPORT` de `tests/test_ingestion_robustesse.py`.",
+      "found_by": "ce corpus, developpement n. 3 -- cas C-09",
+      "cause_exacte": "`ZipFile.testzip()` est documente comme rendant le NOM du premier membre corrompu. C est vrai d un CRC faux -- qu il ne constate qu APRES avoir decompresse. Un flux qui ne se decompresse pas du tout ne lui laisse rien a constater : il RELEVE.",
+      "fix": "`verify.py`, autour de `archive.testzip()` : rattrapage de `(zlib.error, zipfile.BadZipFile, EOFError)` et FAIL motive << un membre est illisible : ... >>, sous le MEME intitule de controle << integrite interne du ZIP >>. Les trois types sont nommes ; `Exception` est ecarte a dessein, pour qu un defaut de l outil reste visible au lieu de se deguiser en refus de donnee.",
+      "observed_after_fix": "REJETE. 1 PASS, 1 FAIL, 0 NOT TESTED, code 1, rapport JSON ecrit. La fixture n a pas change d un octet -- seule la facon dont elle est TRAITEE a change.",
+      "regression_test": "tests/test_flux_illisible.py -- 12 cas, dont deux flux forges hors corpus, le chemin CRC preserve, l archive valide inchangee, et un controle sur l arbre syntaxique qui refuse un `except Exception` a cet endroit.",
+      "rust_behaviour": "`evidence-verify-crypto` rendait DEJA `REJETE` avec un rapport sur la meme entree : le decompresseur ecrit a la main refuse le genre de bloc reserve (RFC 1951 §3.2.3) et le dit. C est cette divergence qui a identifie le defaut Python."
+    }
+  ]
+}

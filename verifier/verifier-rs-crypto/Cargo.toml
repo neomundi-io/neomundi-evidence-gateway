@@ -1,0 +1,55 @@
+# evidence-verify-crypto : attestations Ed25519/JWS et format d'ARCHIVE
+# Evidence.
+#
+# POURQUOI UNE CAISSE SEPAREE, ET NON UNE OPTION DE `verifier-rs`
+#
+# `verifier-rs` tient une propriete que la consolidation precedente a
+# etablie et mesuree : son `Cargo.lock` ne porte QU UNE entree, ce qui laisse
+# un auditeur constater l absence de dependance **sans compiler**. Cargo
+# inscrit dans `Cargo.lock` toutes les dependances possibles, y compris
+# celles qu une option desactivee n emploie pas : ajouter une option
+# `signatures` a `verifier-rs` aurait donc detruit cette propriete, meme
+# desactivee.
+#
+# Deux caisses, deux verrous. Un auditeur qui refuse les dependances
+# cryptographiques emploie `evidence-verify-rs` et verifie l integrite ;
+# celui qui veut les signatures emploie celle-ci et sait ce qu il importe.
+#
+# Les modules communs -- sha256, json, zip, inflate, chemins, bilan -- sont
+# atteints par `#[path]`, donc ce sont LES MEMES FICHIERS. Il n y a pas de
+# copie a faire deriver.
+[package]
+name = "evidence-verify-crypto"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+description = "Verificateur independant des attestations Ed25519/JWS et des archives NeoMundi Evidence"
+license = "Apache-2.0"
+publish = false
+
+[dependencies]
+# ED25519 N EST PAS REIMPLEMENTE.
+#
+# Ecrire une courbe elliptique a la main serait la decision la plus
+# dangereuse de ce depot : les attaques sur Ed25519 portent sur des details
+# -- malleabilite des signatures, points d ordre faible, canonicite de
+# l encodage -- qu une implementation naive manque, et qu une erreur rend
+# silencieusement exploitable.
+#
+# `ed25519-dalek` est l implementation de reference de l ecosysteme Rust,
+# maintenue par dalek-cryptography, auditee, et employee par des projets a
+# enjeu. `default-features = false` retire la generation de cles et le
+# tirage aleatoire : ce programme VERIFIE, il ne signe pas, et il ne doit
+# donc meme pas pouvoir fabriquer une cle.
+ed25519-dalek = { version = "3", default-features = false }
+
+[profile.release]
+opt-level = 2
+debug = false
+strip = true
+panic = "abort"
+codegen-units = 1
+
+[[bin]]
+name = "evidence-verify-crypto"
+path = "src/main.rs"

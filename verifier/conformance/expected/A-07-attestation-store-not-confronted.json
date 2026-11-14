@@ -1,0 +1,58 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "La MEME attestation, SANS `--store-digest`. Le niveau est derive ; le verdict de `evidence-verify-crypto` devient INCOMPLET.",
+  "expected": {
+    "attested_level": "cryptographically_attested",
+    "exit_code": 0,
+    "exit_code_strict": 2,
+    "verdict": "ACCEPTE"
+  },
+  "expected_by_verifier": {
+    "rust-crypto": {
+      "exit_code": 0,
+      "exit_code_strict": 2,
+      "raison": "`evidence-verify-crypto` modelise un VERDICT en plus du niveau, et une ligne REQUISE non demontree rend INCOMPLET. `verify_attestation.py` ne modelise pas de verdict : il rend un niveau. C est une difference de SURFACE, declaree, et non une divergence de regle. Le CODE DE SORTIE, lui, ne diverge PAS : les deux rendent 2 sous `--strict`, par la meme regle de garantie requise -- le corpus 1.2.0 l imputait a tort a la seule modelisation du verdict.",
+      "verdict": "INCOMPLET"
+    }
+  },
+  "family": "A-valid",
+  "files": [
+    {
+      "bytes": 20237,
+      "path": "fixtures/A-valid/A-07-attestation-store-not-confronted/archive.zip",
+      "sha256": "e31e12bb7e32c7a33db1ecacc8c38cd18225fa10618c7e1aa5d6f9540f2ad7d6"
+    },
+    {
+      "bytes": 2211,
+      "path": "fixtures/A-valid/A-07-attestation-store-not-confronted/attestation.jws",
+      "sha256": "d533518f4413d75e7ea58923d21bfe6c168eba2f1cc6703dc12353abceda3493"
+    },
+    {
+      "bytes": 2815,
+      "path": "fixtures/A-valid/A-07-attestation-store-not-confronted/trust-store.json",
+      "sha256": "6e6534544d85cf8e6ef83b6a176869e9d1ab03fb55895966659a1bc9d76df41c"
+    }
+  ],
+  "id": "A-07-attestation-store-not-confronted",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [
+    "--allow-test-keys"
+  ],
+  "provenance": "DERIVE de examples/dossier-v1/, deja public dans ce depot et declare << aucune donnee reelle >>. Aucun dossier de pilote n intervient.",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "verify_attestation.py -- ligne « empreinte du magasin confrontee », marquee REQUISE",
+    "statut": "NORMATIVE",
+    "texte": "Sans empreinte obtenue par un SECOND canal, le magasin et l archive arrivent par la MEME route, et qui controle cette route controle les deux. Un magasin non confronte n est pas faux : il est NON CONFRONTE, et la ligne le dit. Les cinq piliers restent PASS, donc le NIVEAU est derive des deux cotes -- seule la SURFACE du verdict differe."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "attestation"
+}

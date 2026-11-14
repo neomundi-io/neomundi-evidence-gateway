@@ -30,14 +30,20 @@ contrôlables.
 | Artefact | sha256 | Accessible ici ? |
 |---|---|---|
 | **magasin de confiance** (3038 o) | `dac94e8ad4baf0a48fe94b8006a238d970d242cdc52b8d9dd51294777751598d` | 🟢 **oui** — [`../trust/trust-store.json`](../trust/trust-store.json) |
-| `SHA256SUMS` du corpus (21 202 o, 172 lignes) | `e3edeb26c54363ace46737563f4824f79a0adab2baebcb8351bb15d632a6a297` | 🔴 non — empreinte consignée, artefact dans le dépôt du moteur |
-| `manifest.json` du corpus | `2720995161e6b98ee707c72ba3000a5029d8e49a07f1e80de3cf6da82fdd5ec2` | 🔴 non — idem |
-| archive de démonstration V1 (celle des cinq scénarios) | `e31e12bb7e32c7a33db1ecacc8c38cd18225fa10618c7e1aa5d6f9540f2ad7d6` | 🔴 non — dans le dépôt du moteur |
+| `SHA256SUMS` du corpus (21 202 o, 172 lignes) | `e3edeb26c54363ace46737563f4824f79a0adab2baebcb8351bb15d632a6a297` | 🟢 **oui** — [`../verifier/conformance/SHA256SUMS`](../verifier/conformance/SHA256SUMS) |
+| `manifest.json` du corpus | `2720995161e6b98ee707c72ba3000a5029d8e49a07f1e80de3cf6da82fdd5ec2` | 🟢 **oui** — ainsi que les 172 entrées qu'il couvre |
+| archive de démonstration V1 (celle de `demo/demo.sh`) | `e31e12bb7e32c7a33db1ecacc8c38cd18225fa10618c7e1aa5d6f9540f2ad7d6` | 🔴 non — elle vit dans le moteur privé. Employer une fixture du corpus : voir [`../verifier/README.fr.md`](../verifier/README.fr.md) |
 
-🔴 **Une empreinte sans artefact atteignable est un ancrage, pas une preuve.**
-Trois des quatre lignes ci-dessus sont exactement cela, et le tableau le dit
-au lieu de laisser croire autre chose. Le magasin de confiance a été déplacé
-ici précisément pour ne pas en être une.
+🟢 **Trois des quatre artefacts ci-dessus sont désormais atteignables ici.**
+Le 14 novembre, le magasin de confiance était le seul ; publier la surface de
+vérification a amené le corpus avec elle. Une empreinte sans artefact
+atteignable est un ancrage, pas une preuve — le tableau continue donc de dire,
+ligne par ligne, laquelle est laquelle.
+
+Le seul `🔴` restant est le dossier de démonstration employé par
+`demo/demo.sh`. Son empreinte est consignée ; l'archive reste privée. Un tiers
+qui rejoue les cinq scénarios doit pointer `--artifact-root` sur une fixture
+du corpus.
 
 ## Mesures du moteur, telles que consignées sur `3391c768`
 
@@ -67,8 +73,34 @@ soi.
 | `demo/demo.sh` | 5 scénarios, **5 codes observés = 5 attendus** | 2 scénarios, 2 = 2 |
 | CI du gateway sur `main` | **4 check-runs, 4 success** | — |
 
-Les lignes `NOT TESTED` sont les cas qui exigent le moteur. Ils sont rapportés
+Les lignes `NOT TESTED` sont les cas qui exigent un moteur. Ils sont rapportés
 comme non éprouvés, jamais comme réussis.
+
+### Salle blanche — 2026-11-14, sans aucun accès au dépôt privé
+
+La surface de vérification publiée a été copiée dans un répertoire vide, sans
+`.git`, sans dépôt distant et sans identifiant, puis exercée là :
+
+| Épreuve | Observé |
+|---|---|
+| les outils publics s'installent et répondent à `--help` | `verify.py`, `verify_attestation.py`, `adapters/ingest.py` — **3/3 OK** |
+| `sha256sum --check SHA256SUMS` | **172 / 172 OK** |
+| corpus, vérificateur Python | **40 PASS, 10 AMBIGUOUS, 0 FAIL** |
+| corpus, `evidence-verify-rs` (compilé là, hors ligne, **65 tests unitaires au vert**) | 27 PASS, 8 AMBIGUOUS, 15 n/a |
+| corpus, `evidence-verify-crypto` (compilé là) | 13 PASS, 2 AMBIGUOUS, 35 n/a |
+| **les trois ensemble** | **80 PASS, 20 AMBIGUOUS, 50 n/a — 0 écart de code de sortie sur un verdict concordant** |
+| artefact valide (`A-05`) | 17 PASS, 0 FAIL, 4 NOT TESTED — code **0** |
+| artefact altéré (`D-10`) | 16 PASS, **1 FAIL**, 4 NOT TESTED — code **1** |
+| non vérifiable (`A-07`, sans magasin) | code **0** ; avec `--strict`, code **2**, deux garanties requises nommées |
+| lignes de contrôle avec et sans `--strict` | **identiques à l'octet** |
+| le gateway piloté sur le **vérificateur public** au lieu du moteur | cinq scénarios, codes **0 / 1 / 2 / 4 / 3** |
+
+Chaîne Rust employée : `rustc 1.99.1`, `cargo 1.99.1` — les versions de la CI
+du moteur. Binaires construits en salle blanche :
+`evidence-verify-rs` `6b0e56df…`, `evidence-verify-crypto` `eb1d22de…`.
+⚠ Ces deux empreintes **ne sont pas** une revendication de reproductibilité :
+un binaire de release dépend de la chaîne et de l'hôte, et rien ici ne fixe
+l'un ni l'autre.
 
 ### Les cinq scénarios, et le code que chacun rend
 

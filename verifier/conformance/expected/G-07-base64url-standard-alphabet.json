@@ -1,0 +1,57 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Le segment de SIGNATURE est reecrit en base64 STANDARD (`+`/`/`).",
+  "expected": {
+    "ambiguous": true,
+    "note": "C est le cas ou la divergence est la plus visible : un meme engagement cryptographique est atteste d un cote et refuse de l autre, sans qu aucun octet signe ne differe. FIGE par verificateur en 1.2.0 : le corpus 1.1.0 mesurait cette divergence sans la publier.",
+    "python": {
+      "exit_code": 0,
+      "verdict": "ACCEPTE"
+    },
+    "rust-crypto": {
+      "exit_code": 1,
+      "verdict": "REJETE"
+    }
+  },
+  "expected_by_verifier": {},
+  "family": "G-ambiguous",
+  "files": [
+    {
+      "bytes": 20237,
+      "path": "fixtures/G-ambiguous/G-07-base64url-standard-alphabet/archive.zip",
+      "sha256": "e31e12bb7e32c7a33db1ecacc8c38cd18225fa10618c7e1aa5d6f9540f2ad7d6"
+    },
+    {
+      "bytes": 2210,
+      "path": "fixtures/G-ambiguous/G-07-base64url-standard-alphabet/attestation.jws",
+      "sha256": "e4b88ce9e84558d417df781d9857e1a91a23a91bd5551389590927e45045329a"
+    },
+    {
+      "bytes": 2815,
+      "path": "fixtures/G-ambiguous/G-07-base64url-standard-alphabet/trust-store.json",
+      "sha256": "6e6534544d85cf8e6ef83b6a176869e9d1ab03fb55895966659a1bc9d76df41c"
+    }
+  ],
+  "id": "G-07-base64url-standard-alphabet",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [
+    "--allow-test-keys"
+  ],
+  "provenance": "DERIVE de examples/dossier-v1/, deja public dans ce depot et declare << aucune donnee reelle >>. Aucun dossier de pilote n intervient.",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "RFC 7515 §2",
+    "statut": "AMBIGUOUS",
+    "texte": "Les octets de signature sont IDENTIQUES ; seule leur ecriture change. Python decode et atteste ; un lecteur strict refuse le jeton."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "attestation"
+}

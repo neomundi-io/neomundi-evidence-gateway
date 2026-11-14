@@ -1,0 +1,38 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Archive Evidence dont le CRC-32 d un membre contredit ses donnees.",
+  "expected": {
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "C-malformed",
+  "files": [
+    {
+      "bytes": 20237,
+      "path": "fixtures/C-malformed/C-07-archive-crc-invalid/archive.zip",
+      "sha256": "f7628ec74f3dcdc4f5837433b65e9175fc73c2c54dac9ce7ce19e79efbf741e4"
+    }
+  ],
+  "id": "C-07-archive-crc-invalid",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "DERIVE de examples/dossier-v1/, deja public dans ce depot et declare << aucune donnee reelle >>. Aucun dossier de pilote n intervient.",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "APPNOTE ZIP §4.3.12",
+    "statut": "NORMATIVE",
+    "texte": "Le CRC-32 du repertoire central doit egaler celui des donnees. `unzip` et `zipfile` refusent une archive ou il diverge ; un verificateur de preuve ne doit pas conclure << accepte >> la ou tout outil standard dit << corrompu >>."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "archive"
+}

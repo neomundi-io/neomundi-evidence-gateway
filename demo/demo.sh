@@ -62,15 +62,46 @@ if [ "$SANS_MOTEUR" -eq 0 ]; then
     exit 2
   fi
   MOTEUR="$EVIDENCE_ENGINE_HOME"
-  ARCHIVE="examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip"
-  if [ ! -f "$MOTEUR/$ARCHIVE" ]; then
-    echo "le moteur declare ne porte pas $ARCHIVE -- demonstration impossible."
+
+  # DEUX jeux d artefacts possibles, et c est tout l objet de cette mission.
+  #
+  #   Le dossier `examples/dossier-v1/` vit dans le moteur PRIVE : il porte
+  #   une archive, son corpus d entrees rejouees, une attestation et un
+  #   magasin. Riche -- et inatteignable sans acces.
+  #
+  #   Le corpus PUBLIC de conformite, lui, est publie dans `verifier/`. Il
+  #   suffit aux cinq scenarios, et c est ce qui rend cette demonstration
+  #   rejouable par un tiers.
+  #
+  # On prend le premier disponible et on DIT lequel : un tiers doit savoir
+  # sur quoi il vient de lire des codes de sortie.
+  DOSSIER="examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip"
+  FIXTURE="conformance/fixtures/A-valid/A-05-archive-valid/archive.zip"
+  if [ -f "$MOTEUR/$DOSSIER" ]; then
+    ARCHIVE="$DOSSIER"
+    JEU="dossier de demonstration PRIVE (archive + corpus + attestation)"
+    AVEC_CORPUS=1
+  elif [ -f "$MOTEUR/$FIXTURE" ]; then
+    ARCHIVE="$FIXTURE"
+    JEU="corpus PUBLIC de conformite, cas A-05 -- aucun acces prive requis"
+    AVEC_CORPUS=0
+  else
+    echo "le moteur declare ne porte ni $DOSSIER ni $FIXTURE."
+    echo "Aucun artefact a soumettre : demonstration impossible."
     exit 2
   fi
+  echo "jeu d artefacts : $JEU"
 
-  titre "1. ARTEFACT VALIDE -- corpus fourni, mode strict"
-  "$PY" "$RACINE/gateway.py" submit "$RACINE/examples/02-verify-corpus-strict.json" \
-    --artifact-root "$MOTEUR" --out "$SORTIE/01-valide.json" >/dev/null
+  titre "1. ARTEFACT VALIDE -- aucun controle n echoue"
+  if [ "$AVEC_CORPUS" -eq 1 ]; then
+    # Avec le dossier prive : corpus fourni ET mode strict, donc toutes les
+    # garanties requises sont demontrees -> 0.
+    "$PY" "$RACINE/gateway.py" submit "$RACINE/examples/02-verify-corpus-strict.json"       --artifact-root "$MOTEUR" --out "$SORTIE/01-valide.json" >/dev/null
+  else
+    # Avec une fixture publique : aucune entree rejouee a fournir, donc PAS
+    # de mode strict ici. Le poser rendrait 2 -- et ce serait le scenario 3.
+    "$PY" "$RACINE/gateway.py" verify "$ARCHIVE"       --artifact-root "$MOTEUR" --out "$SORTIE/01-valide.json" >/dev/null
+  fi
   relever "1-valide" 0 "$?"
 
   titre "2. ARTEFACT ALTERE -- un membre de l archive est reecrit"
@@ -92,7 +123,7 @@ FIN
     --artifact-root "$SORTIE" --out "$SORTIE/02-altere.json" >/dev/null
   relever "2-altere" 1 "$?"
 
-  titre "3. ARTEFACT NON VERIFIABLE -- corpus non fourni, mode strict"
+  titre "3. ARTEFACT NON VERIFIABLE -- entrees rejouees non fournies, mode strict"
   "$PY" "$RACINE/gateway.py" verify "$ARCHIVE" --strict \
     --artifact-root "$MOTEUR" --out "$SORTIE/03-non-verifiable.json" >/dev/null
   relever "3-non-verifiable" 2 "$?"
@@ -118,6 +149,10 @@ echo "  observes :$OBSERVES"
 echo ""
 echo "  reponses ecrites dans demo/out/"
 echo ""
+if [ "$SANS_MOTEUR" -eq 0 ]; then
+  echo "  jeu d artefacts employe : $JEU"
+  echo ""
+fi
 echo "  CE QUE CETTE DEMONSTRATION ETABLIT"
 echo "    - le gateway distingue cinq situations par son code de sortie,"
 echo "      dont DEUX ou aucune verification n a eu lieu (3 et 4) ;"
@@ -129,7 +164,8 @@ echo "    - aucune verification INDEPENDANTE : le moteur tourne ici, chez"
 echo '      l operateur de ce gateway. Une attestation de cle de TEST ne vaut'
 echo "      pas davantage ;"
 echo "    - aucune propriete du moteur lui-meme : ses propres suites et son"
-echo "      corpus de conformite s en chargent, pas celle-ci."
+echo "      corpus de conformite s en chargent, pas celle-ci. Pour"
+echo "      eprouver le corpus lui-meme : verifier/README.md."
 echo ""
 echo "  REPRODUCTIBILITE, MESUREE"
 echo "    verdicts et codes de sortie : identiques d un passage a l autre."

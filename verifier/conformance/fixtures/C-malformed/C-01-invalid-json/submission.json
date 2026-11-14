@@ -1,0 +1,7 @@
+{
+  "artifacts": [
+    {
+      "bytes": 3,
+      "path": "artefacts/prompt.txt",
+      "role": "prompt",
+      "sha256":

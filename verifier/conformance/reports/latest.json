@@ -1,0 +1,3181 @@
+{
+  "corpus_version": "1.3.0",
+  "strict": false,
+  "verifiers": [
+    "python",
+    "rust-core",
+    "rust-crypto"
+  ],
+  "environment": {
+    "python_version": "3.14.4",
+    "python_executable": "/usr/bin/python3",
+    "cryptography_available": true
+  },
+  "not_runnable": [],
+  "summary": {
+    "PASS": 80,
+    "AMBIGUOUS": 20,
+    "NOT APPLICABLE": 50
+  },
+  "known_failures_observed": [],
+  "code_mismatches": [],
+  "ambiguous_divergences": [
+    {
+      "id": "E-08-path-dot-segment",
+      "observed_by_verifier": {
+        "python": "ACCEPTE",
+        "rust-core": "REJETE"
+      },
+      "distinct_verdicts": [
+        "ACCEPTE",
+        "REJETE"
+      ],
+      "declared": true
+    },
+    {
+      "id": "G-01-duplicate-json-keys",
+      "observed_by_verifier": {
+        "python": "ACCEPTE",
+        "rust-core": "REJETE"
+      },
+      "distinct_verdicts": [
+        "ACCEPTE",
+        "REJETE"
+      ],
+      "declared": true
+    },
+    {
+      "id": "G-02-duplicate-key-on-digest",
+      "observed_by_verifier": {
+        "python": "ACCEPTE",
+        "rust-core": "REJETE"
+      },
+      "distinct_verdicts": [
+        "ACCEPTE",
+        "REJETE"
+      ],
+      "declared": true
+    },
+    {
+      "id": "G-03-nan-outside-rfc",
+      "observed_by_verifier": {
+        "python": "ACCEPTE",
+        "rust-core": "REJETE"
+      },
+      "distinct_verdicts": [
+        "ACCEPTE",
+        "REJETE"
+      ],
+      "declared": true
+    },
+    {
+      "id": "G-04-infinity-outside-rfc",
+      "observed_by_verifier": {
+        "python": "ACCEPTE",
+        "rust-core": "REJETE"
+      },
+      "distinct_verdicts": [
+        "ACCEPTE",
+        "REJETE"
+      ],
+      "declared": true
+    },
+    {
+      "id": "G-07-base64url-standard-alphabet",
+      "observed_by_verifier": {
+        "python": "ACCEPTE",
+        "rust-crypto": "REJETE"
+      },
+      "distinct_verdicts": [
+        "ACCEPTE",
+        "REJETE"
+      ],
+      "declared": true
+    }
+  ],
+  "failures": [],
+  "errors": [],
+  "results": [
+    {
+      "id": "A-01-submission-v1-valid",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-02-submission-v2-valid",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-03-submission-v2-zip-valid",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-04-empty-artifact-allowed",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-05-archive-valid",
+      "family": "A-valid",
+      "subject": "archive",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "derive de l absence de FAIL (verify.py)",
+        "rapport_ecrit": false,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-06-attestation-valid",
+      "family": "A-valid",
+      "subject": "attestation",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "lu_depuis": "derive de counts.fail du rapport structure (verify_attestation.py rend un NIVEAU, pas un verdict)",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-07-attestation-store-not-confronted",
+      "family": "A-valid",
+      "subject": "attestation",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "lu_depuis": "derive de counts.fail du rapport structure (verify_attestation.py rend un NIVEAU, pas un verdict)",
+        "rapport_ecrit": true,
+        "classification": "INCOMPLET",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee"
+        ]
+      }
+    },
+    {
+      "id": "B-01-artifact-file-missing",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "INCOMPLET"
+      },
+      "observed": {
+        "verdict": "INCOMPLET",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "INCOMPLET",
+        "required_not_demonstrated": [
+          "empreintes des artefacts declares"
+        ]
+      }
+    },
+    {
+      "id": "B-02-required-field-absent",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "B-03-v2-null-model-with-reason",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "B-04-v2-null-model-without-reason",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "B-05-v1-null-model-refused",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "B-06-optional-fields-absent",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-01-invalid-json",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-02-invalid-utf8",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-03-unexpected-structure",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-04-unknown-version",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-05-field-not-allowed-by-schema",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare ACCEPTE, observe ACCEPTE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Le schema impose un refus ; l implementation de reference nomme et poursuit. Les deux lectures sont defendables, et aucune n est imposee par ce corpus.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Le schema impose un refus ; l implementation de reference nomme et poursuit. Les deux lectures sont defendables, et aucune n est imposee par ce corpus.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        }
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-06-not-a-zip",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-07-archive-crc-invalid",
+      "family": "C-malformed",
+      "subject": "archive",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "derive de l absence de FAIL (verify.py)",
+        "rapport_ecrit": false,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-08-archive-local-header-mismatch",
+      "family": "C-malformed",
+      "subject": "archive",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "derive de l absence de FAIL (verify.py)",
+        "rapport_ecrit": false,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-09-archive-deflate-invalid",
+      "family": "C-malformed",
+      "subject": "archive",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "derive de l absence de FAIL (verify.py)",
+        "rapport_ecrit": false,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "D-01-artifact-tampered",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "D-02-manifest-digest-wrong",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "D-03-size-wrong",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "D-04-file-substituted",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "D-05-artifact-removed",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "INCOMPLET"
+      },
+      "observed": {
+        "verdict": "INCOMPLET",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "INCOMPLET",
+        "required_not_demonstrated": [
+          "empreintes des artefacts declares"
+        ]
+      }
+    },
+    {
+      "id": "D-06-attestation-signature-invalid",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "derive de counts.fail du rapport structure (verify_attestation.py rend un NIVEAU, pas un verdict)",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "signature cryptographique"
+        ]
+      }
+    },
+    {
+      "id": "D-07-attestation-payload-tampered",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "derive de counts.fail du rapport structure (verify_attestation.py rend un NIVEAU, pas un verdict)",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "signature cryptographique"
+        ]
+      }
+    },
+    {
+      "id": "D-08-attestation-wrong-key",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "derive de counts.fail du rapport structure (verify_attestation.py rend un NIVEAU, pas un verdict)",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "signature cryptographique"
+        ]
+      }
+    },
+    {
+      "id": "D-09-attestation-replaced-by-other",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "derive de counts.fail du rapport structure (verify_attestation.py rend un NIVEAU, pas un verdict)",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "concordance avec l archive"
+        ]
+      }
+    },
+    {
+      "id": "D-10-archive-member-tampered",
+      "family": "D-tampered",
+      "subject": "archive",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "derive de l absence de FAIL (verify.py)",
+        "rapport_ecrit": false,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-01-path-traversal",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-02-path-absolute-unix",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-03-path-absolute-windows",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-04-path-backslash",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-05-path-empty",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-06-path-declared-twice",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "le contrat ne permet pas d imposer un resultat unique",
+      "ecart_code": null,
+      "note": "Au moins une des deux empreintes sera fausse, donc un refus est probable -- mais pour une raison incidente, non parce que le doublon serait interdit.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Au moins une des deux empreintes sera fausse, donc un refus est probable -- mais pour une raison incidente, non parce que le doublon serait interdit."
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-07-zip-member-duplicate",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-08-path-dot-segment",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare ACCEPTE, observe ACCEPTE -- conforme au declare",
+      "ecart_code": null,
+      "note": "FIGE par verificateur en 1.2.0. La note de 1.1.0 affirmait que les deux implementations admettent le segment `.` : c est FAUX. python ACCEPTE, rust-core REFUSE. Et python signale le meme fichier comme NON DECLARE dans son propre rapport : les deux ecritures du chemin ne se reconnaissent pas entre elles.",
+      "expected": {
+        "ambiguous": true,
+        "note": "FIGE par verificateur en 1.2.0. La note de 1.1.0 affirmait que les deux implementations admettent le segment `.` : c est FAUX. python ACCEPTE, rust-core REFUSE. Et python signale le meme fichier comme NON DECLARE dans son propre rapport : les deux ecritures du chemin ne se reconnaissent pas entre elles.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "F-01-coherent-rewrite-accepted",
+      "family": "F-coherent-rewrite",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "ceiling": true,
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "F-02-coherent-rewrite-breaks-attestation",
+      "family": "F-coherent-rewrite",
+      "subject": "attestation",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "derive de counts.fail du rapport structure (verify_attestation.py rend un NIVEAU, pas un verdict)",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "concordance avec l archive"
+        ]
+      }
+    },
+    {
+      "id": "F-03-archive-amputated-no-contract",
+      "family": "F-coherent-rewrite",
+      "subject": "archive",
+      "verifier": "python",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "ceiling": true,
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "derive de l absence de FAIL (verify.py)",
+        "rapport_ecrit": false,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-01-duplicate-json-keys",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare ACCEPTE, observe ACCEPTE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Recommandation consignee : interdire. Compatibilite mesuree : 0 doublon sur 494 documents JSON du depot. NON arbitre.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Recommandation consignee : interdire. Compatibilite mesuree : 0 doublon sur 494 documents JSON du depot. NON arbitre.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-02-duplicate-key-on-digest",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare ACCEPTE, observe ACCEPTE -- conforme au declare",
+      "ecart_code": null,
+      "note": "C est le cas qui rend l ambiguite grave : l empreinte est le coeur du dispositif.",
+      "expected": {
+        "ambiguous": true,
+        "note": "C est le cas qui rend l ambiguite grave : l empreinte est le coeur du dispositif.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-03-nan-outside-rfc",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare ACCEPTE, observe ACCEPTE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Meme famille que G-01. A trancher avec elle, pas separement.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Meme famille que G-01. A trancher avec elle, pas separement.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-04-infinity-outside-rfc",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare ACCEPTE, observe ACCEPTE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Meme decision que G-03.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Meme decision que G-03.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-05-lone-surrogate",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "python",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare REJETE, observe REJETE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Les DEUX refusent desormais, pour deux raisons DIFFERENTES : Python parce que la valeur ne peut pas etre reportee verbatim, Rust parce que son analyseur refuse la demi-paire. La concordance de verdict ne resout pas l ambiguite.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Les DEUX refusent desormais, pour deux raisons DIFFERENTES : Python parce que la valeur ne peut pas etre reportee verbatim, Rust parce que son analyseur refuse la demi-paire. La concordance de verdict ne resout pas l ambiguite.",
+        "python": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-06-base64url-padding",
+      "family": "G-ambiguous",
+      "subject": "attestation",
+      "verifier": "python",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare REJETE, observe REJETE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Troisieme ambiguite de la meme famille. NON arbitree. Les deux REFUSENT, et le comportement est desormais fige par verificateur -- il ne l etait pas en 1.1.0.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Troisieme ambiguite de la meme famille. NON arbitree. Les deux REFUSENT, et le comportement est desormais fige par verificateur -- il ne l etait pas en 1.1.0.",
+        "python": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        },
+        "rust-crypto": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "derive de counts.fail du rapport structure (verify_attestation.py rend un NIVEAU, pas un verdict)",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "signature cryptographique"
+        ]
+      }
+    },
+    {
+      "id": "G-07-base64url-standard-alphabet",
+      "family": "G-ambiguous",
+      "subject": "attestation",
+      "verifier": "python",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare ACCEPTE, observe ACCEPTE -- conforme au declare",
+      "ecart_code": null,
+      "note": "C est le cas ou la divergence est la plus visible : un meme engagement cryptographique est atteste d un cote et refuse de l autre, sans qu aucun octet signe ne differe. FIGE par verificateur en 1.2.0 : le corpus 1.1.0 mesurait cette divergence sans la publier.",
+      "expected": {
+        "ambiguous": true,
+        "note": "C est le cas ou la divergence est la plus visible : un meme engagement cryptographique est atteste d un cote et refuse de l autre, sans qu aucun octet signe ne differe. FIGE par verificateur en 1.2.0 : le corpus 1.1.0 mesurait cette divergence sans la publier.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-crypto": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "lu_depuis": "derive de counts.fail du rapport structure (verify_attestation.py rend un NIVEAU, pas un verdict)",
+        "rapport_ecrit": true,
+        "classification": "INCOMPLET",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee"
+        ]
+      }
+    },
+    {
+      "id": "A-01-submission-v1-valid",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-02-submission-v2-valid",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-03-submission-v2-zip-valid",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-04-empty-artifact-allowed",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-05-archive-valid",
+      "family": "A-valid",
+      "subject": "archive",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `archive` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "A-06-attestation-valid",
+      "family": "A-valid",
+      "subject": "attestation",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `attestation` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "A-07-attestation-store-not-confronted",
+      "family": "A-valid",
+      "subject": "attestation",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `attestation` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "B-01-artifact-file-missing",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "INCOMPLET"
+      },
+      "observed": {
+        "verdict": "INCOMPLET",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "INCOMPLET",
+        "required_not_demonstrated": [
+          "empreintes des artefacts declares"
+        ]
+      }
+    },
+    {
+      "id": "B-02-required-field-absent",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "B-03-v2-null-model-with-reason",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "B-04-v2-null-model-without-reason",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "B-05-v1-null-model-refused",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "B-06-optional-fields-absent",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-01-invalid-json",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-02-invalid-utf8",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-03-unexpected-structure",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-04-unknown-version",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-05-field-not-allowed-by-schema",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "le contrat ne permet pas d imposer un resultat unique",
+      "ecart_code": null,
+      "note": "Le schema impose un refus ; l implementation de reference nomme et poursuit. Les deux lectures sont defendables, et aucune n est imposee par ce corpus.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Le schema impose un refus ; l implementation de reference nomme et poursuit. Les deux lectures sont defendables, et aucune n est imposee par ce corpus.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        }
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-06-not-a-zip",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-07-archive-crc-invalid",
+      "family": "C-malformed",
+      "subject": "archive",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `archive` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "C-08-archive-local-header-mismatch",
+      "family": "C-malformed",
+      "subject": "archive",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `archive` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "C-09-archive-deflate-invalid",
+      "family": "C-malformed",
+      "subject": "archive",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `archive` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "D-01-artifact-tampered",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "D-02-manifest-digest-wrong",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "D-03-size-wrong",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "D-04-file-substituted",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "D-05-artifact-removed",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "INCOMPLET"
+      },
+      "observed": {
+        "verdict": "INCOMPLET",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "INCOMPLET",
+        "required_not_demonstrated": [
+          "empreintes des artefacts declares"
+        ]
+      }
+    },
+    {
+      "id": "D-06-attestation-signature-invalid",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `attestation` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "D-07-attestation-payload-tampered",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `attestation` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "D-08-attestation-wrong-key",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `attestation` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "D-09-attestation-replaced-by-other",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `attestation` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "D-10-archive-member-tampered",
+      "family": "D-tampered",
+      "subject": "archive",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `archive` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "E-01-path-traversal",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-02-path-absolute-unix",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-03-path-absolute-windows",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-04-path-backslash",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-05-path-empty",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-06-path-declared-twice",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "le contrat ne permet pas d imposer un resultat unique",
+      "ecart_code": null,
+      "note": "Au moins une des deux empreintes sera fausse, donc un refus est probable -- mais pour une raison incidente, non parce que le doublon serait interdit.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Au moins une des deux empreintes sera fausse, donc un refus est probable -- mais pour une raison incidente, non parce que le doublon serait interdit."
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-07-zip-member-duplicate",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-08-path-dot-segment",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare REJETE, observe REJETE -- conforme au declare",
+      "ecart_code": null,
+      "note": "FIGE par verificateur en 1.2.0. La note de 1.1.0 affirmait que les deux implementations admettent le segment `.` : c est FAUX. python ACCEPTE, rust-core REFUSE. Et python signale le meme fichier comme NON DECLARE dans son propre rapport : les deux ecritures du chemin ne se reconnaissent pas entre elles.",
+      "expected": {
+        "ambiguous": true,
+        "note": "FIGE par verificateur en 1.2.0. La note de 1.1.0 affirmait que les deux implementations admettent le segment `.` : c est FAUX. python ACCEPTE, rust-core REFUSE. Et python signale le meme fichier comme NON DECLARE dans son propre rapport : les deux ecritures du chemin ne se reconnaissent pas entre elles.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "F-01-coherent-rewrite-accepted",
+      "family": "F-coherent-rewrite",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "ceiling": true,
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "F-02-coherent-rewrite-breaks-attestation",
+      "family": "F-coherent-rewrite",
+      "subject": "attestation",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `attestation` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "F-03-archive-amputated-no-contract",
+      "family": "F-coherent-rewrite",
+      "subject": "archive",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `archive` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "G-01-duplicate-json-keys",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare REJETE, observe REJETE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Recommandation consignee : interdire. Compatibilite mesuree : 0 doublon sur 494 documents JSON du depot. NON arbitre.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Recommandation consignee : interdire. Compatibilite mesuree : 0 doublon sur 494 documents JSON du depot. NON arbitre.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-02-duplicate-key-on-digest",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare REJETE, observe REJETE -- conforme au declare",
+      "ecart_code": null,
+      "note": "C est le cas qui rend l ambiguite grave : l empreinte est le coeur du dispositif.",
+      "expected": {
+        "ambiguous": true,
+        "note": "C est le cas qui rend l ambiguite grave : l empreinte est le coeur du dispositif.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-03-nan-outside-rfc",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare REJETE, observe REJETE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Meme famille que G-01. A trancher avec elle, pas separement.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Meme famille que G-01. A trancher avec elle, pas separement.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-04-infinity-outside-rfc",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare REJETE, observe REJETE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Meme decision que G-03.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Meme decision que G-03.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-05-lone-surrogate",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "rust-core",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare REJETE, observe REJETE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Les DEUX refusent desormais, pour deux raisons DIFFERENTES : Python parce que la valeur ne peut pas etre reportee verbatim, Rust parce que son analyseur refuse la demi-paire. La concordance de verdict ne resout pas l ambiguite.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Les DEUX refusent desormais, pour deux raisons DIFFERENTES : Python parce que la valeur ne peut pas etre reportee verbatim, Rust parce que son analyseur refuse la demi-paire. La concordance de verdict ne resout pas l ambiguite.",
+        "python": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        },
+        "rust-core": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-06-base64url-padding",
+      "family": "G-ambiguous",
+      "subject": "attestation",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `attestation` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "G-07-base64url-standard-alphabet",
+      "family": "G-ambiguous",
+      "subject": "attestation",
+      "verifier": "rust-core",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-core` ne traite pas le sujet `attestation` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "A-01-submission-v1-valid",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "A-02-submission-v2-valid",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "A-03-submission-v2-zip-valid",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "A-04-empty-artifact-allowed",
+      "family": "A-valid",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "A-05-archive-valid",
+      "family": "A-valid",
+      "subject": "archive",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-06-attestation-valid",
+      "family": "A-valid",
+      "subject": "attestation",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "exit_code_strict": 0,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "A-07-attestation-store-not-confronted",
+      "family": "A-valid",
+      "subject": "attestation",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "INCOMPLET",
+        "attested_level": "cryptographically_attested",
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "INCOMPLET",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee"
+        ]
+      }
+    },
+    {
+      "id": "B-01-artifact-file-missing",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "B-02-required-field-absent",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "B-03-v2-null-model-with-reason",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "B-04-v2-null-model-without-reason",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "B-05-v1-null-model-refused",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "B-06-optional-fields-absent",
+      "family": "B-incomplete",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "C-01-invalid-json",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "C-02-invalid-utf8",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "C-03-unexpected-structure",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "C-04-unknown-version",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "C-05-field-not-allowed-by-schema",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "C-06-not-a-zip",
+      "family": "C-malformed",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "C-07-archive-crc-invalid",
+      "family": "C-malformed",
+      "subject": "archive",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-08-archive-local-header-mismatch",
+      "family": "C-malformed",
+      "subject": "archive",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "C-09-archive-deflate-invalid",
+      "family": "C-malformed",
+      "subject": "archive",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "D-01-artifact-tampered",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "D-02-manifest-digest-wrong",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "D-03-size-wrong",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "D-04-file-substituted",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "D-05-artifact-removed",
+      "family": "D-tampered",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "D-06-attestation-signature-invalid",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "signature cryptographique"
+        ]
+      }
+    },
+    {
+      "id": "D-07-attestation-payload-tampered",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "signature cryptographique"
+        ]
+      }
+    },
+    {
+      "id": "D-08-attestation-wrong-key",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "signature cryptographique"
+        ]
+      }
+    },
+    {
+      "id": "D-09-attestation-replaced-by-other",
+      "family": "D-tampered",
+      "subject": "attestation",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "concordance avec l archive"
+        ]
+      }
+    },
+    {
+      "id": "D-10-archive-member-tampered",
+      "family": "D-tampered",
+      "subject": "archive",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "E-01-path-traversal",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "E-02-path-absolute-unix",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "E-03-path-absolute-windows",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "E-04-path-backslash",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "E-05-path-empty",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "E-06-path-declared-twice",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "E-07-zip-member-duplicate",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "E-08-path-dot-segment",
+      "family": "E-paths",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "F-01-coherent-rewrite-accepted",
+      "family": "F-coherent-rewrite",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "F-02-coherent-rewrite-breaks-attestation",
+      "family": "F-coherent-rewrite",
+      "subject": "attestation",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "attested_level": null,
+        "exit_code": 1,
+        "exit_code_strict": 1,
+        "verdict": "REJETE"
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": [
+          "empreinte du magasin confrontee",
+          "concordance avec l archive"
+        ]
+      }
+    },
+    {
+      "id": "F-03-archive-amputated-no-contract",
+      "family": "F-coherent-rewrite",
+      "subject": "archive",
+      "verifier": "rust-crypto",
+      "rule_status": "NORMATIVE",
+      "etat": "PASS",
+      "detail": "verdict et code conformes",
+      "ecart_code": null,
+      "note": null,
+      "expected": {
+        "ceiling": true,
+        "exit_code": 0,
+        "exit_code_strict": 2,
+        "verdict": "ACCEPTE"
+      },
+      "observed": {
+        "verdict": "ACCEPTE",
+        "attested_level": null,
+        "exit_code": 0,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "ACCEPTE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-01-duplicate-json-keys",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "G-02-duplicate-key-on-digest",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "G-03-nan-outside-rfc",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "G-04-infinity-outside-rfc",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "G-05-lone-surrogate",
+      "family": "G-ambiguous",
+      "subject": "submission",
+      "verifier": "rust-crypto",
+      "etat": "NOT APPLICABLE",
+      "detail": "`rust-crypto` ne traite pas le sujet `submission` ; il ne l annonce pas, et le lui reprocher serait une mesure fausse"
+    },
+    {
+      "id": "G-06-base64url-padding",
+      "family": "G-ambiguous",
+      "subject": "attestation",
+      "verifier": "rust-crypto",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare REJETE, observe REJETE -- conforme au declare",
+      "ecart_code": null,
+      "note": "Troisieme ambiguite de la meme famille. NON arbitree. Les deux REFUSENT, et le comportement est desormais fige par verificateur -- il ne l etait pas en 1.1.0.",
+      "expected": {
+        "ambiguous": true,
+        "note": "Troisieme ambiguite de la meme famille. NON arbitree. Les deux REFUSENT, et le comportement est desormais fige par verificateur -- il ne l etait pas en 1.1.0.",
+        "python": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        },
+        "rust-crypto": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    },
+    {
+      "id": "G-07-base64url-standard-alphabet",
+      "family": "G-ambiguous",
+      "subject": "attestation",
+      "verifier": "rust-crypto",
+      "rule_status": "AMBIGUOUS",
+      "etat": "AMBIGUOUS",
+      "detail": "comportement declare REJETE, observe REJETE -- conforme au declare",
+      "ecart_code": null,
+      "note": "C est le cas ou la divergence est la plus visible : un meme engagement cryptographique est atteste d un cote et refuse de l autre, sans qu aucun octet signe ne differe. FIGE par verificateur en 1.2.0 : le corpus 1.1.0 mesurait cette divergence sans la publier.",
+      "expected": {
+        "ambiguous": true,
+        "note": "C est le cas ou la divergence est la plus visible : un meme engagement cryptographique est atteste d un cote et refuse de l autre, sans qu aucun octet signe ne differe. FIGE par verificateur en 1.2.0 : le corpus 1.1.0 mesurait cette divergence sans la publier.",
+        "python": {
+          "exit_code": 0,
+          "verdict": "ACCEPTE"
+        },
+        "rust-crypto": {
+          "exit_code": 1,
+          "verdict": "REJETE"
+        }
+      },
+      "observed": {
+        "verdict": "REJETE",
+        "attested_level": null,
+        "exit_code": 1,
+        "lu_depuis": "rapport structure",
+        "rapport_ecrit": true,
+        "classification": "REJETE",
+        "required_not_demonstrated": []
+      }
+    }
+  ]
+}

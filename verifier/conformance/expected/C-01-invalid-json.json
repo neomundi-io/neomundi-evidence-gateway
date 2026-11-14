@@ -1,0 +1,48 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Manifeste JSON tronque au milieu.",
+  "expected": {
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "C-malformed",
+  "files": [
+    {
+      "bytes": 120,
+      "path": "fixtures/C-malformed/C-01-invalid-json/submission.json",
+      "sha256": "d2b85edda071d307dc5c92cdb6069c68d8b92b48531aedadac9637084fa4c988"
+    },
+    {
+      "bytes": 3,
+      "path": "fixtures/C-malformed/C-01-invalid-json/artefacts/prompt.txt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    },
+    {
+      "bytes": 11,
+      "path": "fixtures/C-malformed/C-01-invalid-json/artefacts/reponse.txt",
+      "sha256": "740c8a152af2c0077d66598619eec8c3570f6f95bbc7acbb2020ae3d53f8092e"
+    }
+  ],
+  "id": "C-01-invalid-json",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "RFC 8259",
+    "statut": "NORMATIVE",
+    "texte": "Un document JSON incomplet n est pas du JSON."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

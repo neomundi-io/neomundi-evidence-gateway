@@ -24,30 +24,44 @@ après coup.
 > non public**. Le demander à
 > [contact@neomundi.io](mailto:contact@neomundi.io).
 
-## 🔴 La plus grande limite : personne à l'extérieur ne peut rejouer une vérification
+## 🟢 La re-vérification indépendante — rétablie, et bornée
 
-Les vérificateurs Evidence — `verify.py`, `verify_attestation.py`, les deux
-vérificateurs Rust indépendants — vivent dans le dépôt du moteur. La
-spécification normative (97 règles tracées) et le corpus public de conformité
-(50 cas gelés, 121 fichiers de fixture) y vivent aussi.
+Jusqu'au 14 novembre 2026, cette section disait que personne hors du moteur
+ne pouvait rejouer une vérification. **Ce n'est plus vrai, et c'était à
+corriger plutôt qu'à assumer.**
 
-Donc, à ce jour :
+La surface de vérification est publiée dans
+[`../verifier/`](../verifier) : la spécification normative, le corpus de
+conformité gelé (50 cas, 121 fixtures, 172 entrées couvertes par empreinte),
+les vérificateurs Python et les deux vérificateurs Rust indépendants.
+227 fichiers, bibliothèque standard seule.
 
-| Qui | Peut rejouer une vérification indépendante ? |
+Mesuré en salle blanche le 2026-11-14 — ces seuls fichiers, aucun accès au
+dépôt privé :
+
+| | |
 |---|---|
-| qui a l'accès au moteur | oui |
-| qui ne l'a pas | **non** |
+| `sha256sum --check SHA256SUMS` | **172 / 172 OK** |
+| corpus, les trois vérificateurs | **80 PASS, 20 AMBIGUOUS, 50 non applicables**, **0 écart de code de sortie sur un verdict concordant** |
+| artefact valide / artefact altéré | code **0** / code **1** |
+| attestation sans magasin, puis avec `--strict` | code **0**, puis code **2** |
 
-**Ce gateway ne comble pas cet écart, et n'est pas censé le combler.** Il ne
-vérifie rien ; il transporte un verdict produit par un moteur. Un rapport
-obtenu par son intermédiaire est une vérification faite par qui exécute le
-moteur.
+**Ce qui reste borné, et n'est pas une formalité :**
 
-C'est le coût de la séparation, énoncé plutôt que découvert. Les chiffres de
-[`VERIFICATION_RESULTS.fr.md`](VERIFICATION_RESULTS.fr.md) restent **vrais et
-ancrés par des empreintes** — mais un tiers ne peut plus les reproduire seul.
-Rétablir cette capacité signifierait publier ici la spécification et le
-corpus de conformité : c'est une décision, pas un oubli.
+- ce sont **nos** vérificateurs, sur **notre** spécification, contre **notre**
+  corpus. Les exécuter confirme que nos outils se comportent comme nous le
+  décrivons — pas que la conception est juste. Le vérificateur Rust existe
+  pour que deux implémentations puissent être *comparées* ; leurs divergences
+  déclarées sont publiées en `AMBIGUOUS` plutôt que réconciliées ;
+- le corpus est **gelé** : une preuve sur les cas qu'il contient, muet sur
+  tous les autres ;
+- `verifier-rs-crypto` exige un accès réseau à un registre de caisses à la
+  première compilation (23 entrées de `Cargo.lock`). `verifier-rs`, non : il
+  compile hors ligne avec rien, et cette asymétrie est délibérée ;
+- **ce qui produit et signe reste privé** : génération de clés et attestation,
+  construction de liaison, horodatage, publication du magasin de confiance,
+  adaptateurs de réconciliation pilote. Rien d'ici ne peut forger une
+  attestation.
 
 ## 🔴 Indépendance
 
@@ -101,7 +115,10 @@ internes. Seule une empreinte conservée ailleurs la détecte.
 - **2 des 12 points d'entrée du moteur sont exposés** : `verify` et
   `attestation`. Liaison, signature, horodatage, ingestion de paquet tiers et
   réconciliation ne le sont **pas** — nommés comme développements futurs dans
-  [`../docs/INTERFACE.fr.md`](../docs/INTERFACE.fr.md), non tus ;
+  [`../docs/INTERFACE.fr.md`](../docs/INTERFACE.fr.md), non tus. À noter que
+  `verifier/adapters/ingest.py` **est** publié, parce que le corpus en a
+  besoin ; c'est seulement le gateway qui n'expose pas encore d'opération
+  pour lui ;
 - **`engine.revision_declared` est déclarée, jamais vérifiée.** Ce gateway ne
   lance aucun `git` et ne contrôle aucune signature sur l'arbre du moteur. Il
   ne peut pas établir qu'un répertoire correspond à un commit ;

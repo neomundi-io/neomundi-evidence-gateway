@@ -1,0 +1,86 @@
+{
+  "changes": [
+    {
+      "at_declared": "2026-11-06T00:00:00Z",
+      "by_identity": "nm-operator-poste",
+      "what": "creation du magasin et inscription de la cle nm-ev-demo-v1"
+    }
+  ],
+  "identities": [
+    {
+      "identity_id": "nm-recherche",
+      "jurisdiction": null,
+      "kind": "association",
+      "legal_capacity_to_attest": "unverified",
+      "legal_name": "NeoMundi Recherche",
+      "notes": "Capacite juridique a attester NON VERIFIEE a ce stade.",
+      "registration_reference": null,
+      "superseded_by": null,
+      "valid_from_declared": "2026-11-06T00:00:00Z"
+    },
+    {
+      "identity_id": "nm-operator-poste",
+      "jurisdiction": null,
+      "kind": "machine",
+      "legal_capacity_to_attest": "not_applicable",
+      "legal_name": "nm-operator-poste",
+      "notes": "Detenteur technique de la cle, et operateur. Ne s engage sur rien.",
+      "registration_reference": null,
+      "superseded_by": null,
+      "valid_from_declared": "2026-11-06T00:00:00Z"
+    },
+    {
+      "identity_id": "nm-station",
+      "jurisdiction": null,
+      "kind": "machine",
+      "legal_capacity_to_attest": "not_applicable",
+      "legal_name": "nm-station",
+      "notes": "Auteur des mesures du corpus atteste. Distinct du signataire : mesurer n est pas s engager.",
+      "registration_reference": null,
+      "superseded_by": null,
+      "valid_from_declared": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "keys": [
+    {
+      "alg": "EdDSA",
+      "crv": "Ed25519",
+      "key_custodian_identity": "nm-operator-poste",
+      "kid": "nm-ev-demo-v1",
+      "kty": "OKP",
+      "notes": "Cle de DEMONSTRATION, ephemere, detruite aussitot apres signature.",
+      "revocation": null,
+      "signer_identity": "nm-recherche",
+      "status": "test",
+      "superseded_by": null,
+      "valid_from_declared": "2026-11-06T00:00:00Z",
+      "valid_until_declared": null,
+      "x": "0000000000000000000000000000000000000000000"
+    }
+  ],
+  "limits": [
+    "Ce magasin ne contient que du materiel public.",
+    "Les dates y sont DECLAREES : aucune n est horodatee independamment.",
+    "La capacite juridique des identites est declaree, jamais verifiee par du code."
+  ],
+  "schema": "neomundi.evidence.trust-store/1",
+  "store_id": "neomundi-evidence-test",
+  "store_kind": "test",
+  "store_version": 1,
+  "updated_at_declared": "2026-11-06T00:00:00Z",
+  "verification_policy": {
+    "accepted_algorithms": [
+      "EdDSA"
+    ],
+    "accepted_curves": [
+      "Ed25519"
+    ],
+    "on_compromised_key": "untrusted_retroactively",
+    "on_expired_key": "untrusted",
+    "on_rotated_key_after_window": "untrusted",
+    "on_rotated_key_within_window": "trusted",
+    "on_test_key": "untrusted_unless_allowed",
+    "on_unknown_key": "not_tested",
+    "policy_id": "neomundi-evidence-policy/1"
+  }
+}

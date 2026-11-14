@@ -1,0 +1,48 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Un octet ajoute a un artefact, son empreinte declaree inchangee.",
+  "expected": {
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "D-tampered",
+  "files": [
+    {
+      "bytes": 808,
+      "path": "fixtures/D-tampered/D-01-artifact-tampered/submission.json",
+      "sha256": "3fb68cd5e9b2092aba4ba2c1674dd37bf05cf57707b2361583dd9b097df71c1d"
+    },
+    {
+      "bytes": 4,
+      "path": "fixtures/D-tampered/D-01-artifact-tampered/artefacts/prompt.txt",
+      "sha256": "7571ce1f8e21c6b13dd7ec2c5ec7c9e4dd9852e209869511853f2f1f74b17927"
+    },
+    {
+      "bytes": 11,
+      "path": "fixtures/D-tampered/D-01-artifact-tampered/artefacts/reponse.txt",
+      "sha256": "740c8a152af2c0077d66598619eec8c3570f6f95bbc7acbb2020ae3d53f8092e"
+    }
+  ],
+  "id": "D-01-artifact-tampered",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "schemas/evidence-submission-v2.json#/properties/artifacts/items/properties/sha256",
+    "statut": "NORMATIVE",
+    "texte": "L empreinte declaree est RECALCULEE sur les octets du fichier. Une divergence est un refus, et les DEUX valeurs doivent figurer au rapport."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

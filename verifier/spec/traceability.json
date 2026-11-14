@@ -1,0 +1,1319 @@
+{
+  "schema": "neomundi.evidence.protocol-traceability/1",
+  "protocol_version": "evidence-protocol/1",
+  "candidate_revision": "1.0.0-rc.1",
+  "corpus_version": "1.3.0",
+  "a_propos": "Chaque regle normative de spec/ et ce qui l eprouve. `coverage` dit s il existe un test ; `reference_implementations` dit si les implementations de reference la respectent. LES DEUX SONT DISTINCTS : une regle peut etre bien couverte et violee, et c est precisement ce qu il faut pouvoir lire.",
+  "echelles": {
+    "coverage": [
+      "COVERED",
+      "PARTIAL",
+      "GAP",
+      "NOT TESTABLE"
+    ],
+    "reference_implementations": [
+      "CONFORMING",
+      "PARTIAL",
+      "GAP",
+      "UNKNOWN"
+    ]
+  },
+  "rules": [
+    {
+      "id": "EP1-ABS-001",
+      "section": "9.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_provenance.py",
+        "tests/test_capacite.py",
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-ABS-002",
+      "section": "9.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_i18n.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Les trois comptes sont trois champs distincts du rapport JSON, epingles par la suite i18n."
+    },
+    {
+      "id": "EP1-ABS-010",
+      "section": "9.2",
+      "kind": "MUST",
+      "corpus_cases": [
+        "B-03-v2-null-model-with-reason",
+        "B-04-v2-null-model-without-reason"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-ABS-011",
+      "section": "9.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_contrat_v2_schema.py"
+      ],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "L enumeration est epinglee ; aucun test ne verifie qu une raison n est pas REECRITE en l autre."
+    },
+    {
+      "id": "EP1-ABS-012",
+      "section": "9.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_contrat_v2_schema.py"
+      ],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "Le `allOf` du schema l impose ; aucun cas du corpus ne porte un modele NOMME avec une raison d absence."
+    },
+    {
+      "id": "EP1-ABS-013",
+      "section": "9.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_contrat_v2_schema.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-CAN-001",
+      "section": "5.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "D-02-manifest-digest-wrong"
+      ],
+      "tests": [],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "Eprouve indirectement : une empreinte fausse est detectee, donc aucune renormalisation n a eu lieu. Aucun cas ne l eprouve directement."
+    },
+    {
+      "id": "EP1-CAN-002",
+      "section": "5.2",
+      "kind": "MUST",
+      "corpus_cases": [
+        "A-06-attestation-valid"
+      ],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-CAN-003",
+      "section": "5.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "GAP",
+      "reference_implementations": "UNKNOWN",
+      "note": "Aucun cas ne porte un profil INVALIDE avec une signature VALIDE -- la seule forme qui distinguerait les deux echecs."
+    },
+    {
+      "id": "EP1-CAN-004",
+      "section": "5.1",
+      "kind": "MUST",
+      "corpus_cases": [
+        "D-07-attestation-payload-tampered"
+      ],
+      "tests": [
+        "tests/test_attestation.py",
+        "verifier-rs-crypto/tests/integration.rs"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-CAN-005",
+      "section": "5.3",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "ci: revendications interdites"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Controle documentaire : la CI refuse une revendication de conformite RFC 8785 / DSSE / in-toto / Sigstore dans spec/."
+    },
+    {
+      "id": "EP1-COMPAT-001",
+      "section": "3.1",
+      "kind": "MUST",
+      "corpus_cases": [
+        "C-04-unknown-version"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-COMPAT-002",
+      "section": "3.2",
+      "kind": "MUST",
+      "corpus_cases": [
+        "C-05-field-not-allowed-by-schema"
+      ],
+      "tests": [
+        "tests/test_conformite_schema.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "La divergence est DECLAREE dans la liste `TOLERANCES` de la suite, avec son motif."
+    },
+    {
+      "id": "EP1-COMPAT-003",
+      "section": "3.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "C-05-field-not-allowed-by-schema"
+      ],
+      "tests": [
+        "tests/test_ingestion.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Le champ en surplus sort en NOT TESTED, pas en PASS."
+    },
+    {
+      "id": "EP1-COMPAT-004",
+      "section": "3.3",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "B-06-optional-fields-absent"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-COMPAT-010",
+      "section": "5",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "G-01-duplicate-json-keys",
+        "G-02-duplicate-key-on-digest",
+        "G-03-nan-outside-rfc",
+        "G-04-infinity-outside-rfc",
+        "G-06-base64url-padding",
+        "G-07-base64url-standard-alphabet",
+        "E-08-path-dot-segment"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Les SEPT cas sont figes en AMBIGU, et leur comportement est desormais declare PAR VERIFICATEUR sur les six qui divergent. Aucune des trois regles proposees n est appliquee."
+    },
+    {
+      "id": "EP1-COMPAT-020",
+      "section": "6",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [],
+      "coverage": "NOT TESTABLE",
+      "reference_implementations": "CONFORMING",
+      "note": "Obligation de gouvernance : aucune version n a ete retiree."
+    },
+    {
+      "id": "EP1-COMPAT-021",
+      "section": "6",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [],
+      "coverage": "NOT TESTABLE",
+      "reference_implementations": "CONFORMING",
+      "note": "Aucune version n est depreciee a ce jour."
+    },
+    {
+      "id": "EP1-COMPAT-022",
+      "section": "6",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_cles.py",
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-COMPAT-030",
+      "section": "7",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "ci: build_fixtures.py --check"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "1.1.0 l a demontre : 0 des 121 fixtures modifiee."
+    },
+    {
+      "id": "EP1-COMPAT-031",
+      "section": "7",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "ci: corpus de conformite"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "`reports/latest.json` et la matrice portent `corpus_version`."
+    },
+    {
+      "id": "EP1-CONF-001",
+      "section": "1 (CONFORMANCE)",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_specification.py"
+      ],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "La suite verifie que les comptes publies sont exacts et qu aucun pourcentage de conformite n est derive. Elle ne peut pas juger une revendication faite AILLEURS que dans ce depot."
+    },
+    {
+      "id": "EP1-CONF-002",
+      "section": "2 (CONFORMANCE)",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [],
+      "coverage": "NOT TESTABLE",
+      "reference_implementations": "CONFORMING",
+      "note": "Obligation portant sur une revendication TIERCE. Respectee ici : chaque chiffre publie nomme sa plateforme."
+    },
+    {
+      "id": "EP1-CONF-003",
+      "section": "2 (CONFORMANCE)",
+      "kind": "MAY",
+      "corpus_cases": [],
+      "tests": [
+        "ci: corpus de conformite"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Le banc l applique : trois perimetres declares, trois denominateurs."
+    },
+    {
+      "id": "EP1-CONF-010",
+      "section": "3 (CONFORMANCE)",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "ci: corpus de conformite"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "`PERIMETRES` dans `conformance/runners/run.py` : 50 NOT APPLICABLE observes, aucun FAIL hors perimetre."
+    },
+    {
+      "id": "EP1-CONF-011",
+      "section": "3 (CONFORMANCE)",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_specification.py",
+        "ci: matrice de couverture"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "La matrice publie ses denominateurs en premiere section, et la suite verifie les comptes de regles."
+    },
+    {
+      "id": "EP1-CONF-020",
+      "section": "5.3 (CONFORMANCE)",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_specification.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Cas 7d : chaque lacune de couverture doit etre NOMMEE dans CONFORMANCE.md, pas seulement comptee."
+    },
+    {
+      "id": "EP1-CONF-030",
+      "section": "7 (CONFORMANCE)",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [],
+      "coverage": "NOT TESTABLE",
+      "reference_implementations": "CONFORMING",
+      "note": "Obligation de conduite : signaler une fiche fausse plutot que de contourner le cas. `conformance/README.md` section 10 en donne la procedure."
+    },
+    {
+      "id": "EP1-INT-001",
+      "section": "6.1",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_contrat_v2_schema.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-INT-002",
+      "section": "6.1",
+      "kind": "MUST",
+      "corpus_cases": [
+        "D-01-artifact-tampered",
+        "D-02-manifest-digest-wrong",
+        "D-04-file-substituted",
+        "D-10-archive-member-tampered"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-INT-003",
+      "section": "6.1",
+      "kind": "MUST",
+      "corpus_cases": [
+        "D-03-size-wrong"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-INT-004",
+      "section": "6.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "A-04-empty-artifact-allowed"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-INT-010",
+      "section": "6.2",
+      "kind": "MUST",
+      "corpus_cases": [
+        "E-01-path-traversal",
+        "E-05-path-empty"
+      ],
+      "tests": [
+        "tests/test_chemins_archive.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-INT-011",
+      "section": "6.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "E-02-path-absolute-unix",
+        "E-03-path-absolute-windows",
+        "E-04-path-backslash"
+      ],
+      "tests": [
+        "tests/test_chemins_archive.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "UNC est refuse par la regle de l antislash, pas par une regle dediee."
+    },
+    {
+      "id": "EP1-INT-012",
+      "section": "6.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "E-04-path-backslash"
+      ],
+      "tests": [
+        "tests/test_chemins_archive.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "CORRIGE le 11/11. `verify.py` decomposait un nom de membre avec `pathlib`, donc selon la PLATEFORME : `..\\secret` etait refuse sous Windows et ACCEPTE sous Linux, ou tourne la CI. Le controle passe par `membre_abusif()`, qui refuse l antislash et decompose sur `/` -- comme `adapters/ingest.py` et `verifier-rs/src/chemins.rs` le faisaient DEJA. Compatibilite mesuree avant d appliquer : 18 archives suivies, 128 membres, 0 concerne. Le cas 2 de la suite mesure l ARBRE SYNTAXIQUE : ni `pathlib` ni `os.path` dans le predicat, parce qu aucune entree ne distinguerait les deux implementations depuis une seule machine."
+    },
+    {
+      "id": "EP1-INT-013",
+      "section": "6.2",
+      "kind": "MUST",
+      "corpus_cases": [
+        "E-07-zip-member-duplicate"
+      ],
+      "tests": [
+        "tests/test_chemins_archive.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-INT-020",
+      "section": "6.3",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "B-01-artifact-file-missing",
+        "D-05-artifact-removed"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-INT-021",
+      "section": "6.3",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "verifier-rs/tests/regressions_consolidation.rs",
+        "tests/test_obligations_sans_test.py"
+      ],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "Le vecteur de DISSIMULATION d un membre non declare est verrouille cote Rust. Aucun cas du corpus ne l eprouve, d ou PARTIAL. La POLITIQUE exigee par la seconde moitie de la regle est desormais ENONCEE dans docs/SUBMISSION.md 2 (signaler, et ne pas refuser -- --strict inclus) et verrouillee avec le comportement par les cas 4a-4c de tests/test_obligations_sans_test.py. Jusqu au 2026-11-12 elle ne vivait que dans un commentaire de code."
+    },
+    {
+      "id": "EP1-INT-030",
+      "section": "6.4",
+      "kind": "MUST",
+      "corpus_cases": [
+        "C-06-not-a-zip"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-INT-031",
+      "section": "6.4",
+      "kind": "MUST",
+      "corpus_cases": [
+        "C-07-archive-crc-invalid"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-INT-032",
+      "section": "6.4",
+      "kind": "MUST",
+      "corpus_cases": [
+        "C-08-archive-local-header-mismatch"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-INT-033",
+      "section": "6.4",
+      "kind": "MUST",
+      "corpus_cases": [
+        "C-09-archive-deflate-invalid"
+      ],
+      "tests": [
+        "tests/test_flux_illisible.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Non conforme cote Python jusqu au corpus 1.0.0 ; corrige, et le cas passe en 1.1.0."
+    },
+    {
+      "id": "EP1-INT-034",
+      "section": "6.4",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "C-09-archive-deflate-invalid"
+      ],
+      "tests": [],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "Un refus est observe ; aucun cas ne demontre qu AUCUN octet n a ete retenu du flux endommage."
+    },
+    {
+      "id": "EP1-INT-035",
+      "section": "6.4",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "verifier-rs/tests/regressions_consolidation.rs"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "PARTIAL",
+      "note": "Eprouve sur `rust-core` seulement. `verify.py` s appuie sur `zipfile`, dont les bornes ne sont pas declarees."
+    },
+    {
+      "id": "EP1-INT-040",
+      "section": "6.5",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [],
+      "coverage": "GAP",
+      "reference_implementations": "UNKNOWN",
+      "note": "Aucun test ne verifie qu un refus DEFENSIF se distingue d un refus CONTRACTUEL dans un rapport."
+    },
+    {
+      "id": "EP1-INT-041",
+      "section": "6.5",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [],
+      "coverage": "NOT TESTABLE",
+      "reference_implementations": "CONFORMING",
+      "note": "Obligation portant sur la facon de JUGER une autre implementation. Le banc l applique : `NOT APPLICABLE`, jamais `FAIL`."
+    },
+    {
+      "id": "EP1-LIM-001",
+      "section": "15",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "F-01-coherent-rewrite-accepted",
+        "F-02-coherent-rewrite-breaks-attestation",
+        "F-03-archive-amputated-no-contract"
+      ],
+      "tests": [
+        "tests/test_falsification.py",
+        "tests/test_publication.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-LIM-002",
+      "section": "4 (THREAT_MODEL)",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_specification.py",
+        "tests/test_publication.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Controle documentaire : la suite de specification refuse une revendication de conformite tierce ou d identite verifiee dans spec/."
+    },
+    {
+      "id": "EP1-REC-001",
+      "section": "12.1",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_reconciliation.py",
+        "tests/test_bom.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "HORS CORPUS : le corpus 1.1.0 ne porte aucun cas de reconciliation."
+    },
+    {
+      "id": "EP1-REC-002",
+      "section": "12.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_reconciliation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Hors corpus."
+    },
+    {
+      "id": "EP1-REC-003",
+      "section": "12.1",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_reconciliation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Hors corpus."
+    },
+    {
+      "id": "EP1-REC-010",
+      "section": "12.2",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_reconciliation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Hors corpus."
+    },
+    {
+      "id": "EP1-REC-011",
+      "section": "12.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_reconciliation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Hors corpus."
+    },
+    {
+      "id": "EP1-REC-012",
+      "section": "12.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_reconciliation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Hors corpus."
+    },
+    {
+      "id": "EP1-REC-013",
+      "section": "12.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_leader_reconciliation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Hors corpus."
+    },
+    {
+      "id": "EP1-REC-014",
+      "section": "12.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_reconciliation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Hors corpus."
+    },
+    {
+      "id": "EP1-SIG-001",
+      "section": "7.1",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "verifier-rs-crypto/tests/integration.rs"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-SIG-002",
+      "section": "7.1",
+      "kind": "MUST",
+      "corpus_cases": [
+        "D-07-attestation-payload-tampered"
+      ],
+      "tests": [
+        "verifier-rs-crypto/tests/integration.rs",
+        "tests/test_diagnostic_encodage.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Le motif d un echec de signature ne doit pas accuser la clef quand l ENCODAGE est en cause : les octets signes sont les segments VERBATIM, donc un bourrage en fait partie. Corrige le 11/11 et eprouve ; le verdict, lui, ne change pas."
+    },
+    {
+      "id": "EP1-SIG-003",
+      "section": "7.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "D-07-attestation-payload-tampered"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-SIG-010",
+      "section": "7.2",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Cas 11 : `alg` falsifie en `none`, `HS256`, `RS256`."
+    },
+    {
+      "id": "EP1-SIG-011",
+      "section": "7.2",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-SIG-012",
+      "section": "7.2",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "verifier-rs-crypto/tests/integration.rs"
+      ],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "`verify_strict` d `ed25519-dalek` l assure cote Rust. Aucun vecteur d encodage non canonique n est fige dans le corpus."
+    },
+    {
+      "id": "EP1-SIG-020",
+      "section": "7.3",
+      "kind": "MUST",
+      "corpus_cases": [
+        "A-06-attestation-valid"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-SIG-021",
+      "section": "7.3",
+      "kind": "MUST",
+      "corpus_cases": [
+        "A-06-attestation-valid"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-SIG-022",
+      "section": "7.3",
+      "kind": "MUST",
+      "corpus_cases": [
+        "D-10-archive-member-tampered",
+        "F-02-coherent-rewrite-breaks-attestation",
+        "D-09-attestation-replaced-by-other"
+      ],
+      "tests": [
+        "verifier-rs-crypto/banc/crypto.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Le defaut inverse -- ne controler qu une des trois empreintes declarees -- a reellement ete commis puis corrige pendant le developpement n. 2."
+    },
+    {
+      "id": "EP1-SIG-023",
+      "section": "7.3",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [],
+      "coverage": "GAP",
+      "reference_implementations": "UNKNOWN",
+      "note": "Aucun cas ne porte `attestation_kind: retrospective`."
+    },
+    {
+      "id": "EP1-SIG-024",
+      "section": "7.3",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "Les cas 5 et 6 eprouvent l ancrage externe absent ou non concordant ; aucun n eprouve la PRESENTATION de `attested_at_declared`."
+    },
+    {
+      "id": "EP1-SIG-030",
+      "section": "7.4",
+      "kind": "MUST",
+      "corpus_cases": [
+        "A-06-attestation-valid",
+        "D-08-attestation-wrong-key"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-SIG-031",
+      "section": "7.4",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py",
+        "tests/test_obligations_sans_test.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Referme le 11/11 par la CLOTURE. Un en-tete enrichi de `jwk`, `jku`, `x5u` et `x5c` est construit, et trois mesures le verrouillent : sans magasin la signature reste NOT TESTED ; avec un magasin ou le `kid` est absent, NOT TESTED aussi ; avec le bon magasin, c est la clef du MAGASIN qui est employee -- le rapport la NOMME -- et non celle que le jeton transportait."
+    },
+    {
+      "id": "EP1-SIG-032",
+      "section": "7.4",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Cas 4 : clef inconnue -> signature et confiance en NOT TESTED, niveau `aucun`, code 0."
+    },
+    {
+      "id": "EP1-TRU-001",
+      "section": "8.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "A-06-attestation-valid",
+        "A-07-attestation-store-not-confronted",
+        "D-06-attestation-signature-invalid"
+      ],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-TRU-002",
+      "section": "8.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "A-06-attestation-valid"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-TRU-010",
+      "section": "8.2",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Cas 19 : une politique de verification inconnue n est pas remplacee par un defaut."
+    },
+    {
+      "id": "EP1-TRU-011",
+      "section": "8.2",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-TRU-012",
+      "section": "8.2",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py",
+        "tests/test_cles.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Cas 13 d attestation et cas 6 de cles : une signature ANTERIEURE a la revocation tombe."
+    },
+    {
+      "id": "EP1-TRU-013",
+      "section": "8.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-TRU-020",
+      "section": "8.3",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "ci: revendications interdites"
+      ],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "Controle documentaire. Aucun test n inspecte la sortie des outils a la recherche d une revendication d identite."
+    },
+    {
+      "id": "EP1-TRU-021",
+      "section": "8.3",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "F-01-coherent-rewrite-accepted",
+        "F-03-archive-amputated-no-contract"
+      ],
+      "tests": [
+        "tests/test_falsification.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-TS-001",
+      "section": "11",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_timestamp.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "HORS CORPUS : aucun cas d horodatage n est fige."
+    },
+    {
+      "id": "EP1-TS-002",
+      "section": "11",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_timestamp.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Hors corpus."
+    },
+    {
+      "id": "EP1-TS-003",
+      "section": "11",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_attestation.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Hors corpus. Cas 5 : signature valide, ancrage externe absent."
+    },
+    {
+      "id": "EP1-VER-001",
+      "section": "4.1",
+      "kind": "MUST",
+      "corpus_cases": [
+        "C-04-unknown-version"
+      ],
+      "tests": [
+        "tests/test_contrat_v2_schema.py"
+      ],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "Aucun cas n OMET `schema` : la moitie << doit le porter >> tient au schema, pas a une fixture."
+    },
+    {
+      "id": "EP1-VER-002",
+      "section": "4.1",
+      "kind": "MUST",
+      "corpus_cases": [
+        "C-04-unknown-version"
+      ],
+      "tests": [
+        "tests/test_conformite_schema.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-VER-003",
+      "section": "4.3",
+      "kind": "MUST",
+      "corpus_cases": [
+        "B-05-v1-null-model-refused"
+      ],
+      "tests": [
+        "tests/test_contrat_v2_schema.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-VER-004",
+      "section": "4.4",
+      "kind": "MUST",
+      "corpus_cases": [
+        "B-02-required-field-absent"
+      ],
+      "tests": [
+        "tests/test_contrat_v2_schema.py",
+        "tests/test_conformite_schema.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-VER-005",
+      "section": "4.4",
+      "kind": "MUST",
+      "corpus_cases": [
+        "C-01-invalid-json",
+        "C-02-invalid-utf8",
+        "C-03-unexpected-structure"
+      ],
+      "tests": [
+        "tests/test_bom.py",
+        "tests/test_ingestion_robustesse.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Les trois formes sont distinguees par trois motifs differents. `test_bom.py` verrouille le piege voisin : un BOM UTF-8 ne doit PAS rendre un fichier illisible."
+    },
+    {
+      "id": "EP1-VER-006",
+      "section": "4.4",
+      "kind": "MUST",
+      "corpus_cases": [
+        "A-01-submission-v1-valid",
+        "A-02-submission-v2-valid",
+        "A-03-submission-v2-zip-valid",
+        "A-05-archive-valid",
+        "B-06-optional-fields-absent"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "La moitie rarement eprouvee : un refus gratuit est un rapport faux au meme titre qu une acceptation gratuite. La famille A du corpus l eprouve sur les trois sujets."
+    },
+    {
+      "id": "EP1-VER-010",
+      "section": "10.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "B-01-artifact-file-missing",
+        "D-05-artifact-removed"
+      ],
+      "tests": [],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-VER-011",
+      "section": "10.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_conformite_schema.py"
+      ],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "La suite confronte le verdict au contrat. Aucun test ne verifie la coherence INTERNE d un rapport -- verdict contre ses propres lignes."
+    },
+    {
+      "id": "EP1-VER-012",
+      "section": "10.2",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_i18n.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-VER-013",
+      "section": "10.2",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_obligations_sans_test.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Referme le 11/11. 13 lignes non-PASS balayees sur 6 regimes d echec, toutes porteuses d un motif non vide."
+    },
+    {
+      "id": "EP1-VER-020",
+      "section": "10.3",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "C-09-archive-deflate-invalid"
+      ],
+      "tests": [
+        "tests/test_flux_illisible.py",
+        "tests/test_ingestion_robustesse.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-VER-021",
+      "section": "10.3",
+      "kind": "MUST NOT",
+      "corpus_cases": [
+        "C-09-archive-deflate-invalid"
+      ],
+      "tests": [
+        "tests/test_flux_illisible.py",
+        "tests/test_ingestion_robustesse.py",
+        "verifier-rs/banc/fuzz.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "PARTIAL",
+      "note": "`verify.py` est conforme depuis la correction C-09. `adapters/ingest.py` presente SIX entrees ou il sort en 1 sans rapport -- mesurees a nouveau ici, inchangees, declarees dans COMPLETUDE_RUST_EVIDENCE/08 section 3."
+    },
+    {
+      "id": "EP1-VER-022",
+      "section": "10.3",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "ci: corpus --strict"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "La CI compare les 50 cas avec et sans `--strict` sur les trois verificateurs : aucun verdict ne change."
+    },
+    {
+      "id": "EP1-VER-023",
+      "section": "10.3",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [],
+      "coverage": "NOT TESTABLE",
+      "reference_implementations": "CONFORMING",
+      "note": "Enonce d interpretation : il dit comment LIRE un code de sortie, pas quoi produire."
+    },
+    {
+      "id": "EP1-VER-030",
+      "section": "10.4",
+      "kind": "SHOULD",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_i18n.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": ""
+    },
+    {
+      "id": "EP1-VER-031",
+      "section": "10.4",
+      "kind": "SHOULD",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_obligations_sans_test.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "Referme le 11/11. `does_not_establish` present et non vide, et les trois comptes restent trois champs distincts."
+    },
+    {
+      "id": "EP1-VER-040",
+      "section": "4.1",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_specification.py"
+      ],
+      "coverage": "PARTIAL",
+      "reference_implementations": "CONFORMING",
+      "note": "Le statut candidat est verifie comme enregistrement de contrat. Qu un tiers s en serve effectivement ne peut pas etre teste ici : c est precisement ce qui manque."
+    },
+    {
+      "id": "EP1-VER-041",
+      "section": "4.6",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_lien_externe.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "S10 : une canonicalisation annoncee hors profil sort NON VERIFIABLE au lieu d etre recalculee de travers."
+    },
+    {
+      "id": "EP1-VER-042",
+      "section": "4.6",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_lien_externe.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "S1 et S10. La frontiere avec verify_attestation.py est decrite, non implementee deux fois."
+    },
+    {
+      "id": "EP1-VER-043",
+      "section": "4.6",
+      "kind": "MUST",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_lien_externe.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "S18 a S23. S23 eprouve le cas qui compte : la taille du FICHIER declaree sur une couverture canonique est contredite, sinon le controle recreerait la confusion 451/752."
+    },
+    {
+      "id": "EP1-VER-044",
+      "section": "4.6",
+      "kind": "MUST NOT",
+      "corpus_cases": [],
+      "tests": [
+        "tests/test_lien_externe.py"
+      ],
+      "coverage": "COVERED",
+      "reference_implementations": "CONFORMING",
+      "note": "S26 a S28c. Le vocabulaire d etat est ferme, et le garde-fou de prose est lui-meme falsifie."
+    }
+  ]
+}

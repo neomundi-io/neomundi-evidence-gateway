@@ -28,14 +28,19 @@ digests below are what makes these rows checkable.
 | Artifact | sha256 | Accessible here? |
 |---|---|---|
 | **trust store** (3038 bytes) | `dac94e8ad4baf0a48fe94b8006a238d970d242cdc52b8d9dd51294777751598d` | 🟢 **yes** — [`../trust/trust-store.json`](../trust/trust-store.json) |
-| conformance corpus `SHA256SUMS` (21 202 bytes, 172 lines) | `e3edeb26c54363ace46737563f4824f79a0adab2baebcb8351bb15d632a6a297` | 🔴 no — digest recorded, artifact in the engine repository |
-| conformance corpus `manifest.json` | `2720995161e6b98ee707c72ba3000a5029d8e49a07f1e80de3cf6da82fdd5ec2` | 🔴 no — same |
-| V1 demonstration archive (the one the five scenarios use) | `e31e12bb7e32c7a33db1ecacc8c38cd18225fa10618c7e1aa5d6f9540f2ad7d6` | 🔴 no — in the engine repository |
+| conformance corpus `SHA256SUMS` (21 202 bytes, 172 lines) | `e3edeb26c54363ace46737563f4824f79a0adab2baebcb8351bb15d632a6a297` | 🟢 **yes** — [`../verifier/conformance/SHA256SUMS`](../verifier/conformance/SHA256SUMS) |
+| conformance corpus `manifest.json` | `2720995161e6b98ee707c72ba3000a5029d8e49a07f1e80de3cf6da82fdd5ec2` | 🟢 **yes** — and the 172 entries it covers |
+| V1 demonstration archive (the one `demo/demo.sh` uses) | `e31e12bb7e32c7a33db1ecacc8c38cd18225fa10618c7e1aa5d6f9540f2ad7d6` | 🔴 no — it lives in the private engine. Use a corpus fixture instead: see [`../verifier/README.md`](../verifier/README.md) |
 
-🔴 **A digest with no reachable artifact is an anchor, not a proof.** Three of
-the four rows above are exactly that, and the table says so rather than
-implying otherwise. The trust store was moved here precisely so that it would
-not be one of them.
+🟢 **Three of the four artifacts above are now reachable here.** On
+14 November the trust store was the only one; publishing the verification
+surface brought the corpus with it. A digest with no reachable artifact is an
+anchor, not a proof — so the table keeps saying, row by row, which is which.
+
+The one remaining `🔴` is the demonstration dossier used by `demo/demo.sh`.
+Its digest is recorded; the archive itself stays private. A third party
+reproducing the five scenarios should point `--artifact-root` at a corpus
+fixture.
 
 ## Engine measurements, as recorded on `3391c768`
 
@@ -64,8 +69,33 @@ than papering over them. A count of PASS is not probative on its own.
 | `demo/demo.sh` | 5 scenarios, **5 observed exit codes = 5 expected** | 2 scenarios, 2 = 2 |
 | gateway CI on `main` | **4 check-runs, 4 success** | — |
 
-The `NOT TESTED` lines are the cases that need the engine. They are reported
+The `NOT TESTED` lines are the cases that need an engine. They are reported
 as not tested, never as passed.
+
+### Clean room — 2026-11-14, no access to the private repository
+
+The published verification surface was copied into an empty directory, with
+no `.git`, no remote and no credential, and exercised there:
+
+| Test | Observed |
+|---|---|
+| public tools install and answer `--help` | `verify.py`, `verify_attestation.py`, `adapters/ingest.py` — **3/3 OK** |
+| `sha256sum --check SHA256SUMS` | **172 / 172 OK** |
+| corpus, Python verifier | **40 PASS, 10 AMBIGUOUS, 0 FAIL** |
+| corpus, `evidence-verify-rs` (built there, offline, **65 unit tests pass**) | 27 PASS, 8 AMBIGUOUS, 15 n/a |
+| corpus, `evidence-verify-crypto` (built there) | 13 PASS, 2 AMBIGUOUS, 35 n/a |
+| **all three together** | **80 PASS, 20 AMBIGUOUS, 50 n/a — 0 exit-code deviation on a concordant verdict** |
+| valid artefact (`A-05`) | 17 PASS, 0 FAIL, 4 NOT TESTED — code **0** |
+| tampered artefact (`D-10`) | 16 PASS, **1 FAIL**, 4 NOT TESTED — code **1** |
+| unverifiable (`A-07`, no trust store) | code **0**; with `--strict`, code **2**, two required guarantees named |
+| control lines with and without `--strict` | **byte-identical** |
+| the gateway driven against the **public verifier** instead of the engine | five scenarios, codes **0 / 1 / 2 / 4 / 3** |
+
+Rust toolchain used: `rustc 1.99.1`, `cargo 1.99.1` — the versions the engine
+CI uses. Binaries built in the clean room:
+`evidence-verify-rs` `6b0e56df…`, `evidence-verify-crypto` `eb1d22de…`.
+⚠ Those two digests are **not** a reproducibility claim: a release binary
+depends on the toolchain and the host, and nothing here pins either.
 
 ### The five scenarios, and the code each returns
 

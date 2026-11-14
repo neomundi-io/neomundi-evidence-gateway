@@ -1,0 +1,47 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Le MEME chemin declare deux fois dans `artifacts`, avec deux empreintes differentes.",
+  "expected": {
+    "ambiguous": true,
+    "note": "Au moins une des deux empreintes sera fausse, donc un refus est probable -- mais pour une raison incidente, non parce que le doublon serait interdit."
+  },
+  "expected_by_verifier": {},
+  "family": "E-paths",
+  "files": [
+    {
+      "bytes": 803,
+      "path": "fixtures/E-paths/E-06-path-declared-twice/submission.json",
+      "sha256": "e66eb1a2fec16ab2d85e9177f3fa38412d0c1f7aed87f25f7c567e97b8d10455"
+    },
+    {
+      "bytes": 3,
+      "path": "fixtures/E-paths/E-06-path-declared-twice/artefacts/prompt.txt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    },
+    {
+      "bytes": 11,
+      "path": "fixtures/E-paths/E-06-path-declared-twice/artefacts/reponse.txt",
+      "sha256": "740c8a152af2c0077d66598619eec8c3570f6f95bbc7acbb2020ae3d53f8092e"
+    }
+  ],
+  "id": "E-06-path-declared-twice",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "schemas/evidence-submission-v2.json#/properties/artifacts -- aucun `uniqueItems`",
+    "statut": "AMBIGUOUS",
+    "texte": "Le schema ne publie aucune contrainte d unicite sur `artifacts[].path`. Un meme chemin ne peut pourtant pas porter deux empreintes. Le contrat est MUET : ce corpus ne peut pas imposer un verdict."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

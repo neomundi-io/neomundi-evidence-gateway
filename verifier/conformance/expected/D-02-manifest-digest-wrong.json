@@ -1,0 +1,43 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "L empreinte DECLAREE est fausse, les octets sont intacts.",
+  "expected": {
+    "exit_code": 1,
+    "exit_code_strict": 1,
+    "verdict": "REJETE"
+  },
+  "expected_by_verifier": {},
+  "family": "D-tampered",
+  "files": [
+    {
+      "bytes": 628,
+      "path": "fixtures/D-tampered/D-02-manifest-digest-wrong/submission.json",
+      "sha256": "f82f675fa5c6885d536cf54de00eb398016882f251cedf44b2a0b68c398cb310"
+    },
+    {
+      "bytes": 3,
+      "path": "fixtures/D-tampered/D-02-manifest-digest-wrong/artefacts/prompt.txt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    }
+  ],
+  "id": "D-02-manifest-digest-wrong",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "schemas/evidence-submission-v2.json",
+    "statut": "NORMATIVE",
+    "texte": "Le sens du refus est le meme : declare et recalcule divergent. Qui des deux a change n est pas decidable depuis le paquet seul."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}

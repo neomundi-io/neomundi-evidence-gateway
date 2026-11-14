@@ -22,30 +22,42 @@ This page is part of the product, not a disclaimer appended to it.
 > exist unchanged; access to them is **granted, not public**. Request access
 > at [contact@neomundi.io](mailto:contact@neomundi.io).
 
-## 🔴 The largest limit: nobody outside can re-run a verification
+## 🟢 Independent re-verification — restored, and bounded
 
-The Evidence verifiers — `verify.py`, `verify_attestation.py`, the two
-independent Rust verifiers — live in the engine repository. The normative
-specification (97 traced rules) and the public conformance corpus (50 frozen
-cases, 121 fixture files) live there too.
+Until 14 November 2026 this section said that nobody outside the engine could
+re-run a verification. **That is no longer true, and it was the right thing to
+fix rather than to live with.**
 
-So, as of today:
+The verification surface is published in [`../verifier/`](../verifier):
+the normative specification, the frozen conformance corpus (50 cases,
+121 fixtures, 172 digest-covered entries), the Python verifiers and the two
+independent Rust verifiers. 227 files, standard library only.
 
-| Who | Can re-run an independent verification? |
+Measured in a clean room on 2026-11-14 — those files alone, no access to the
+private repository:
+
+| | |
 |---|---|
-| anyone with engine access | yes |
-| anyone without it | **no** |
+| `sha256sum --check SHA256SUMS` | **172 / 172 OK** |
+| corpus, all three verifiers | **80 PASS, 20 AMBIGUOUS, 50 not applicable**, **0 exit-code deviation on a concordant verdict** |
+| valid artefact / tampered artefact | code **0** / code **1** |
+| attestation without a trust store, then with `--strict` | code **0**, then code **2** |
 
-**This gateway does not close that gap, and is not meant to.** It verifies
-nothing; it transports a verdict produced by an engine. A report obtained
-through it is a verification performed by whoever runs the engine.
+**What remains bounded, and is not a formality:**
 
-This is the cost of the separation, stated rather than discovered. The figures
-on [`VERIFICATION_RESULTS.md`](VERIFICATION_RESULTS.md) remain **true and
-anchored by digests** — but a third party can no longer reproduce them
-unaided. If that capability is to be restored, it means publishing the
-specification and the conformance corpus here; that is a decision, not an
-oversight.
+- these are **our** verifiers, on **our** specification, against **our**
+  corpus. Running them confirms that our tools behave as we describe — not
+  that the design is right. The Rust verifier exists so that two
+  implementations can be *compared*; their declared divergences are
+  published as `AMBIGUOUS` rather than reconciled;
+- the corpus is **frozen**: evidence about the cases it contains, silent
+  about every case it does not;
+- `verifier-rs-crypto` needs network access to a crate registry on a first
+  build (23 `Cargo.lock` entries). `verifier-rs` does not — it builds
+  offline with nothing, and that asymmetry is deliberate;
+- **what produces and signs stays private**: key generation and attestation,
+  binding construction, timestamping, trust-store publication, the pilot
+  reconciliation adapters. Nothing here can mint an attestation.
 
 ## 🔴 Independence
 
@@ -94,7 +106,10 @@ Only a digest kept elsewhere detects it.
 - **2 of the engine's 12 entry points are exposed**: `verify` and
   `attestation`. Binding, signing, timestamping, third-party package
   ingestion and reconciliation are **not** — named as future work in
-  [`../docs/INTERFACE.md`](../docs/INTERFACE.md), not omitted silently;
+  [`../docs/INTERFACE.md`](../docs/INTERFACE.md), not omitted silently.
+  Note that `verifier/adapters/ingest.py` **is** published, because the
+  corpus needs it; the gateway simply does not expose an operation for it
+  yet;
 - **`engine.revision_declared` is declared, never verified.** This gateway
   runs no `git` and checks no signature over the engine tree. It cannot
   establish that a directory corresponds to a commit;

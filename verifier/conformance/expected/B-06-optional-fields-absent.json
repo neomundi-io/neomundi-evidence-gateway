@@ -1,0 +1,48 @@
+{
+  "corpus_version": "1.3.0",
+  "description": "Les champs FACULTATIFS absents : `provenance_declared`, `limits_declared`, `notes_declared`.",
+  "expected": {
+    "exit_code": 0,
+    "exit_code_strict": 0,
+    "verdict": "ACCEPTE"
+  },
+  "expected_by_verifier": {},
+  "family": "B-incomplete",
+  "files": [
+    {
+      "bytes": 808,
+      "path": "fixtures/B-incomplete/B-06-optional-fields-absent/submission.json",
+      "sha256": "3fb68cd5e9b2092aba4ba2c1674dd37bf05cf57707b2361583dd9b097df71c1d"
+    },
+    {
+      "bytes": 3,
+      "path": "fixtures/B-incomplete/B-06-optional-fields-absent/artefacts/prompt.txt",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    },
+    {
+      "bytes": 11,
+      "path": "fixtures/B-incomplete/B-06-optional-fields-absent/artefacts/reponse.txt",
+      "sha256": "740c8a152af2c0077d66598619eec8c3570f6f95bbc7acbb2020ae3d53f8092e"
+    }
+  ],
+  "id": "B-06-optional-fields-absent",
+  "limits": [
+    "L integrite ne demontre pas la verite des evenements.",
+    "Un verdict de conformite ne vaut que pour les regles que ce cas cite, et pour les versions de contrat qu il nomme."
+  ],
+  "options": [],
+  "provenance": "SYNTHETIQUE, genere par conformance/runners/build_fixtures.py",
+  "publication": {
+    "authorised": true,
+    "contains_private_data": false,
+    "contains_private_keys": false,
+    "licence": "Apache-2.0 (celle du depot)"
+  },
+  "rule": {
+    "reference": "schemas/evidence-submission-v2.json#/required",
+    "statut": "NORMATIVE",
+    "texte": "Un champ facultatif absent n affecte pas le verdict. Il peut en revanche produire une ligne NOT TESTED, qui n est pas un echec."
+  },
+  "schema": "neomundi.evidence.conformance-case/1",
+  "subject": "submission"
+}
