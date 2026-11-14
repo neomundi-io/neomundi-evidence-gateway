@@ -12,7 +12,7 @@
 
 [![Mesure](https://img.shields.io/badge/Mesure-Mesurer-2563eb?style=flat-square)](https://github.com/neomundi-io/neomundi-runtime-measurement)
 [![Station](https://img.shields.io/badge/Station-Observer-0f766e?style=flat-square)](https://github.com/neomundi-io/neomundi-station-public)
-[![Evidence](https://img.shields.io/badge/Evidence-Vérifier-D4A545?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-public)
+[![Evidence](https://img.shields.io/badge/Evidence-Vérifier-D4A545?style=flat-square)](verifier/README.fr.md)
 [![Gateway](https://img.shields.io/badge/Gateway-Intégrer-475569?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-gateway)
 
 [![Statut](https://img.shields.io/badge/Statut-expérimental-a16207?style=flat-square)](#maturité--à-lire-avant-de-citer-quoi-que-ce-soit) [![Bibliothèque standard](https://img.shields.io/badge/Dépendances-stdlib_Python-0f766e?style=flat-square)](#prérequis) [![Licence](https://img.shields.io/badge/Licence-tous_droits_réservés-6b7280?style=flat-square)](#droits)
@@ -49,7 +49,7 @@ La réponse le dit dans chaque charge :
 Cette abstention est le produit, pas une économie. Une passerelle qui
 réimplémenterait la vérification serait un second vérificateur, avec ses
 propres divergences — exactement ce que la
-[spécification Evidence](https://github.com/neomundi-io/neomundi-evidence-public/blob/main/spec/SPECIFICATION.md)
+[spécification Evidence](verifier/spec/SPECIFICATION.md)
 est écrite pour éviter. [`tests/test_no_verification_logic.py`](tests/test_no_verification_logic.py)
 échoue si une primitive de vérification apparaît dans les sources du produit,
 et confronte le verdict republié, champ par champ, à un appel **direct** au
@@ -121,8 +121,11 @@ gateway ne la relâche pas.
 Les contrats de rapport du moteur — `neomundi.evidence.verification-report/1`
 et `neomundi.evidence.attestation-report/1` — ne sont **pas redéfinis ici**.
 Leur charge est transportée verbatim sous `engine_report`. Ils sont documentés
-dans le [`docs/INTEGRATION.fr.md`](https://github.com/neomundi-io/neomundi-evidence-public/blob/main/docs/INTEGRATION.fr.md)
-du moteur.
+dans le `docs/INTEGRATION.fr.md` du moteur, qui n'est **pas public**.
+Ce qui l'est : chaque rapport nomme son propre contrat dans son champ
+`schema`, et les champs sont lisibles dans
+[`verifier/verify.py`](verifier/verify.py) et
+[`verifier/spec/SPECIFICATION.md`](verifier/spec/SPECIFICATION.md).
 
 ## Le dossier public
 
@@ -158,8 +161,9 @@ formalité :
 Tout ce que le moteur lui-même n'établit pas — vérité du contenu, capacité
 juridique d'un signataire, horodatage indépendant, ancrage tiers — est recopié
 dans le tableau `limits` de la réponse, préfixé `engine:`. Voir les
-[limitations](https://github.com/neomundi-io/neomundi-evidence-public/blob/main/docs/EVIDENCE_LIMITATIONS.fr.md)
-du moteur.
+document de limitations propre au moteur, qui n'est pas public — ses
+lignes `does_not_establish` sont recopiées dans
+[`references/LIMITS.fr.md`](references/LIMITS.fr.md).
 
 ## Prérequis
 

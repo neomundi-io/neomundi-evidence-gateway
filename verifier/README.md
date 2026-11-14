@@ -142,6 +142,20 @@ and the 3 `UNKNOWN` are declared, not hidden.
 - the corpus is **frozen**. It is evidence about the cases it contains, and
   silent about every case it does not.
 
+## One consequence of republishing unmodified
+
+These 227 files are a **byte-for-byte** republication of what the engine
+holds — that property is asserted in this repository's commit history and
+checked by `tests/test_corpus_public.py`. So some of them still carry links
+and clone instructions pointing at `neomundi-io/neomundi-evidence-public`,
+which is private: `conformance/README.md` is the clearest case.
+
+Those links are left as they are, deliberately. Editing a republished frozen
+artefact to tidy a link would cost the one property that makes this corpus
+worth publishing. **Read such a link as naming where the file came from, not
+as somewhere you can go.** To clone the corpus, clone this repository
+instead.
+
 ## Rights
 
 These files are published for **verification and review**. No reuse licence
