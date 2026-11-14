@@ -124,6 +124,19 @@ Leur charge est transportée verbatim sous `engine_report`. Ils sont documentés
 dans le [`docs/INTEGRATION.fr.md`](https://github.com/neomundi-io/neomundi-evidence-public/blob/main/docs/INTEGRATION.fr.md)
 du moteur.
 
+## Le dossier public
+
+Le moteur est un dépôt privé. Ce dont un tiers a besoin pour tracer, citer ou
+confronter le travail est publié **ici**, et ne dépend pas de l'accès à
+celui-ci :
+
+| | |
+|---|---|
+| [`trust/trust-store.json`](trust/trust-store.json) | le **magasin de confiance public**, à l'octet, `sha256 dac94e8a…` — l'artefact, pas seulement son empreinte. [Notice](trust/README.fr.md) |
+| [`references/REVIEWS.fr.md`](references/REVIEWS.fr.md) | les trois **revues indépendantes** : ce que chaque relecteur a fait, les limites de chaque revue, et la PR du moteur, son commit de fusion et sa date |
+| [`references/VERIFICATION_RESULTS.fr.md`](references/VERIFICATION_RESULTS.fr.md) | ce qui a été **mesuré**, contre quelle révision, avec quelle empreinte — et quelles empreintes n'ont aucun artefact atteignable |
+| [`references/LIMITS.fr.md`](references/LIMITS.fr.md) | les **limites connues**, dont celle que crée la séparation : hors du moteur, personne ne peut rejouer une vérification |
+
 ## Maturité — à lire avant de citer quoi que ce soit
 
 **Expérimental, version 0.1.0.** Ce gateway n'a jamais été exercé par un
