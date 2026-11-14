@@ -15,6 +15,7 @@
 [![Evidence](https://img.shields.io/badge/Evidence-Vérifier-D4A545?style=flat-square)](verifier/README.fr.md)
 [![Gateway](https://img.shields.io/badge/Gateway-Intégrer-475569?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-gateway)
 
+[![PyPI](https://img.shields.io/pypi/v/neomundi-evidence-verify?label=PyPI&style=flat-square)](https://pypi.org/project/neomundi-evidence-verify/)
 [![Statut](https://img.shields.io/badge/Statut-expérimental-a16207?style=flat-square)](#maturité--à-lire-avant-de-citer-quoi-que-ce-soit) [![Bibliothèque standard](https://img.shields.io/badge/Dépendances-stdlib_Python-0f766e?style=flat-square)](#prérequis) [![Licence](https://img.shields.io/badge/Licence-Apache_2.0-0f766e?style=flat-square)](LICENSE)
 
 </div>
