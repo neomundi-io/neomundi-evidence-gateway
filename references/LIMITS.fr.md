@@ -10,19 +10,19 @@ après coup.
 
 ## État du dépôt du moteur
 
-> **`neomundi-io/neomundi-evidence-public` est PUBLIC au moment où cette page
-> est publiée. Son passage en privé est autorisé et imminent.**
+> **`neomundi-io/neomundi-evidence-public` est PRIVÉ depuis le 2026-11-14.**
 >
-> Ce bloc est le **seul endroit** de ce dépôt où cet état est consigné, et il
-> est mis à jour par un commit dédié au moment où le déplacement est fait —
-> afin que l'historique du dépôt porte la date, plutôt qu'une page affirmant
-> un état qu'elle ne peut pas encore connaître.
+> Vérifié en anonyme, sans aucun jeton, au moment même de la bascule : le
+> dépôt, sa fiche d'API, ses URL `raw` et ses pages de pull request répondent
+> toutes **404**.
 >
-> Dans les deux états : rien n'est supprimé et aucun historique n'est
-> réécrit. Aucune branche, aucun tag, aucune pull request, aucun commit n'est
-> retiré — tout le contenu et tout l'historique du dépôt du moteur existent
-> inchangés, et une fois privé, l'accès y est **accordé, non public**. Le
-> demander à [contact@neomundi.io](mailto:contact@neomundi.io).
+> **Rien n'a été supprimé et aucun historique n'a été réécrit.** `main` vaut
+> toujours `3391c768f55b08590624aa1c24fe65fdb6420191`, les **7** branches sont
+> intactes, le tag annoté `v1.0.0-rc1` est intact, et le dépôt comptait
+> **0 fork** — donc aucune copie publique ne subsiste ailleurs. Tout le
+> contenu et tout l'historique existent inchangés ; l'accès y est **accordé,
+> non public**. Le demander à
+> [contact@neomundi.io](mailto:contact@neomundi.io).
 
 ## 🔴 La plus grande limite : personne à l'extérieur ne peut rejouer une vérification
 
@@ -31,12 +31,12 @@ vérificateurs Rust indépendants — vivent dans le dépôt du moteur. La
 spécification normative (97 règles tracées) et le corpus public de conformité
 (50 cas gelés, 121 fichiers de fixture) y vivent aussi.
 
-Donc, une fois le déplacement ci-dessus effectué :
+Donc, à ce jour :
 
 | Qui | Peut rejouer une vérification indépendante ? |
 |---|---|
 | qui a l'accès au moteur | oui |
-| qui ne l'a pas | **non**, dès lors que le dépôt du moteur est privé |
+| qui ne l'a pas | **non** |
 
 **Ce gateway ne comble pas cet écart, et n'est pas censé le combler.** Il ne
 vérifie rien ; il transporte un verdict produit par un moteur. Un rapport
