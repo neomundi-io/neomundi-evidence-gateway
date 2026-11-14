@@ -20,4 +20,10 @@ venv/
 *.zip
 *.jws
 *.ots
-trust-store.json
+
+# EXCEPTION : `trust/trust-store.json` EST suivi, et c est delibere. Il ne
+# porte aucun materiel de cle privee -- seulement le point public `x` d une
+# cle Ed25519 -- et il est la preuve ACCESSIBLE que le second canal ne fait
+# que confirmer. Voir trust/README.md.
+*/trust-store.json
+!trust/trust-store.json

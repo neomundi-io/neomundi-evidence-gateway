@@ -120,6 +120,19 @@ The engine's report contracts — `neomundi.evidence.verification-report/1` and
 payload is carried verbatim under `engine_report`. They are documented in the
 engine's [`docs/INTEGRATION.md`](https://github.com/neomundi-io/neomundi-evidence-public/blob/main/docs/INTEGRATION.md).
 
+## The public record
+
+The engine is a private repository. What a third party needs in order to
+trace, cite or confront the work is published **here**, and does not depend
+on access to it:
+
+| | |
+|---|---|
+| [`trust/trust-store.json`](trust/trust-store.json) | the **public trust store**, byte for byte, `sha256 dac94e8a…` — the artifact, not only its digest. [Notice](trust/README.md) |
+| [`references/REVIEWS.md`](references/REVIEWS.md) | the three **independent reviews**: what each reviewer did, each review's limits, and the exact engine PR, merge commit and date |
+| [`references/VERIFICATION_RESULTS.md`](references/VERIFICATION_RESULTS.md) | what was **measured**, against which revision, with which digest — and which digests have no reachable artifact |
+| [`references/LIMITS.md`](references/LIMITS.md) | the **known limits**, including the one the separation creates: outside the engine, nobody can re-run a verification |
+
 ## Maturity — read this before quoting anything
 
 **Experimental, version 0.1.0.** This gateway has never been exercised by a

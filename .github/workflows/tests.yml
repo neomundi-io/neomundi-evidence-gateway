@@ -90,6 +90,9 @@ jobs:
           sys.exit(1 if echecs else 0)
           PY
 
+      - name: Le magasin de confiance publie porte bien l empreinte annoncee
+        run: python tests/test_trust_store.py
+
       - name: Cas 4 et 5 -- aucune verification n a lieu, et le code le dit
         run: python tests/test_gateway.py
 

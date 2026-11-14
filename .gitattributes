@@ -3,3 +3,8 @@
 # l interpreteur. On force donc LF pour tout ce qui est texte.
 * text=auto eol=lf
 *.zip binary
+
+# Le magasin de confiance porte une empreinte publiee. Git ne doit JAMAIS le
+# normaliser : `text=auto` reecrirait ses fins de ligne et changerait son
+# sha256, donc la preuve. `-text` le soustrait a toute conversion.
+trust/trust-store.json -text
