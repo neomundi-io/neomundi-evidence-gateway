@@ -1,0 +1,177 @@
+# Integration continue du NeoMundi Evidence Gateway.
+#
+# Deux jobs, et la separation est le point important :
+#
+#   « contrat du gateway (sans moteur) » est OBLIGATOIRE. Il eprouve tout ce
+#   qui ne depend pas du moteur -- les enveloppes, les raisons de refus, les
+#   codes 3 et 4, et l absence de logique de verification dans le produit.
+#   Il reste vert quand le moteur est prive, parce qu il ne lui demande rien.
+#
+#   « confrontation au moteur (si atteignable) » tente de recuperer le
+#   moteur. S il n est pas atteignable -- et il ne le sera plus une fois
+#   prive -- le job NE MENT PAS : il imprime ce qui n a pas ete eprouve et
+#   s arrete la. Un job qui se contenterait de passer laisserait croire que
+#   les cas 1 a 3 ont tourne.
+
+name: tests
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contrat:
+    name: contrat du gateway (sans moteur, python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Installer jsonschema
+        # OPTIONNELLE pour le produit, employee par les suites pour valider
+        # les enveloppes contre les contrats publies. Sans elle le controle
+        # rend NOT TESTED -- jamais PASS.
+        run: python -m pip install --disable-pip-version-check --quiet jsonschema
+
+      - name: Les contrats sont du JSON valide, et fermes
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+          echecs = 0
+          for f in sorted(pathlib.Path("contracts").glob("*.json")):
+              charge = json.loads(f.read_text(encoding="utf-8"))
+              if charge.get("additionalProperties") is not False:
+                  print(f"FAIL {f} : additionalProperties doit valoir false")
+                  echecs += 1
+              else:
+                  print(f"PASS {f} : {charge['$id']}")
+          sys.exit(1 if echecs else 0)
+          PY
+
+      - name: Les requetes d exemple sont conformes au contrat de requete
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+          import jsonschema
+          schema = json.loads(pathlib.Path("contracts/gateway-request-v1.json").read_text(encoding="utf-8"))
+          echecs = 0
+          for f in sorted(pathlib.Path("examples").glob("*.json")):
+              charge = json.loads(f.read_text(encoding="utf-8"))
+              attendu_invalide = "rejected" in f.name
+              try:
+                  jsonschema.validate(charge, schema)
+                  valide = True
+              except jsonschema.ValidationError as exc:
+                  valide = False
+                  motif = exc.message
+              if valide and attendu_invalide:
+                  print(f"FAIL {f} : attendu INVALIDE, mais conforme")
+                  echecs += 1
+              elif not valide and not attendu_invalide:
+                  print(f"FAIL {f} : {motif}")
+                  echecs += 1
+              else:
+                  print(f"PASS {f} : {'invalide comme attendu' if attendu_invalide else 'conforme'}")
+          sys.exit(1 if echecs else 0)
+          PY
+
+      - name: Cas 4 et 5 -- aucune verification n a lieu, et le code le dit
+        run: python tests/test_gateway.py
+
+      - name: Aucune logique de verification dans le produit (epreuves A et B)
+        run: python tests/test_no_verification_logic.py
+
+      - name: La demonstration joue ses deux scenarios sans moteur
+        run: sh demo/demo.sh --no-engine
+
+      - name: Aucun CRLF dans les sources suivies
+        run: |
+          python - <<'PY'
+          import pathlib, subprocess, sys
+          suivis = subprocess.run(["git", "ls-files"], capture_output=True, text=True,
+                                  check=True).stdout.split()
+          fautifs = []
+          for nom in suivis:
+              chemin = pathlib.Path(nom)
+              if not chemin.is_file():
+                  continue
+              if chemin.read_bytes().count(b"\r\n"):
+                  fautifs.append(nom)
+          for nom in fautifs:
+              print(f"FAIL {nom} : porte des CRLF")
+          print(f"{len(suivis)} fichier(s) suivi(s) confronte(s)")
+          sys.exit(1 if fautifs else 0)
+          PY
+
+  moteur:
+    name: confrontation au moteur (si atteignable)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: gateway
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Installer jsonschema et cryptography
+        run: |
+          python -m pip install --disable-pip-version-check --quiet \
+            jsonschema cryptography
+
+      - name: Recuperer le moteur, s il est atteignable
+        id: moteur
+        run: |
+          # AUCUN jeton : si le moteur est prive, ce clone echoue, et c est
+          # le resultat attendu -- pas une panne de CI.
+          if git clone --depth 1 \
+               https://github.com/neomundi-io/neomundi-evidence-public.git engine 2>/dev/null; then
+            echo "disponible=true" >> "$GITHUB_OUTPUT"
+            echo "revision=$(git -C engine rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            echo "moteur recupere : $(git -C engine rev-parse --short HEAD)"
+          else
+            echo "disponible=false" >> "$GITHUB_OUTPUT"
+            echo "le moteur n est pas atteignable sans autorisation."
+          fi
+
+      - name: Cas 1 a 3 et epreuve C -- le verdict est celui du moteur
+        if: steps.moteur.outputs.disponible == 'true'
+        working-directory: gateway
+        env:
+          EVIDENCE_ENGINE_HOME: ${{ github.workspace }}/engine
+          EVIDENCE_ENGINE_REVISION: ${{ steps.moteur.outputs.revision }}
+        run: |
+          python tests/test_gateway.py
+          python tests/test_no_verification_logic.py
+
+      - name: Les cinq scenarios de la demonstration
+        if: steps.moteur.outputs.disponible == 'true'
+        working-directory: gateway
+        env:
+          EVIDENCE_ENGINE_HOME: ${{ github.workspace }}/engine
+        run: sh demo/demo.sh
+
+      - name: CE QUI N A PAS ETE EPROUVE
+        if: steps.moteur.outputs.disponible != 'true'
+        run: |
+          echo "NOT TESTED -- le moteur Evidence n a pas pu etre recupere sans"
+          echo "autorisation. Les cas 1 a 3 (artefact valide, artefact altere,"
+          echo "artefact non verifiable) et l epreuve C (egalite avec un appel"
+          echo "direct au moteur) N ONT PAS TOURNE dans cette execution."
+          echo ""
+          echo "Ce job est vert parce qu il n a rien a reprocher au gateway, et"
+          echo "NON parce que ces cas sont passes. Pour les eprouver, lancer"
+          echo "les suites avec EVIDENCE_ENGINE_HOME pose sur un moteur local."

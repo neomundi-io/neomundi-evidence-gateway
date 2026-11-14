@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "neomundi.evidence.gateway.request/1",
+  "title": "NeoMundi Evidence Gateway - request envelope, version 1",
+  "description": "What a caller submits. The gateway refuses anything this schema does not allow, before any engine is invoked; `additionalProperties: false` is deliberate and matches the discipline of the Evidence contracts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "operation", "artifact"],
+  "properties": {
+    "schema": {
+      "const": "neomundi.evidence.gateway.request/1",
+      "description": "Exact contract identifier. A different value is refused rather than coerced."
+    },
+    "operation": {
+      "enum": ["verify", "attestation"],
+      "description": "`verify` checks an Evidence archive. `attestation` checks a detached Ed25519/JWS attestation against an archive and a trust store."
+    },
+    "request_id": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "Caller-supplied correlation identifier, echoed verbatim in the response. The gateway never generates one: an identifier it invented would not correlate with anything the caller holds."
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Path to the artifact, resolved under the configured artifact root. A resolved path outside that root is refused (`path_outside_root`)."
+        },
+        "name": {
+          "type": "string",
+          "description": "Logical name echoed in the response. It replaces nothing in the engine report; it is what the caller calls this artifact."
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "corpus": {
+          "type": "string",
+          "description": "Directory of replayed inputs. Supplying it is what turns the engine's replayed-input digest control from NOT TESTED into a tested control."
+        },
+        "attestation": {
+          "type": "string",
+          "description": "Detached JWS file. Required for `operation: attestation`."
+        },
+        "trust_store": {
+          "type": "string",
+          "description": "Trust store file. Required for `operation: attestation`: without it the engine establishes no identity and can only answer NOT TESTED."
+        },
+        "allow_test_keys": {
+          "type": "boolean",
+          "default": false,
+          "description": "Accept a key whose declared status is `test`. A test key grants no attestation; this flag makes accepting one an explicit, recorded decision of the caller."
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "strict": {
+          "type": "boolean",
+          "default": false,
+          "description": "Pass the engine's `--strict`. It changes no verdict line; it changes the exit code when a required guarantee is not demonstrated."
+        },
+        "language": {
+          "enum": ["fr", "en"],
+          "default": "fr",
+          "description": "Language of the engine's control lines."
+        }
+      }
+    }
+  }
+}

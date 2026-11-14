@@ -1,0 +1,23 @@
+# Sorties de la demonstration. Elles portent des chemins de la machine qui
+# les a produites : elles ne sont pas publiables, et elles se refabriquent
+# en une commande (`sh demo/demo.sh`).
+demo/out/
+
+# Reponses ecrites a la main pendant une mise au point.
+reponse.json
+response.json
+*.response.json
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Aucun artefact, aucune archive, aucun magasin de confiance ne vit ici :
+# ce depot ne porte pas de materiau de preuve, et un `git add .` ne doit
+# jamais en publier un par accident.
+*.zip
+*.jws
+*.ots
+trust-store.json

@@ -1,0 +1,9 @@
+{
+  "schema": "neomundi.evidence.gateway.request/1",
+  "operation": "inspect",
+  "request_id": "example-04-rejected",
+  "artifact": {
+    "name": "evidence-v1-demo",
+    "path": "examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip"
+  }
+}

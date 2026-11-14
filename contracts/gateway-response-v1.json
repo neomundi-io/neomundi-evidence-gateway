@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "neomundi.evidence.gateway.response/1",
+  "title": "NeoMundi Evidence Gateway - response envelope, version 1",
+  "description": "What the gateway returns. `engine_report` is the engine's own report, republished with local filesystem paths redacted; the gateway adds no control line, no count and no verdict of its own.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "gateway", "operation", "status", "verification_performed", "limits", "errors", "exit_code"],
+  "properties": {
+    "schema": { "const": "neomundi.evidence.gateway.response/1" },
+    "gateway": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "performs_verification"],
+      "properties": {
+        "name": { "const": "neomundi-evidence-gateway" },
+        "version": { "type": "string" },
+        "performs_verification": {
+          "const": false,
+          "description": "Always false, by construction. The gateway is a transport and an envelope, not a verifier."
+        }
+      }
+    },
+    "operation": { "type": ["string", "null"] },
+    "request_id": { "type": ["string", "null"] },
+    "status": {
+      "enum": ["completed", "rejected", "engine_unavailable"],
+      "description": "`completed` means the engine ran and produced a machine report - it does NOT mean the artifact passed. Read `verdict` and `exit_code` for that."
+    },
+    "verification_performed": {
+      "type": "boolean",
+      "description": "A fact about this gateway run, not about the artifact: true only when the engine ran and its report was read. False on `rejected` and `engine_unavailable`."
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "sha256_reported_by_engine": {
+          "type": ["string", "null"],
+          "description": "Taken from the engine report. The gateway does not hash the artifact itself - doing so would be a second integrity implementation."
+        }
+      }
+    },
+    "engine": {
+      "type": ["object", "null"],
+      "description": "What was reached, and under what declaration. `revision_declared` is declared by the operator and never verified here.",
+      "properties": {
+        "available": { "type": "boolean" },
+        "entrypoint": { "type": "string" },
+        "exit_code": { "type": "integer" },
+        "report_schema": { "type": ["string", "null"] },
+        "conformance_corpus_declared": { "type": ["string", "null"] },
+        "revision_declared": { "type": ["string", "null"] },
+        "revision_is_declared_not_verified": { "const": true },
+        "probe": { "type": ["object", "null"] }
+      }
+    },
+    "verdict": {
+      "type": ["object", "null"],
+      "description": "Null unless the engine ran. Every field is copied from the engine report.",
+      "properties": {
+        "source": { "const": "evidence-engine" },
+        "computed_by_gateway": { "const": false },
+        "value": { "type": ["string", "null"] },
+        "counts": { "type": ["object", "null"] },
+        "strict": { "type": ["boolean", "null"] },
+        "required_not_demonstrated": { "type": ["array", "null"] },
+        "engine_exit_code": { "type": "integer" }
+      }
+    },
+    "engine_report": {
+      "type": ["object", "null"],
+      "description": "The engine's report, verbatim except for path redaction. Its own `schema` field names the contract it follows."
+    },
+    "engine_report_redacted": {
+      "type": "boolean",
+      "description": "True when at least one string in the engine report was rewritten to remove a local path. Stated rather than silent: a redacted report is no longer byte-identical to what the engine wrote."
+    },
+    "redactions_applied": { "type": "integer", "minimum": 0 },
+    "limits": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Always non-empty. Carries the gateway's own two limits, plus every `does_not_establish` line of the engine report."
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reason", "detail"],
+        "properties": {
+          "reason": { "type": "string" },
+          "field": { "type": ["string", "null"] },
+          "detail": { "type": "string" }
+        }
+      }
+    },
+    "exit_code": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4],
+      "description": "0/1/2 are the engine's own codes, passed through untranslated. 3 = engine unavailable, 4 = request refused; both mean no verification took place."
+    }
+  }
+}

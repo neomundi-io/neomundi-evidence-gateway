@@ -1,0 +1,16 @@
+{
+  "schema": "neomundi.evidence.gateway.request/1",
+  "operation": "verify",
+  "request_id": "example-02-verify-corpus-strict",
+  "artifact": {
+    "name": "evidence-v1-demo",
+    "path": "examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip"
+  },
+  "inputs": {
+    "corpus": "examples/dossier-v1/corpus"
+  },
+  "options": {
+    "strict": true,
+    "language": "fr"
+  }
+}

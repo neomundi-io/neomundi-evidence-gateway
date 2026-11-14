@@ -1,0 +1,5 @@
+# Les scripts de ce depot sont lances par `sh`. Un `.sh` en CRLF ne
+# s execute pas sous bash : la fin de ligne devient une partie du nom de
+# l interpreteur. On force donc LF pour tout ce qui est texte.
+* text=auto eol=lf
+*.zip binary

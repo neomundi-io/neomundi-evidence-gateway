@@ -1,0 +1,17 @@
+{
+  "schema": "neomundi.evidence.gateway.request/1",
+  "operation": "attestation",
+  "request_id": "example-03-attestation",
+  "artifact": {
+    "name": "evidence-v1-demo",
+    "path": "examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip"
+  },
+  "inputs": {
+    "attestation": "examples/dossier-v1/NEOMUNDI_EVIDENCE_V1_DEMO.zip.jws",
+    "trust_store": "examples/dossier-v1/trust-store.json"
+  },
+  "options": {
+    "strict": true,
+    "language": "fr"
+  }
+}
