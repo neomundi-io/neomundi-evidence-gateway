@@ -133,11 +133,17 @@ echo "      corpus de conformite s en chargent, pas celle-ci."
 echo ""
 echo "  REPRODUCTIBILITE, MESUREE"
 echo "    verdicts et codes de sortie : identiques d un passage a l autre."
-echo "    Les reponses des scenarios 1, 3, 4 et 5 sont identiques a l octet ;"
-echo "    celle du scenario 2 ne l est PAS, parce que l archive alteree est"
-echo "    refabriquee a chaque passage et qu un ZIP porte l horodatage de ses"
-echo "    membres -- donc une autre empreinte. Comparer les verdicts, jamais"
-echo "    l empreinte d une archive refabriquee."
+if [ "$SANS_MOTEUR" -eq 0 ]; then
+  echo "    Les reponses des scenarios 1, 3, 4 et 5 sont identiques a l octet ;"
+  echo "    celle du scenario 2 ne l est PAS, parce que l archive alteree est"
+  echo "    refabriquee a chaque passage et qu un ZIP porte l horodatage de ses"
+  echo "    membres -- donc une autre empreinte. Comparer les verdicts, jamais"
+  echo "    l empreinte d une archive refabriquee."
+else
+  echo "    Les reponses des scenarios 4 et 5 sont identiques a l octet. Ce"
+  echo "    passage n a pas joue les scenarios 1 a 3 : rien n est affirme ici"
+  echo "    de leur reproductibilite."
+fi
 
 if [ "$ECARTS" -ne 0 ]; then
   echo ""

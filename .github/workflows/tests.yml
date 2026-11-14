@@ -31,7 +31,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: ["3.9", "3.11", "3.13"]
+        # Les memes versions que la CI du moteur. 3.9 et 3.10 ne sont PAS
+        # offertes par les runners Ubuntu 26.04 : les declarer rendrait un
+        # job rouge qui ne dit rien du produit.
+        python: ["3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
 
