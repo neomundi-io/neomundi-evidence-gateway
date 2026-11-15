@@ -4,6 +4,10 @@
 
 # NeoMundi Evidence Gateway
 
+Chaîne produit NeoMundi — INSTALL → TRACE → MEASURE → **VERIFY** → ACT. Ce dépôt est la **surface de vérification indépendante** : il exécute le moteur Evidence et republie son verdict et son code de sortie sans les traduire. Un `0` signifie qu'aucun contrôle n'a échoué — ce n'est pas un certificat, et cela ne dit rien de la vérité d'une réponse d'IA.
+
+[Architecture produit](https://github.com/neomundi-io/.github/blob/main/docs/PRODUCT_ARCHITECTURE.md) · [Audit des capacités](https://github.com/neomundi-io/.github/blob/main/docs/V2_FUNCTIONAL_AUDIT_2026-11-15.md) · [Tous les composants](https://github.com/neomundi-io/.github)
+
 ### Remettez à un auditeur les preuves de vos opérations IA — et l'outil pour les revérifier sans vous faire confiance.
 
 [![PyPI](https://img.shields.io/pypi/v/neomundi-evidence-verify?style=flat-square&label=PyPI&color=0f766e)](https://pypi.org/project/neomundi-evidence-verify/) [![Statut](https://img.shields.io/badge/Statut-expérimental-a16207?style=flat-square)](#maturité--à-lire-avant-de-citer-quoi-que-ce-soit) [![Dépendances](https://img.shields.io/badge/Dépendances-stdlib_Python-0f766e?style=flat-square)](#prérequis) [![Licence](https://img.shields.io/badge/Licence-Apache_2.0-0f766e?style=flat-square)](LICENSE)
