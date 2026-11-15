@@ -4,6 +4,10 @@
 
 # NeoMundi Evidence Gateway
 
+NeoMundi product chain — INSTALL → TRACE → MEASURE → **VERIFY** → ACT. This repository is the **independent verification surface**: it runs the Evidence engine and republishes its verdict and exit code untranslated. A `0` means no control failed — it is not a certificate, and it says nothing about whether an AI answer was true.
+
+[Product architecture](https://github.com/neomundi-io/.github/blob/main/docs/PRODUCT_ARCHITECTURE.md) · [Capability audit](https://github.com/neomundi-io/.github/blob/main/docs/V2_FUNCTIONAL_AUDIT_2026-11-15.md) · [All components](https://github.com/neomundi-io/.github)
+
 ### Hand an auditor your AI evidence — and the tool to re-check it without trusting you.
 
 [![PyPI](https://img.shields.io/pypi/v/neomundi-evidence-verify?style=flat-square&label=PyPI&color=0f766e)](https://pypi.org/project/neomundi-evidence-verify/) [![Status](https://img.shields.io/badge/Status-experimental-a16207?style=flat-square)](#maturity--read-this-before-quoting-anything) [![Dependencies](https://img.shields.io/badge/Dependencies-Python_stdlib-0f766e?style=flat-square)](#requirements) [![License](https://img.shields.io/badge/License-Apache_2.0-0f766e?style=flat-square)](LICENSE)
