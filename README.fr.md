@@ -10,7 +10,7 @@ Conservez des preuves techniques, vérifiez leur intégrité et transmettez des 
 
 **INSTALL → TRACE → MEASURE → VERIFY → ACT**
 
-[Architecture produit](https://github.com/neomundi-io/.github/blob/main/docs/PRODUCT_ARCHITECTURE.md) · [Audit des capacités](https://github.com/neomundi-io/.github/blob/main/docs/V2_FUNCTIONAL_AUDIT_2026-11-15.md) · [Tous les composants](https://github.com/neomundi-io/.github)
+[Architecture produit](https://github.com/neomundi-io/.github/blob/main/docs/PRODUCT_ARCHITECTURE.md) · [Audit des capacités](https://github.com/neomundi-io/.github/blob/main/docs/V2_FUNCTIONAL_AUDIT_2026-11-15.md) · [Tous les composants](https://github.com/orgs/neomundi-io/repositories)
 
 ### Des preuves techniques que vos clients et auditeurs peuvent contrôler — sans dépendre de votre tableau de bord.
 
