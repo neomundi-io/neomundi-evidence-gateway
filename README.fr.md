@@ -69,6 +69,14 @@ Evidence contrôle le dossier technique ; il n'établit **ni** la vérité d'une
 | Vérificateur public | Implémentations Python et deux implémentations Rust aux périmètres distincts | [Inventaire](verifier/README.fr.md) |
 | Spécification et corpus | Règles normatives, cas figés et comparaison de couverture | [Spécification](verifier/spec/SPECIFICATION.md) · [Corpus](verifier/conformance/README.md) |
 
+### Une promesse fondée sur une architecture que vous pouvez examiner
+
+Les capacités d'Evidence reposent sur des composants documentés, des contrats de vérification explicites et des limites clairement établies. Découvrez comment Evidence produit, conserve et vérifie les éléments de preuve techniques — et ce que ces contrôles ne permettent pas d'établir. Chaque capacité porte son état 🟢 🟡 🔴 et le périmètre dans lequel il vaut.
+
+**[Explorer l'architecture Evidence →](ARCHITECTURE.md)**
+
+*Nous exposons l'architecture parce que la promesse repose sur des mécanismes contrôlables : le vérificateur, la spécification et le corpus figé sont publics, et les limites sont écrites à côté des capacités. Le document est rédigé en anglais.*
+
 Les sections suivantes conservent les commandes d'installation, contrats de verdicts et codes de sortie, démonstrations reproductibles, résultats, maturité et limites.
 
 ---
