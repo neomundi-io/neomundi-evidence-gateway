@@ -2,13 +2,17 @@
 
 <sub><b>English</b> · <a href="README.fr.md">Français</a></sub>
 
-# NeoMundi Evidence Gateway
+# NeoMundi Evidence
 
-NeoMundi product chain — INSTALL → TRACE → MEASURE → **VERIFY** → ACT. This repository is the **independent verification surface**: it runs the Evidence engine and republishes its verdict and exit code untranslated. A `0` means no control failed — it is not a certificate, and it says nothing about whether an AI answer was true.
+**Your AI produced an output. Can you prove what happened?**
+
+Preserve technical evidence. Verify its integrity. Share records others can check independently.
+
+**INSTALL → TRACE → MEASURE → VERIFY → ACT**
 
 [Product architecture](https://github.com/neomundi-io/.github/blob/main/docs/PRODUCT_ARCHITECTURE.md) · [Capability audit](https://github.com/neomundi-io/.github/blob/main/docs/V2_FUNCTIONAL_AUDIT_2026-11-15.md) · [All components](https://github.com/neomundi-io/.github)
 
-### Hand an auditor your AI evidence — and the tool to re-check it without trusting you.
+### Hand a customer or auditor checkable AI evidence — not another dashboard claim.
 
 [![PyPI](https://img.shields.io/pypi/v/neomundi-evidence-verify?style=flat-square&label=PyPI&color=0f766e)](https://pypi.org/project/neomundi-evidence-verify/) [![Status](https://img.shields.io/badge/Status-experimental-a16207?style=flat-square)](#maturity--read-this-before-quoting-anything) [![Dependencies](https://img.shields.io/badge/Dependencies-Python_stdlib-0f766e?style=flat-square)](#requirements) [![License](https://img.shields.io/badge/License-Apache_2.0-0f766e?style=flat-square)](LICENSE)
 
@@ -23,7 +27,53 @@ NeoMundi product chain — INSTALL → TRACE → MEASURE → **VERIFY** → ACT.
 
 ---
 
-## Why this exists
+## 1. The problem — can you prove what happened?
+
+A customer challenges an AI-generated result. An auditor asks which records support a claim. Your team needs to reconstruct an incident months later. Operator-controlled logs alone do not make the supporting artifacts independently checkable.
+
+## 2. The benefit — technical evidence others can check
+
+**Preserve** a structured evidence package. **Verify** archive integrity, available signatures and timestamp evidence with explicit outcomes. **Demonstrate** what passed, failed or could not be tested — without asking the reviewer to trust your dashboard.
+
+Evidence checks the technical record; it does **not** establish that the underlying AI response was true, that an external action took place or that a regulatory obligation was fulfilled.
+
+## 3. How it works — preserve → verify → demonstrate
+
+1. **Preserve:** the private Evidence engine assembles an evidence package and its declared provenance.
+2. **Verify:** the public verifier checks supported archive and attestation properties; verification can run offline. The gateway forwards submissions to the engine and publishes its returned verdict unchanged — it does not verify by itself.
+3. **Demonstrate:** hand over the package, verification instructions and explicit status so another party can independently repeat the supported checks.
+
+## 4. Who it is for — a first market hypothesis
+
+| Situation | Potential buyer | Value to validate |
+| --- | --- | --- |
+| An AI software vendor faces customer security or audit questionnaires | CTO / VP Engineering | Share inspectable technical evidence rather than screenshots |
+| An AI operations team investigates contested outputs | AI Platform / Quality lead | Reconstruct which evidence was preserved and which checks ran |
+| A regulated-sector supplier prepares technical documentation | Risk / Compliance lead with Engineering | Provide traceable artifacts to support, not replace, compliance work |
+
+**Beachhead hypothesis, not validated customer demand:** B2B AI software vendors facing evidence requests from enterprise buyers.
+
+## 5. See it in action — reproduce the checks
+
+- [Install the public verifier](#install-the-public-verifier) with `pip install neomundi-evidence-verify`.
+- [Verify a valid and a tampered archive](#verify-a-proof-in-three-commands) using the public fixtures.
+- [Inspect the Python and Rust verifiers and conformance corpus](verifier/README.md), including different coverage boundaries.
+- [Review the verification limits](references/LIMITS.md) before relying on a result.
+
+## 6. Technical architecture — go deeper
+
+| Component | Role | Reference |
+| --- | --- | --- |
+| Evidence engine (private) | Produces evidence packages and engine verdicts | [Product architecture](https://github.com/neomundi-io/.github/blob/main/docs/PRODUCT_ARCHITECTURE.md) |
+| Evidence Gateway (public) | Submits to the engine and returns its response without inventing verification | [Gateway boundary](#the-gateway-verifies-nothing--and-that-is-the-point) |
+| Public verifier | Python implementations and two Rust implementations with distinct scopes | [Verifier inventory](verifier/README.md) |
+| Specification and corpus | Normative rules, fixed cases and coverage comparisons | [Specification](verifier/spec/SPECIFICATION.md) · [Corpus](verifier/conformance/README.md) |
+
+The sections below retain the installation commands, verdict and exit-code contracts, reproducible demonstrations, evidence records, maturity statements and limitations.
+
+---
+
+## Why this exists — technical background
 
 **The problem.** Organisations run AI in production, then have to answer for
 it — an audit, a client's due diligence, an incident review, months later.
