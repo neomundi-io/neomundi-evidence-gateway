@@ -114,24 +114,25 @@ that does it — `station ledger verify` — rather than pretending to cover it.
 ## 2 · Functional architecture
 
 ```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 320}} }%%
 flowchart LR
   subgraph PRIV["Private — Evidence engine"]
     direction TB
     E1["Produce the package"]
-    E2["Sign · Ed25519 / JWS"]
-    E3["Timestamp · publish trust store"]
+    E2["Sign<br/>Ed25519 / JWS"]
+    E3["Timestamp<br/>publish trust store"]
   end
 
   ART["Evidence artifacts<br/>archive ZIP<br/>detached attestation<br/>timestamp proof"]
 
   subgraph PUB["Public — this repository, Apache-2.0"]
     direction TB
-    GW["Gateway<br/>envelope in, envelope out<br/>verifies nothing itself<br/>delegates to an engine install"]
+    GW["Gateway<br/>envelope in · envelope out<br/>verifies nothing itself<br/>delegates to an engine"]
     VER["Public verifier<br/>offline, no account<br/>Python · 2 Rust crates"]
-    SPEC["Specification + frozen corpus<br/>the rules, and 50 fixed cases"]
+    SPEC["Specification<br/>+ frozen corpus<br/>50 fixed cases"]
   end
 
-  OUT["Verdict and exit code<br/>ACCEPTED / REFUSED / INCOMPLETE<br/>PASS · FAIL · NOT TESTED"]
+  OUT["Verdict and exit code<br/>ACCEPTED / REFUSED<br/>/ INCOMPLETE<br/>PASS · FAIL · NOT TESTED"]
 
   E1 --> E2 --> E3
   PRIV --> ART
@@ -389,6 +390,7 @@ Three distinct reasons, and none of them is a formality:
 ### The three verifiers, and their real perimeters
 
 ```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 320}} }%%
 flowchart TB
   CORPUS["Frozen conformance corpus<br/>50 cases · 7 families<br/>172 digests · runs offline"]
 
@@ -396,7 +398,7 @@ flowchart TB
   RC["Rust core<br/>submission only<br/>35 of 50 applicable"]
   RX["Rust crypto<br/>archive · attestation only<br/>15 of 50 applicable"]
 
-  CMP["Verdicts compared across<br/>applicable verifiers"]
+  CMP["Verdicts compared<br/>across applicable verifiers"]
 
   NORM["40 normative cases<br/>verdicts agree<br/>0 exit-code deviation"]
   AMB["10 ambiguous cases<br/>the contract does not decide<br/>6 of them diverge"]
