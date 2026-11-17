@@ -2,13 +2,17 @@
 
 <sub><a href="README.md">English</a> · <b>Français</b></sub>
 
-# NeoMundi Evidence Gateway
+# NeoMundi Evidence
 
-Chaîne produit NeoMundi — INSTALL → TRACE → MEASURE → **VERIFY** → ACT. Ce dépôt est la **surface de vérification indépendante** : il exécute le moteur Evidence et republie son verdict et son code de sortie sans les traduire. Un `0` signifie qu'aucun contrôle n'a échoué — ce n'est pas un certificat, et cela ne dit rien de la vérité d'une réponse d'IA.
+**Un résultat d'IA est contesté. Pouvez-vous prouver ce qui s'est passé ?**
+
+Conservez des preuves techniques, vérifiez leur intégrité et transmettez des dossiers contrôlables par un tiers.
+
+**INSTALL → TRACE → MEASURE → VERIFY → ACT**
 
 [Architecture produit](https://github.com/neomundi-io/.github/blob/main/docs/PRODUCT_ARCHITECTURE.md) · [Audit des capacités](https://github.com/neomundi-io/.github/blob/main/docs/V2_FUNCTIONAL_AUDIT_2026-11-15.md) · [Tous les composants](https://github.com/neomundi-io/.github)
 
-### Remettez à un auditeur les preuves de vos opérations IA — et l'outil pour les revérifier sans vous faire confiance.
+### Des preuves techniques que vos clients et auditeurs peuvent contrôler — sans dépendre de votre tableau de bord.
 
 [![PyPI](https://img.shields.io/pypi/v/neomundi-evidence-verify?style=flat-square&label=PyPI&color=0f766e)](https://pypi.org/project/neomundi-evidence-verify/) [![Statut](https://img.shields.io/badge/Statut-expérimental-a16207?style=flat-square)](#maturité--à-lire-avant-de-citer-quoi-que-ce-soit) [![Dépendances](https://img.shields.io/badge/Dépendances-stdlib_Python-0f766e?style=flat-square)](#prérequis) [![Licence](https://img.shields.io/badge/Licence-Apache_2.0-0f766e?style=flat-square)](LICENSE)
 
@@ -23,7 +27,53 @@ Chaîne produit NeoMundi — INSTALL → TRACE → MEASURE → **VERIFY** → AC
 
 ---
 
-## Pourquoi cela existe
+## 1. Le problème — pouvez-vous prouver ce qui s'est passé ?
+
+Un client conteste un résultat produit par une IA. Un auditeur demande les preuves d'une affirmation. Votre équipe doit reconstituer un incident des mois plus tard. Des journaux détenus par le seul opérateur ne rendent pas les artefacts contrôlables de façon autonome.
+
+## 2. Le bénéfice — des preuves techniques contrôlables par des tiers
+
+**Conserver** un dossier de preuves structuré. **Vérifier** l'intégrité des archives, les signatures et horodatages disponibles avec des résultats explicites. **Démontrer** ce qui a réussi, échoué ou n'a pas pu être testé, sans demander de croire votre tableau de bord.
+
+Evidence contrôle le dossier technique ; il n'établit **ni** la vérité d'une réponse d'IA, **ni** la réalité d'une action externe, **ni** la conformité réglementaire.
+
+## 3. Comment ça marche — conserver → vérifier → démontrer
+
+1. **Conserver :** le moteur privé Evidence construit le dossier de preuves et sa provenance déclarée.
+2. **Vérifier :** le vérificateur public contrôle les propriétés d'archives et d'attestations qu'il sait traiter, y compris hors ligne. Le Gateway transmet les soumissions au moteur et publie son verdict sans modification ; il ne vérifie rien lui-même.
+3. **Démontrer :** remettre le dossier, les instructions et les statuts explicites pour permettre à un tiers de répéter les contrôles applicables.
+
+## 4. Pour qui — hypothèse de premier marché
+
+| Situation | Acheteur potentiel | Valeur à valider |
+| --- | --- | --- |
+| Éditeur de logiciel IA sollicité par des clients sur l'audit ou la sécurité | CTO / direction technique | Transmettre des éléments contrôlables plutôt que des captures d'écran |
+| Équipe opérationnelle enquêtant sur des sorties IA contestées | Responsable plateforme / qualité IA | Reconstituer les pièces conservées et les contrôles réalisés |
+| Fournisseur IA d'un secteur réglementé préparant sa documentation | Risques / conformité avec l'ingénierie | Étayer des travaux de conformité sans prétendre s'y substituer |
+
+**Hypothèse beachhead, non encore validée commercialement :** éditeurs B2B de logiciels IA confrontés aux demandes de preuves de clients entreprises.
+
+## 5. Voir la démonstration — reproduire les contrôles
+
+- [Installer le vérificateur public](#installer-le-vérificateur-public) avec `pip install neomundi-evidence-verify`.
+- [Vérifier une archive valide et une archive altérée](#vérifier-une-preuve-en-trois-commandes) avec les jeux d'essai publics.
+- [Consulter les vérificateurs Python/Rust et le corpus](verifier/README.fr.md), avec leurs périmètres distincts.
+- [Lire les limites de vérification](references/LIMITS.md) avant d'utiliser un résultat.
+
+## 6. Architecture technique — aller plus loin
+
+| Composant | Rôle | Référence |
+| --- | --- | --- |
+| Moteur Evidence (privé) | Produit les dossiers de preuves et les verdicts du moteur | [Architecture produit](https://github.com/neomundi-io/.github/blob/main/docs/PRODUCT_ARCHITECTURE.fr.md) |
+| Evidence Gateway (public) | Transmet les soumissions et restitue les réponses sans inventer de vérification | [Frontière du Gateway](#le-gateway-ne-vérifie-rien--et-cest-le-produit) |
+| Vérificateur public | Implémentations Python et deux implémentations Rust aux périmètres distincts | [Inventaire](verifier/README.fr.md) |
+| Spécification et corpus | Règles normatives, cas figés et comparaison de couverture | [Spécification](verifier/spec/SPECIFICATION.md) · [Corpus](verifier/conformance/README.md) |
+
+Les sections suivantes conservent les commandes d'installation, contrats de verdicts et codes de sortie, démonstrations reproductibles, résultats, maturité et limites.
+
+---
+
+## Pourquoi cela existe — contexte technique
 
 **Le problème.** Les organisations emploient de l'IA en production, puis
 doivent en répondre — un audit, la diligence d'un client, l'analyse d'un
