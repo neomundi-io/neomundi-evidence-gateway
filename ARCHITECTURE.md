@@ -114,45 +114,42 @@ that does it — `station ledger verify` — rather than pretending to cover it.
 ## 2 · Functional architecture
 
 ```mermaid
-%%{init: {"flowchart": {"wrappingWidth": 320}} }%%
 flowchart LR
-  subgraph PRIV["Private — Evidence engine"]
-    direction TB
-    E1["Produce the package"]
-    E2["Sign<br/>Ed25519 / JWS"]
-    E3["Timestamp<br/>publish trust store"]
+  subgraph INTEGRATION["Integration — delegated execution"]
+    direction LR
+    CLIENT["Integrator<br/>submission envelope"]
+    GIN["Public Gateway<br/>validate + forward"]
+    ENGINE["Private Evidence engine<br/>performs requested operation"]
+    GOUT["Gateway response<br/>engine verdict unchanged"]
+    CLIENT --> GIN --> ENGINE --> GOUT
   end
 
-  ART["Evidence artifacts<br/>archive ZIP<br/>detached attestation<br/>timestamp proof"]
-
-  subgraph PUB["Public — this repository, Apache-2.0"]
-    direction TB
-    GW["Gateway<br/>envelope in · envelope out<br/>verifies nothing itself<br/>delegates to an engine"]
-    VER["Public verifier<br/>offline, no account<br/>Python · 2 Rust crates"]
-    SPEC["Specification<br/>+ frozen corpus<br/>50 fixed cases"]
+  subgraph HANDOVER["Evidence handover — independent local checks"]
+    direction LR
+    ART["Evidence package<br/>ZIP · detached attestation<br/>timestamp proof"]
+    VER["Public verifier<br/>Python · Rust scopes"]
+    REPORT["Local control report<br/>PASS · FAIL · NOT TESTED<br/>exit code"]
+    ART --> VER --> REPORT
   end
-
-  OUT["Verdict and exit code<br/>ACCEPTED / REFUSED<br/>/ INCOMPLETE<br/>PASS · FAIL · NOT TESTED"]
-
-  E1 --> E2 --> E3
-  PRIV --> ART
-  ART --> PUB
-  PUB --> OUT
 
   classDef private fill:#f1f3f6,stroke:#64748b,stroke-width:1px,color:#0f172a
   classDef artifact fill:#fbf4e3,stroke:#b8860b,stroke-width:1px,color:#0f172a
   classDef public fill:#e6f2f0,stroke:#0f766e,stroke-width:1px,color:#0f172a
   classDef result fill:#eef3fb,stroke:#2563eb,stroke-width:1px,color:#0f172a
 
-  class E1,E2,E3 private
+  class ENGINE private
   class ART artifact
-  class GW,VER,SPEC public
-  class OUT result
+  class GIN,VER public
+  class CLIENT,GOUT,REPORT result
 ```
 
-**Reading the diagram.** Grey is private and produces; gold is what crosses the boundary; teal is
-published and only ever reads and judges; blue is what a reader acts on. The artifact is the only
-thing that has to travel — **everything needed to check it is already public.**
+**Reading the diagram.** These are **two distinct routes**, not one pipeline. Above,
+the public Gateway delegates an operation to the private engine and republishes its returned
+report without verifying the package itself. Below, a reviewer holds an evidence package and
+runs public verification locally; the Gateway is **not** on that path. Grey denotes the private
+engine, gold the transferred evidence, teal public interfaces and verifiers, and blue request
+or result surfaces. The published specification and corpus support the verifier but are not
+runtime steps or automatic checks of each submitted package.
 
 ### The six functions, and who performs each
 
@@ -254,7 +251,7 @@ sequenceDiagram
   OP->>PKG: declare paths, sizes, SHA-256 digests
   OP->>PKG: sign the digests — detached Ed25519 / JWS
   OP->>ANCH: submit the signature digest to OpenTimestamps
-  ANCH-->>OP: proof — pending, then confirmed by the chain
+  ANCH-->>OP: proof — pending or carrying a Bitcoin attestation (chain validation is separate)
   OP->>TP: hand over package + attestation + proof
   Note over TP,VER: no account, no network, no call to NeoMundi
   TP->>VER: run the controls locally
@@ -326,7 +323,7 @@ and only `--strict` separates *demonstrated* from *not testable*.
 
 | Observed | Reported | Under `--strict` |
 |---|---|---|
-| a **Bitcoin** attestation is present | `PASS` — confirmed by the chain, with its block number(s) | `0` |
+| a **Bitcoin** attestation is present | `PASS` — Bitcoin attestation identified in the proof, with block number(s); **the chain is not independently validated here** | `0` |
 | only **PENDING** attestations | `NOT TESTED` — a calendar undertook to include the digest in a future transaction; **it attests no date** | **`2`** |
 | the proof commits to another digest | **`FAIL`** — the binding is refuted | `1` |
 | `opentimestamps` not installed | `NOT TESTED` — state unknown; the **binding** is still checked | `2` |
@@ -518,7 +515,7 @@ evidence about the cases it contains, silent about every case it does not.
 | "We do not know whether an archive has been altered" | digest recomputation over the delivered bytes | exit **1** and the line naming the member that failed — **Reproduced** on `D-10` | tampering surfaces as a named failure, not a silent pass | 🔴 a **coherent rewrite** — content replaced *and* digests recomputed — passes. Only an external anchor defeats it |
 | "An auditor wants to repeat the checks, not read our report" | frozen corpus + specification + three verifiers | `sha256sum --check SHA256SUMS` → 172/172, then the corpus runner — **Reproduced** | the auditor reaches their own verdict on their own machine | 🔴 our verifiers, our corpus. Reproduction is not independent validation |
 | "A supplier must hand a technical file to a third-party organisation" | package + attestation + timestamp proof + explicit status | the trust store is published byte for byte; the attestation verifies against it | a transferable file instead of a claim | 🔴 the signer's `legal_capacity_to_attest` is **`experimental`**, and its powers are **not verified** |
-| "We need the date to be provable" | OpenTimestamps proof, four states never conflated | a confirmed proof names its Bitcoin block(s) — **Reproduced** | a `pending` proof can never be shown as a confirmed date | 🔴 **verified time stays `NOT TESTED`**: validating a chain attestation needs a block header. No eIDAS qualification is claimed |
+| "We need the date to be provable" | OpenTimestamps proof, four states never conflated | a proof carrying Bitcoin attestations names their block(s) — **Reproduced**, without validating the chain | a `pending` proof is never represented as a verified date | 🔴 **verified time stays `NOT TESTED`**: validating a chain attestation needs a block header. No eIDAS qualification is claimed |
 | "We want to plug this into our own pipeline" | gateway envelopes, closed contracts, five exit codes | codes 0/1/3/4 — **Reproduced**; `computed_by_gateway: false` in every payload | an integration boundary that cannot silently become a second verifier | 🟡 version `0.1.0`, **never exercised by a third party** |
 | "We need a compliance certificate" | — | — | — | 🔴 **do not sell.** Evidence certifies nothing and decides no conformity |
 
