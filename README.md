@@ -69,6 +69,14 @@ Evidence checks the technical record; it does **not** establish that the underly
 | Public verifier | Python implementations and two Rust implementations with distinct scopes | [Verifier inventory](verifier/README.md) |
 | Specification and corpus | Normative rules, fixed cases and coverage comparisons | [Specification](verifier/spec/SPECIFICATION.md) · [Corpus](verifier/conformance/README.md) |
 
+### Built on an architecture you can inspect
+
+Our promise is backed by documented components, explicit verification contracts and clearly stated limits. Explore how Evidence produces, preserves and verifies technical records — and what those checks cannot establish. Every capability carries its state 🟢 🟡 🔴 and the perimeter it holds in.
+
+**[Explore Evidence Architecture →](ARCHITECTURE.md)**
+
+*We expose the architecture because the promise rests on mechanisms you can check — the verifier, the specification and the frozen corpus are public, and the limits are written down beside the capabilities.*
+
 The sections below retain the installation commands, verdict and exit-code contracts, reproducible demonstrations, evidence records, maturity statements and limitations.
 
 ---
