@@ -1,6 +1,6 @@
 <div align="center">
 
-<sub><a href="README.md">English</a> · <b>Français</b></sub>
+[![Français](https://img.shields.io/badge/FR-Fran%C3%A7ais-2563eb?style=flat-square)](README.fr.md) · [![English](https://img.shields.io/badge/EN-English-2563eb?style=flat-square)](README.md)
 
 # NeoMundi Evidence
 
@@ -25,7 +25,24 @@ Conservez des preuves techniques, vérifiez leur intégrité et transmettez des 
 [![Evidence](https://img.shields.io/badge/Evidence-Vérifier-D4A545?style=flat-square)](verifier/README.fr.md)
 [![Gateway](https://img.shields.io/badge/Gateway-Intégrer-475569?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-gateway)
 
+**[Installer le vérificateur](#installer-le-vérificateur-public)** · **[Reproduire les contrôles](#vérifier-une-preuve-en-trois-commandes)** · **[Limites des vérifications](references/LIMITS.md)**
+
+**[neomundi.io](https://neomundi.io/)**
+
 </div>
+
+---
+
+## Des observations IA aux preuves vérifiables indépendamment
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/neomundi-io/neomundi-evidence-gateway/main/assets/evidence-journey-fr-dark.svg">
+    <img alt="Parcours Evidence : conserver un dossier avec provenance, contrôler les empreintes et les attestations disponibles, documenter les états validés, échoués ou non testés, puis transmettre pour vérification indépendante." src="https://raw.githubusercontent.com/neomundi-io/neomundi-evidence-gateway/main/assets/evidence-journey-fr-light.svg" width="100%">
+  </picture>
+</p>
+
+**Conserver → Contrôler → Documenter → Transmettre.** Le vérificateur public exécute les contrôles documentés ; le Gateway transmet les soumissions au moteur sans les vérifier lui-même. Une intégrité vérifiée ne prouve pas que la réponse de l'IA était vraie.
 
 ---
 
