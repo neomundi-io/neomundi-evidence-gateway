@@ -6,13 +6,15 @@
 
 **Your AI produced an output. Can you prove what happened?**
 
+**From AI observations to independently checkable evidence.**
+
 Preserve technical evidence. Verify its integrity. Share records others can check independently.
 
 **INSTALL → TRACE → MEASURE → VERIFY → ACT**
 
 [Product architecture](https://github.com/neomundi-io/.github/blob/main/docs/PRODUCT_ARCHITECTURE.md) · [Capability audit](https://github.com/neomundi-io/.github/blob/main/docs/V2_FUNCTIONAL_AUDIT_2026-11-15.md) · [All components](https://github.com/orgs/neomundi-io/repositories)
 
-### Hand a customer or auditor checkable AI evidence — not another dashboard claim.
+### Give customers and auditors evidence they can check — not claims they must trust.
 
 [![PyPI](https://img.shields.io/pypi/v/neomundi-evidence-verify?style=flat-square&label=PyPI&color=0f766e)](https://pypi.org/project/neomundi-evidence-verify/) [![Status](https://img.shields.io/badge/Status-experimental-a16207?style=flat-square)](#maturity--read-this-before-quoting-anything) [![Dependencies](https://img.shields.io/badge/Dependencies-Python_stdlib-0f766e?style=flat-square)](#requirements) [![License](https://img.shields.io/badge/License-Apache_2.0-0f766e?style=flat-square)](LICENSE)
 
