@@ -1,6 +1,6 @@
 <div align="center">
 
-<sub><b>English</b> · <a href="README.fr.md">Français</a></sub>
+[![English](https://img.shields.io/badge/EN-English-2563eb?style=flat-square)](README.md) · [![Français](https://img.shields.io/badge/FR-Fran%C3%A7ais-2563eb?style=flat-square)](README.fr.md)
 
 # NeoMundi Evidence
 
@@ -25,7 +25,24 @@ Preserve technical evidence. Verify its integrity. Share records others can chec
 [![Evidence](https://img.shields.io/badge/Evidence-Verify-D4A545?style=flat-square)](verifier/README.md)
 [![Gateway](https://img.shields.io/badge/Gateway-Integrate-475569?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-gateway)
 
+**[Install verifier](#install-the-public-verifier)** · **[Reproduce the checks](#verify-a-proof-in-three-commands)** · **[Verification limits](references/LIMITS.md)**
+
+**[neomundi.io](https://neomundi.io/)**
+
 </div>
+
+---
+
+## From an AI observation to independently checkable evidence
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/neomundi-io/neomundi-evidence-gateway/main/assets/evidence-journey-en-dark.svg">
+    <img alt="Evidence journey: preserve a provenance-bearing evidence package, check hashes and supported attestations, report passed, failed or untested states, and hand over for independent verification." src="https://raw.githubusercontent.com/neomundi-io/neomundi-evidence-gateway/main/assets/evidence-journey-en-light.svg" width="100%">
+  </picture>
+</p>
+
+**Preserve → Check → Report → Hand over.** The public verifier performs documented checks; the gateway forwards engine submissions and does **not** independently validate them. Verified integrity does not prove the AI answer was true.
 
 ---
 
