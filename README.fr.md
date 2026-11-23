@@ -6,13 +6,15 @@
 
 **Un résultat d'IA est contesté. Pouvez-vous prouver ce qui s'est passé ?**
 
+**Des observations de l'IA aux preuves vérifiables indépendamment.**
+
 Conservez des preuves techniques, vérifiez leur intégrité et transmettez des dossiers contrôlables par un tiers.
 
 **INSTALL → TRACE → MEASURE → VERIFY → ACT**
 
 [Architecture produit](https://github.com/neomundi-io/.github/blob/main/docs/PRODUCT_ARCHITECTURE.md) · [Audit des capacités](https://github.com/neomundi-io/.github/blob/main/docs/V2_FUNCTIONAL_AUDIT_2026-11-15.md) · [Tous les composants](https://github.com/orgs/neomundi-io/repositories)
 
-### Des preuves techniques que vos clients et auditeurs peuvent contrôler — sans dépendre de votre tableau de bord.
+### Donnez à vos clients et auditeurs des preuves à vérifier, pas des affirmations à croire.
 
 [![PyPI](https://img.shields.io/pypi/v/neomundi-evidence-verify?style=flat-square&label=PyPI&color=0f766e)](https://pypi.org/project/neomundi-evidence-verify/) [![Statut](https://img.shields.io/badge/Statut-expérimental-a16207?style=flat-square)](#maturité--à-lire-avant-de-citer-quoi-que-ce-soit) [![Dépendances](https://img.shields.io/badge/Dépendances-stdlib_Python-0f766e?style=flat-square)](#prérequis) [![Licence](https://img.shields.io/badge/Licence-Apache_2.0-0f766e?style=flat-square)](LICENSE)
 
