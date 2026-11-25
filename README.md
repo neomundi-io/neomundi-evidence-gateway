@@ -8,6 +8,10 @@
 
 **From AI observations to independently checkable evidence.**
 
+**Make records of runtime AI measurements independently verifiable.**
+
+Preserve and verify the integrity of evidence derived from instrumented executions. Verification establishes record integrity, not the factual truth of an AI output.
+
 Preserve technical evidence. Verify its integrity. Share records others can check independently.
 
 **INSTALL → TRACE → MEASURE → VERIFY → ACT**

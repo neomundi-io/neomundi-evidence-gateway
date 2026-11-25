@@ -8,6 +8,10 @@
 
 **Des observations de l'IA aux preuves vérifiables indépendamment.**
 
+**Rendez les enregistrements des mesures d'IA en exécution vérifiables indépendamment.**
+
+Conservez et vérifiez l'intégrité des preuves issues des exécutions instrumentées. La vérification établit l'intégrité des enregistrements, et non la vérité factuelle d'une réponse d'IA.
+
 Conservez des preuves techniques, vérifiez leur intégrité et transmettez des dossiers contrôlables par un tiers.
 
 **INSTALL → TRACE → MEASURE → VERIFY → ACT**
