@@ -25,6 +25,7 @@ Conservez des preuves techniques, vérifiez leur intégrité et transmettez des 
 **Mesure → Station → Evidence → Gateway**
 
 [![Mesure](https://img.shields.io/badge/Mesure-Mesurer-2563eb?style=flat-square)](https://github.com/neomundi-io/neomundi-runtime-measurement)
+[![Intégrations](https://img.shields.io/badge/Int%C3%A9grations-6%20frameworks-7c3aed?style=flat-square)](https://github.com/neomundi-io/neomundi-integrations)
 [![Station](https://img.shields.io/badge/Station-Observer-0f766e?style=flat-square)](https://github.com/neomundi-io/neomundi-station-public)
 [![Evidence](https://img.shields.io/badge/Evidence-Vérifier-D4A545?style=flat-square)](verifier/README.fr.md)
 [![Gateway](https://img.shields.io/badge/Gateway-Intégrer-475569?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-gateway)
@@ -37,6 +38,8 @@ Conservez des preuves techniques, vérifiez leur intégrité et transmettez des 
 
 ---
 
+
+**Vous utilisez déjà LangChain, LiteLLM, MLflow, OpenTelemetry, Langfuse ou le SDK OpenAI Agents ?** Les observations dont parle cette page peuvent être produites depuis le point d'accroche que votre framework vous donne déjà — six paquets publiés, chacun avec un niveau de preuve calculé depuis une preuve versionnée : **[bibliothèque d'intégrations](https://github.com/neomundi-io/neomundi-integrations)**.
 ## Des observations IA aux preuves vérifiables indépendamment
 
 <p align="center">
