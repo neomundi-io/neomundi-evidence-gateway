@@ -28,11 +28,24 @@ __all__ = ["__version__", "VERSION_DU_CORPUS", "REVISION_DU_PROTOCOLE"]
 #: ne comptait pas les membres de `/3` et `/4` qu il declare pourtant,
 #: et devenait insatisfiable pour une archive portant une couverture.
 #:
+#: 🟢 PUBLIEE sur PyPI le 2026-11-27 a 23:10:50Z, 111 588 octets. Eprouvee
+#: depuis l index dans un venv vierge : `18 PASS, 0 FAIL, 3 NOT TESTED`,
+#: code 0, sur deux archives `/4` reelles. Le travail `interop` de la
+#: Station est passe au vert sur LE MEME COMMIT, sans qu une ligne de code
+#: change -- la preuve que l arete mesure l index, et non l accord des
+#: depots entre eux.
+#:
 #: ⚠ Mettre a jour ce numero NE PUBLIE RIEN. La publication passe par
 #: `workflow_dispatch` sur `publish.yml`, avec confirmation tapee et
-#: environnement GitHub. Tant qu elle n a pas eu lieu, l index sert
-#: encore la 0.1.0, et toute page qui annoncerait le contraire serait
-#: fausse -- PyPI est immuable, une page perimee ne se retire pas.
+#: environnement GitHub a relecteur requis. Tant qu elle n a pas eu lieu,
+#: l index sert la version precedente, et toute page qui annoncerait le
+#: contraire serait fausse -- PyPI est immuable, une page perimee ne se
+#: retire pas.
+#:
+#: 🔴 EVPACK-022 -- l etape `testpypi` que ce depot recommande N EST PAS
+#: OUTILLEE : le projet n existe pas sur TestPyPI et aucun editeur de
+#: confiance n y est configure. La 0.2.0 a donc ete publiee SANS repetition
+#: generale. A configurer avant la prochaine.
 __version__ = "0.2.0"
 
 #: Version du corpus de conformite dont les verificateurs embarques sont
