@@ -69,8 +69,50 @@ SCHEMAS_CONNUS = (
     "station.export.campagne/1",
     "station.export.campagne/2",
     "station.export.campagne/3",
+    "station.export.campagne/4",
     "neomundi.evidence.med-demo/1",
 )
+
+#: EVPACK-001 -- pourquoi `/4` est ajoute ici, et pourquoi c est le
+#: verificateur qui change et non le producteur.
+#:
+#: La Station a adopte `station.export.campagne/4` le 2026-11-25 pour verser
+#: `measurement_absences.jsonl` : la mesure DEMANDEE qui n a pas eu lieu, et
+#: le nom de la classe d exception qui l a refusee. Sans ce membre, le
+#: destinataire voyait une observation sans mesure sans pouvoir distinguer
+#: << pas encore mesuree >> de << refusee >>.
+#:
+#: Ce verificateur est reste a `/3`, et `controle_schema` rend FAIL sur un
+#: schema inconnu -- premier controle, donc tout le rapport s effondre
+#: derriere. Resultat mesure le 2026-11-27 sur une archive REELLE produite
+#: par la Station a `afd8506f` : `2 PASS, 1 FAIL, 0 NOT TESTED`, code 1, sur
+#: les TROIS surfaces (moteur, copie republiee de la passerelle, et paquet
+#: PyPI `neomundi-evidence-verify` 0.1.0, dont le `verify.py` embarque est
+#: identique a l octet : sha256 `886170547eab7d766a1b...`, 44 394 octets).
+#:
+#: 🔴 Trois corrections ont ete examinees, et DEUX sont refusees :
+#:
+#:   * **retrograder la Station a `/3`** -- refuse. Le membre existe et porte
+#:     une information qu aucun autre ne porte ; une archive `/4` renommee
+#:     `/3` serait indiscernable d une `/3` qui n a genuinement aucune
+#:     absence a declarer. Ce serait effacer une distinction, pas reparer une
+#:     incompatibilite.
+#:   * **accepter tout `station.export.campagne/N`** -- refuse. `MEMBRES_PAR_SCHEMA`
+#:     ne saurait alors plus quoi attendre, et `tests/test_adversarial.py`
+#:     eprouve precisement qu un `/99` fabrique est REFUSE. Une liste fermee
+#:     est une defense, pas une rigidite.
+#:
+#: La correction juste est donc la troisieme : nommer `/4` explicitement,
+#: avec ses membres. Le producteur a suivi la convention de `/2` -> `/3`
+#: (un membre de plus, les autres inchanges) ; c est ce verificateur qui
+#: n avait pas suivi.
+#:
+#: ⚠ Et le DEFAUT DURABLE n est pas cette ligne : c est qu aucune integration
+#: continue ne soumettait une archive FRAICHEMENT PRODUITE au verificateur
+#: DISTRIBUE. Les deux depots etaient verts chacun de son cote pendant que la
+#: chaine entre eux etait rompue. Le test d interoperabilite ajoute avec cette
+#: correction est la vraie reparation ; cette ligne n est que le symptome
+#: traite.
 
 #: Les membres attendus par version de schema.
 MEMBRES_PAR_SCHEMA = {
@@ -100,6 +142,23 @@ MEMBRES_PAR_SCHEMA = {
         "observations.jsonl",
         "measurements.jsonl",
         "measurement_coverage.jsonl",
+        "reference_evaluations.jsonl",
+        "replay_provenance.jsonl",
+        "manifest.json",
+        "rapport.md",
+        "checksums.sha256",
+    ),
+    # `/4` ajoute UN membre a `/3` : la mesure DEMANDEE qui n a pas eu lieu,
+    # et le nom de la classe d exception qui l a refusee. Meme convention que
+    # `/2` -> `/3` : un membre de plus, les neuf autres inchanges -- une
+    # archive `/3` reste donc lisible, et les controles qui portent sur un
+    # membre absent rendent NOT TESTED plutot que FAIL.
+    "station.export.campagne/4": (
+        "observations.csv",
+        "observations.jsonl",
+        "measurements.jsonl",
+        "measurement_coverage.jsonl",
+        "measurement_absences.jsonl",
         "reference_evaluations.jsonl",
         "replay_provenance.jsonl",
         "manifest.json",
@@ -764,9 +823,33 @@ def controle_completude(
     # Les decomptes des membres effectivement livres.
     decomptes = manifeste.get("decomptes")
     decomptes = decomptes if isinstance(decomptes, dict) else {}
+    # EVPACK-014 -- ce tableau etait incomplet, et le contrat en devenait
+    # INSATISFIABLE.
+    #
+    # Il nomme les membres livres EN OCTETS D ORIGINE, dont les decomptes
+    # doivent totaliser `enregistrements_exportes`. Il s etait arrete a
+    # quatre membres, ceux de `/2`. Or `/3` a ajoute
+    # `measurement_coverage.jsonl` et `/4` `measurement_absences.jsonl` :
+    # deux membres que `MEMBRES_PAR_SCHEMA` declare, qui portent de vrais
+    # enregistrements du registre, et que ce tableau ne comptait pas.
+    #
+    # Consequence mesuree le 2026-11-27 sur une archive `/4` REELLE portant
+    # une couverture : registre 4 enregistrements, 3 reellement livres en
+    # octets d origine, et `somme_livres` n en voyait que 2. Le producteur
+    # n avait alors que deux issues, toutes deux fausses -- declarer
+    # `enregistrements_exportes = 2` et ranger dans `types_exclus` une
+    # couverture qu il a POURTANT LIVREE, ou declarer 3 et echouer au
+    # controle. Un contrat qu on ne peut honorer qu en mentant n est pas un
+    # contrat.
+    #
+    # ⚠ Les membres absents d une archive ancienne contribuent 0 : le filtre
+    # `if nom in noms` ci-dessous le garantit, et une archive `/1` ou `/2`
+    # se lit donc exactement comme avant.
     livres = {
         "observations.jsonl": decomptes.get("observations"),
         "measurements.jsonl": decomptes.get("mesures"),
+        "measurement_coverage.jsonl": decomptes.get("couvertures"),
+        "measurement_absences.jsonl": decomptes.get("absences_de_mesure"),
         "reference_evaluations.jsonl": decomptes.get("evaluations"),
         "replay_provenance.jsonl": decomptes.get("provenances_de_rejeu"),
     }
