@@ -25,7 +25,7 @@ Preserve technical evidence. Verify its integrity. Share records others can chec
 **Measurement → Station → Evidence → Gateway**
 
 [![Measurement](https://img.shields.io/badge/Measurement-Measure-2563eb?style=flat-square)](https://github.com/neomundi-io/neomundi-runtime-measurement)
-[![Integrations](https://img.shields.io/badge/Integrations-6%20frameworks-7c3aed?style=flat-square)](https://github.com/neomundi-io/neomundi-integrations)
+[![Integrations](https://img.shields.io/badge/Integrations-7%20frameworks-7c3aed?style=flat-square)](https://github.com/neomundi-io/neomundi-integrations)
 [![Station](https://img.shields.io/badge/Station-Observe-0f766e?style=flat-square)](https://github.com/neomundi-io/neomundi-station-public)
 [![Evidence](https://img.shields.io/badge/Evidence-Verify-D4A545?style=flat-square)](verifier/README.md)
 [![Gateway](https://img.shields.io/badge/Gateway-Integrate-475569?style=flat-square)](https://github.com/neomundi-io/neomundi-evidence-gateway)
@@ -39,7 +39,7 @@ Preserve technical evidence. Verify its integrity. Share records others can chec
 ---
 
 
-**Already running LangChain, LiteLLM, MLflow, OpenTelemetry, Langfuse or the OpenAI Agents SDK?** The observations this page is about can be produced from the hook your framework already gives you — six published packages, each with an evidence level computed from a committed proof: **[integration library](https://github.com/neomundi-io/neomundi-integrations)**.
+**Already running LangChain, LiteLLM, MLflow, OpenTelemetry, Langfuse, the OpenAI Agents SDK or the Microsoft Agent Framework?** The observations this page is about can be produced from the hook your framework already gives you — seven published packages, each with an evidence level computed from a committed proof: **[integration library](https://github.com/neomundi-io/neomundi-integrations)**.
 ## From an AI observation to independently checkable evidence
 
 <p align="center">
