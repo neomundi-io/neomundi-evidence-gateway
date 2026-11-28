@@ -28,7 +28,9 @@ enregistrements portent sur leurs propres entrees se recalculent.
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
+import io
 import json
 import sys
 import zipfile
@@ -607,6 +609,18 @@ def controle_confidentialite(bilan: Bilan, archive: zipfile.ZipFile, noms: list[
         bilan.dire(PASS, "aucun secret ni chemin de machine dans l archive")
 
 
+#: Les premiers caracteres qu un tableur interprete comme une formule.
+#: `-` n y est PAS : un nombre negatif est une valeur legitime. Le producteur
+#: le prefixe quand meme, donc il est plus conservateur que ce controle -- et
+#: c est le bon sens de l ecart.
+AMORCES_FORMULE = ("=", "+", "@", "	")
+
+#: Un `response_text` de production depasse largement la limite par defaut de
+#: 131 072 caracteres du module `csv`. Sans ce relevement, `csv.reader` leve
+#: `_csv.Error: field larger than field limit` sur une archive saine.
+TAILLE_CHAMP_CSV = 16 * 1024 * 1024
+
+
 def controle_csv(bilan: Bilan, archive: zipfile.ZipFile, noms: list[str]) -> None:
     """Les cellules a risque de formule sont-elles neutralisees ?
 
@@ -614,6 +628,44 @@ def controle_csv(bilan: Bilan, archive: zipfile.ZipFile, noms: list[str]) -> Non
     et une archive abimee non plus. Lire sans garde ferait PLANTER le
     verificateur au lieu de rendre un resultat — et un verificateur qui plante
     ne rend ni PASS, ni FAIL, ni NOT TESTED.
+
+    LE DEFAUT QUE CETTE FONCTION CORRIGE -- EVPACK-023
+    --------------------------------------------------
+
+    Le controle lisait des LIGNES PHYSIQUES et coupait sur `;`. Trois fautes
+    qui se composent, et un CSV valide suffit a les declencher toutes :
+
+      1. `splitlines()` coupe AUSSI a l interieur d un champ entre guillemets.
+         Un `response_text` qui porte des sauts de ligne -- toute reponse de
+         modele un peu longue -- devient des dizaines de fausses lignes ;
+      2. `split(";")` ignore les guillemets : un `;` dans une reponse coupe
+         une cellule en deux, et la seconde moitie commence par n importe
+         quoi ;
+      3. `strip('"')` retire les guillemets aux DEUX bouts, ce qui peut
+         exposer un caractere qui etait a l interieur.
+
+    MESURE SUR UNE ARCHIVE REELLE DE PRODUCTION, le 2026-11-27 -- export de
+    la campagne `barometre-metier-v1-anthropic-v3`, 1 156 004 octets :
+
+        observations.csv                              1 584 587 octets
+        lignes selon splitlines()                        13 172
+        lignes selon split(CRLF)                            122
+        enregistrements CSV reels                           121
+        lignes PHYSIQUES commencant par une amorce         4 339
+        CELLULES commencant par une amorce                    0
+
+    Les 4 339 lignes sont des listes markdown -- `- Les flux sont...` -- a
+    l interieur de champs entre guillemets, et l une commence par
+    `+35 pb sur toute la duree`. Le controle rendait donc FAIL sur une archive
+    SAINE, dont le producteur avait neutralise toutes les cellules.
+
+    🔴 Ce qui rend ce defaut grave : une liste a tirets est ubiquitaire dans
+    une reponse de modele. PRESQUE TOUTE archive portant de la prose reelle
+    echouait, et un tiers en concluait que l archive etait fautive.
+
+    La correction analyse le CSV et juge des CELLULES -- ce que le producteur
+    protege, et la seule chose qu un tableur interprete.
+
     """
     if "observations.csv" not in noms:
         bilan.dire(
@@ -623,12 +675,30 @@ def controle_csv(bilan: Bilan, archive: zipfile.ZipFile, noms: list[str]) -> Non
         )
         return
     contenu = texte(archive, "observations.csv", "utf-8-sig")
+    ancienne_limite = csv.field_size_limit()
+    try:
+        csv.field_size_limit(TAILLE_CHAMP_CSV)
+        enregistrements = list(csv.reader(io.StringIO(contenu), delimiter=";"))
+    except (csv.Error, ValueError) as erreur:
+        # Un CSV qui ne s analyse pas EST un defaut de l archive : le dire,
+        # plutot que de retomber sur une lecture par lignes qui redonnerait
+        # exactement le faux positif que cette fonction corrige.
+        bilan.dire(
+            FAIL,
+            "aucune cellule CSV interpretable comme formule",
+            "le membre `observations.csv` ne s analyse pas comme un CSV : %s" % erreur,
+        )
+        return
+    finally:
+        csv.field_size_limit(ancienne_limite)
+
     suspectes = []
-    for numero, ligne in enumerate(contenu.splitlines()):
-        for cellule in ligne.split(";"):
-            nu = cellule.strip('"')
-            if nu[:1] in ("=", "+", "@") or nu[:1] == "\t":
-                suspectes.append("ligne %d : %r" % (numero + 1, nu[:24]))
+    for numero, enregistrement in enumerate(enregistrements):
+        for colonne, cellule in enumerate(enregistrement):
+            if cellule[:1] in AMORCES_FORMULE:
+                suspectes.append(
+                    "enregistrement %d, colonne %d : %r" % (numero + 1, colonne, cellule[:24])
+                )
     if suspectes:
         bilan.dire(
             FAIL,
@@ -636,7 +706,12 @@ def controle_csv(bilan: Bilan, archive: zipfile.ZipFile, noms: list[str]) -> Non
             " ; ".join(suspectes[:3]),
         )
     else:
-        bilan.dire(PASS, "aucune cellule CSV interpretable comme formule")
+        bilan.dire(
+            PASS,
+            "aucune cellule CSV interpretable comme formule",
+            "%d cellule(s) analysee(s) sur %d enregistrement(s)"
+            % (sum(len(e) for e in enregistrements), len(enregistrements)),
+        )
 
 
 def controle_entrees(

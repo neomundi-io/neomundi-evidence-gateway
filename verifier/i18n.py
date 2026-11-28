@@ -742,6 +742,15 @@ FORMATS: dict[str, str] = {
     "membres en totalisent %d":
         "the contract announces %d exported record(s), the members' counts "
         "total %d",
+    # ---- EVPACK-023 : le controle CSV juge des CELLULES ----------------
+    # Les trois details du controle corrige. Un detail non traduit sort en
+    # francais dans la sortie anglaise, et la suite FR/EN le voit -- c est
+    # exactement ainsi que ces trois-la ont ete trouves.
+    "%d cellule(s) analysee(s) sur %d enregistrement(s)":
+        "%d cell(s) analysed over %d record(s)",
+    "le membre `observations.csv` ne s analyse pas comme un CSV : %s":
+        "member `observations.csv` does not parse as CSV: %s",
+    "enregistrement %d, colonne %d : %r": "record %d, column %d: %r",
     "%s introuvable": "%s not found",
     "chemins abusifs : %s": "abusive paths: %s",
     "controle interrompu par un defaut de l outil : %s: %s":
