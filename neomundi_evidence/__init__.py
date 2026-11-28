@@ -46,7 +46,20 @@ __all__ = ["__version__", "VERSION_DU_CORPUS", "REVISION_DU_PROTOCOLE"]
 #: OUTILLEE : le projet n existe pas sur TestPyPI et aucun editeur de
 #: confiance n y est configure. La 0.2.0 a donc ete publiee SANS repetition
 #: generale. A configurer avant la prochaine.
-__version__ = "0.2.0"
+#:
+#: 0.2.1 -- EVPACK-023. La 0.2.0 refusait toute archive dont une reponse
+#: porte une liste markdown : le controle anti-formule lisait des LIGNES
+#: PHYSIQUES et coupait sur `;`, donc il voyait des cellules la ou il n y
+#: en avait pas. Mesure du 2026-11-27 sur un export REEL du registre de
+#: production : 121 enregistrements CSV pour 13 172 lignes physiques, dont
+#: 4 339 commencant par une amorce de formule -- et ZERO cellule fautive.
+#: Le verificateur rendait FAIL sur une archive saine.
+#:
+#: 🔴 Une liste a tirets est ubiquitaire dans une reponse de modele :
+#: presque toute archive portant de la prose reelle echouait. Un tiers en
+#: concluait que l archive etait fautive -- l inverse exact de ce que ce
+#: paquet existe pour etablir.
+__version__ = "0.2.1"
 
 #: Version du corpus de conformite dont les verificateurs embarques sont
 #: issus, et revision du protocole qu ils implementent. Ce sont les deux
