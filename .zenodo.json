@@ -1,0 +1,29 @@
+{
+  "title": "NeoMundi Evidence — public verifier and gateway",
+  "description": "Public, offline verifier for NeoMundi Evidence archives, attestations and OpenTimestamps proofs, together with the gateway that forwards submissions to the Evidence engine. Verification establishes the integrity of a record and reports explicitly what could not be tested; it does not establish that the underlying AI output was true.",
+  "upload_type": "software",
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "creators": [
+    {
+      "name": "Favre-Lecca, Sébastien",
+      "affiliation": "NeoMundi"
+    }
+  ],
+  "keywords": [
+    "artificial intelligence",
+    "evidence",
+    "verification",
+    "integrity",
+    "attestation",
+    "opentimestamps",
+    "audit"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/neomundi-io/neomundi-evidence-gateway",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

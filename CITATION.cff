@@ -1,0 +1,27 @@
+# Citation metadata for this repository.
+# https://citation-file-format.github.io/
+#
+# Read by GitHub, which renders a "Cite this repository" button, and by Zenodo
+# when a release is archived. 🔴 It does not archive anything by itself.
+
+cff-version: 1.2.0
+message: If you use this software, please cite it using these metadata.
+type: software
+title: NeoMundi Evidence — public verifier and gateway
+abstract: >-
+  Public, offline verifier for NeoMundi Evidence archives, attestations and OpenTimestamps proofs, together with the gateway that forwards submissions to the Evidence engine. Verification establishes the integrity of a record and reports explicitly what could not be tested; it does not establish that the underlying AI output was true.
+authors:
+  - family-names: Favre-Lecca
+    given-names: Sébastien
+    affiliation: NeoMundi
+repository-code: https://github.com/neomundi-io/neomundi-evidence-gateway
+url: https://neomundi.io
+license: Apache-2.0
+keywords:
+  - artificial intelligence
+  - evidence
+  - verification
+  - integrity
+  - attestation
+  - opentimestamps
+  - audit
